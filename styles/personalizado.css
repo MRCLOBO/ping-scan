@@ -1,0 +1,43 @@
+.fila-inicio-seccion{
+    height: 100vh;  
+    align-items: center;
+  }
+  .banner-inicio-seccion{
+    position:fixed;
+    margin: 0;
+    opacity: 0.2;
+    width: 100vw;
+    height:100vh;
+    overflow: hidden;
+  }
+  .container{
+    margin: 0;
+    padding:0;
+  
+  }
+  .card{
+  margin-left: 10%;
+  }
+  .col-sm-12{
+    padding:0px;
+
+  }
+ 
+  @media (max-width:780px){
+    .card > img{
+      width:90%;     
+      overflow: hidden;
+    }
+    .card{
+      margin:20px;
+    }
+    .row{
+      width:100vw;
+    }
+    .fila-inicio-seccion{
+      width: 100vw;  
+      align-items: start;
+    }
+
+  }
+
