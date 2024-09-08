@@ -1,0 +1,61 @@
+.fila-inicio-seccion{
+    align-items: center;
+    margin: 0 30px;
+  }
+  .banner-inicio-seccion{
+    position:fixed;
+    margin: 0;
+    opacity: 0.2;
+    width: 100vw;
+    height:100vh;
+    overflow: hidden;
+  }
+  .container{
+    padding:0;
+    max-width: 100vw;
+  }
+
+  .imagen-usuario{
+    background-color: transparent;
+    border: none;
+    align-items: center;
+  }
+  .col-sm-12{
+    padding:0px;
+  }
+  .row{
+    --bs-gutter-x: 0;
+    font-size: 20px;
+  }
+  .imagen-usuario > img{
+    height:30vh;
+    margin:20px;
+  }
+  .ventana-inicio-seccion{
+    margin: 0;
+    padding:20px;
+    width: 100%;
+
+  }
+  .on-linea{
+    background-color: green;
+  }
+  .off-line{
+    background-color: red;
+  }
+
+ /* Formato responsive para celulares*/
+  @media (max-width:780px){
+
+    .card{
+      margin:20px;
+    }    .row{
+      --bs-gutter-x: 0;
+    }
+    .fila-inicio-seccion{
+      width: 100vw;  
+      align-items: center;
+    }
+
+  }
+
