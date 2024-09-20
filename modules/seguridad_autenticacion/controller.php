@@ -22,9 +22,9 @@ class UserController {
     public function handleRequest() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['add_user'])) {
-                $this->addUser($_POST['username'], $_POST['password'], $_POST['role']);
+                $this->addUser($_POST['usuario'], $_POST['contrasena'], $_POST['rol']);
             } elseif (isset($_POST['edit_user'])) {
-                $this->editUser($_POST['id'], $_POST['username'], $_POST['role']);
+                $this->editUser($_POST['id_usuarios'], $_POST['usuario'], $_POST['rol']);
             }
         } elseif (isset($_GET['delete_user'])) {
             $this->deleteUser($_GET['delete_user']);
@@ -83,7 +83,7 @@ class UserController {
     }
 
     public function login($username, $password) {
-        $query = "SELECT * FROM usuarios WHERE nombre = ?";
+        $query = "SELECT * FROM usuarios WHERE usuario = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -92,10 +92,10 @@ class UserController {
 
         if ($userResult && password_verify($password, $userResult['contrasena'])) {
             session_start();
-            $_SESSION['user'] = array(
+            $_SESSION['usuario'] = array(
                 'id' => $userResult['id_usuarios'],
                 //'userName' => $username,
-                'nombre' => $userResult['nombre'],
+                'usuario' => $userResult['usuario'],
                 'rol' => $userResult['rol'],
             );
             return true;

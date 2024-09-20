@@ -11,13 +11,13 @@ $conn = $conexion->getConexion();
 // Crear una instancia del controlador de usuario
 $controller = new UserController($conn);
 
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['usuario'])) {
     header("Location: ../../public/login.php");
     exit();
 }
 else{
     // Enviar los datos necesarios a la vista
-    $user = json_decode(json_encode($_SESSION['user']));
+    $user = json_decode(json_encode($_SESSION['usuario']));
 }
 
 // Si es una solicitud para cerrar sesión

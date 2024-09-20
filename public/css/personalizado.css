@@ -1,0 +1,108 @@
+.fila-inicio-seccion{
+    align-items: center;
+    margin: 0 30px;
+  }
+  .banner-inicio-seccion{
+    position:fixed;
+    margin: 0;
+    opacity: 0.2;
+    width: 100vw;
+    height:100vh;
+    overflow: hidden;
+  }
+  .container{
+    padding:0;
+    max-width: 100vw;
+  }
+
+  .imagen-usuario{
+    background-color: transparent;
+    border: none;
+    align-items: center;
+  }
+  .col-sm-12{
+    padding:0px;
+  }
+  .row{
+    --bs-gutter-x: 0;
+    font-size: 20px;
+  }
+  .imagen-usuario > img{
+    height:30vh;
+    margin:20px;
+  }
+  .ventana-inicio-seccion{
+    margin: 0;
+    padding:20px;
+    width: 100%;
+
+  }
+  .on-linea{
+    background-color: green;
+  }
+  .off-line{
+    background-color: red;
+  }
+  .editar-fondo{
+    position:fixed;
+    left:0;
+    top:0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255,255,255,0.2);
+    align-content: center;
+  }
+.editar-card{
+  margin:auto;
+  width: 35%;
+  border-radius: 5%;
+}
+.icono{
+  width:40px;
+  height:40px;
+  margin-top:10px;
+}
+.usuario-icono-info{
+  margin:5px;
+  font-size:15px;
+}
+.btn-cerrar-seccion{
+text-align: center;
+align-content: center;
+}
+.card-opcion{
+  margin:auto;
+  background-color: rgb(230,230,250,0.9);
+  width:85%;
+  border-radius:10px;
+  text-align: center;
+  padding:10px;
+}
+.card-opcion-boton > img{
+  width: 90%;
+}
+.card-opcion-boton{
+  border:0;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+}
+.card-opcion:hover{
+  border: thick solid rgb(50,50,255);
+  width: 90%;
+  transition-duration: 0.5s;
+
+}
+.card-opcion-h3{
+  font-size:1.5em;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(50,50,255);
+  border-radius: 10px;
+}
+.tabla-opcion-admin{
+  margin:5px;
+}
+ /* Formato responsive para celulares*/
+
+

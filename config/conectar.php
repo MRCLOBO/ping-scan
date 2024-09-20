@@ -3,7 +3,7 @@
 class Conectar {
     private $servidor = "localhost";
     private $usuario = "root";
-    private $contrasena = "password";
+    private $contrasena = "";
     private $bd = "ping_scan";
     public $conexion;
 
