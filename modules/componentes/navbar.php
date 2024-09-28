@@ -1,7 +1,12 @@
-    <div class="row bg-primary p-2">
+
+            <div class="row bg-primary p-2">
             <div class="col col-1 text-center">
-    <img src="../../public/media/imagenes/icono-hamburguesa.png" alt=""
-    class="icono"/>
+                <img src="../../public/media/imagenes/icono-atras.png"
+                class="btn" id="boton-atras"/>
+            </div>
+            <div class="col col-1 text-center">
+                <img src="../../public/media/imagenes/icono-hamburguesa.png" alt=""
+                class="icono"/>
             </div> 
 
              <!-- inicio info usuario -->
@@ -17,7 +22,7 @@
             </div>
         </div> 
             <!-- Fin de info usuario nav-->
-             <div class="col-6"></div>
+             <div class="col-5"></div>
         <div class="col-2 btn-cerrar-seccion">
         <form action="DashboardController.php?action=logout" method="POST">
             <button class="btn btn-danger" type="submit">Cerrar Sesión</button>

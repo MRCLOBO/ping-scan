@@ -1,6 +1,6 @@
 <?php
 //require '../../config/conectar.php';
-require 'model.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/model.php';
 
 
 class UserController {

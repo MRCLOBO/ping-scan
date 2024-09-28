@@ -37,11 +37,17 @@
     width: 100%;
 
   }
-  .on-linea{
-    background-color: green;
+  .esperando-conexion{
+    background-color: yellow;
+    color:rgb(40,40,40)
   }
-  .off-line{
+  .offline{
     background-color: red;
+    color:white;
+  }
+  .online{
+    background-color: green;
+    color:white;
   }
   .editar-fondo{
     position:fixed;
@@ -102,6 +108,88 @@ align-content: center;
 }
 .tabla-opcion-admin{
   margin:5px;
+}
+.formulario-añadir-dispositivo{
+  background-color: rgb(40,40,40);
+  border:thin solid white;
+  border-radius: 10px;
+  margin:auto;
+  width:70vw;
+  text-align: center;
+  color:white;
+}
+.formulario-añadir-dispositivo > h2{
+  background-color: rgb(60,60,255);
+  padding:10px;
+  border-radius: 10px 10px 0 0;
+}
+.boton-atras{
+  position:absolute;
+  margin-left:30%;
+  margin-top:1%;
+}
+.solicitar-ip{
+  border:thin solid rgb(255,255,255);
+  width: fit-content;
+  margin: auto;
+  padding:5px;
+  border-radius: 10px;
+
+}
+.solicitar-ip > input{
+  border:none;
+  text-align: center;
+  background-color: rgb(40,40,40);
+  color:white;
+}
+#nombre_equipo{
+  width: 70%;
+  text-align: center;
+  border-radius: 10px;
+  padding:5px;
+  border:thin solid rgb(255,255,255);
+  background-color: rgb(40,40,40);
+  color:white;
+}
+.formulario-añadir-dispositivo > form > button{
+  margin-top: 15px;
+}
+.tabla-monitorear-dispositivos{
+  margin:auto;
+  border: thin solid white;
+  border-radius: 0 0 20px 20px;
+}
+.tabla-monitorear-dispositivos > thead > tr > th{
+  padding:10px;
+  background-color: rgb(60,60,255);
+  font-size: 1.5em;
+  text-align: center;
+} 
+.tabla-monitorear-dispositivos > tbody > tr > td{
+  padding: 10px;
+  border:thin solid white;
+}
+.col-acciones{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: rgb(60,60,255);
+  border-radius: 10px;
+  text-align: center;
+  border: thin solid white;
+}
+.col-acciones > a > img{
+  width: 48px;
+  height:48px;
+  margin: auto;
+}
+.col-acciones > a > img:hover{
+  transition:1s;
+  filter:invert(1);
+}
+.fila-seleccionada{
+border: thin solid black;
+background-color: rgb(255,255,255,0.1);
 }
  /* Formato responsive para celulares*/
 
