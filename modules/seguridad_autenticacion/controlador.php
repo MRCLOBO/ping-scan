@@ -46,9 +46,10 @@ class ControladorUsuarios {
         header("Location: vista.php");
     }
 
-
+    
     public function editarUsuario($id_usuarios, $usuario, $nombre, $rol) {
         if (!empty($id_usuarios) && !empty($usuario) && !empty($nombre) && !empty($rol)) {
+            
             if ($this->model->updateUsuario($id_usuarios, $usuario, $nombre,$rol)) {
                 $_SESSION['message'] = "Usuario actualizado exitosamente.";
             } else {
@@ -80,6 +81,9 @@ class ControladorUsuarios {
 
     public function getAllUsers() {
         return $this->model->getAllUsers();
+    }
+    public function getLocales(){
+        return $this->model->getLocales();
     }
 
     public function login($username, $password) {

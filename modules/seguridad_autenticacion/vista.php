@@ -26,7 +26,7 @@ $editarUsuario = null;
 if (isset($_GET['editar_usuario'])) {
     $editarUsuario = $controlador->getUserToEdit($_GET['editar_usuario']);
 }
-
+$locales = $controlador->getLocales();
 $usuarios = $controlador->getAllUsers();
 ?>
 <!DOCTYPE html>
@@ -50,8 +50,8 @@ $usuarios = $controlador->getAllUsers();
             <tr>
                 <th>ID</th>
                 <th>Usuario</th>
-                <th>Rol</th>
                 <th>Nombre</th>
+                <th>Rol</th>
             </tr>
         </thead>
         <?php 
@@ -106,12 +106,12 @@ $usuarios = $controlador->getAllUsers();
                 <label for="usuario">Usuario:</label>
                 </br><input type="text" name="usuario" placeholder="Inserte el usuario" 
                 id="usuario" value="<?php echo htmlspecialchars($editarUsuario['usuario']); ?>"
-                class="mb-3 col-11 col-md-6 text-center"/>
+                class="mb-3 col-11 col-md-6 text-center" required/>
                 </br>
                 <label for="nombre">Nombre:</label>
                 </br><input type="text" id="nombre" name="nombre" placeholder="Inserte el nombre"
                 value="<?php echo htmlspecialchars($editarUsuario['nombre'])?>"
-                class="mb-3 col-11 col-md-6 text-center"/>
+                class="mb-3 col-11 col-md-6 text-center" required/>
                 </br>
                 <label for="edit_role">Rol:</label>
             </br>
@@ -120,8 +120,16 @@ $usuarios = $controlador->getAllUsers();
                 <option value="user" <?php echo $editarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>
                 </select>
             </br>
-            <label>Local del usuario:</label>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+            <!-- Local perteneciente del usuario -->
+            <div id="container-elegir-local" class="elegir-local-ocultar">
+            <label for="usuario-local">Especificar el local del usuario:</label>
+            </br><select name="usuario_local" class="mb-3" id="usuario-local">
+                <?php while ($rowEditar = $locales->fetch_assoc()):?>
+                    <option value="<?php echo $rowEditar['denominacion']?>"><?php echo $rowEditar['denominacion']?></option>
+                <?php endwhile; ?>
+            </select>
+            </div>
+                <button type="submit" class="btn btn-primary mb-3">Enviar</button>
                 </form>
     </div>
     </div> 
@@ -181,9 +189,21 @@ $usuarios = $controlador->getAllUsers();
             document.getElementById("eliminar-usuario").href="?eliminar_usuario="+document.getElementById(valorActual).children[0].id;
         });
     }
-  //console.log("<?php// echo $_SERVER['DOCUMENT_ROOT']?>") respuesta: C:/laragon/www
     //Boton atras
     document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/dashboard/DashboardView.php";})
+    //Logica para poner el local del usuario de acuerdo a una condicion, y hacerlo obligatorio
+    document.getElementById("edit_role").addEventListener("click",()=>{
+    if(document.getElementById("edit_role")!==null){
+        if(document.getElementById("edit_role").value==="user"){
+        //poner al local del usuario obligatorio
+        document.getElementById("container-elegir-local").className="elegir-local-mostrar";
+        document.getElementById("usuario-local").required=true;
+        }
+        else{
+            document.getElementById("container-elegir-local").className="elegir-local-ocultar";
+            document.getElementById("usuario-local").required=false;
+        }
+    }})//fin de logica para poner el local del usuario
     </script>
 </body>
 </html>

@@ -11,6 +11,7 @@ $id_usuarios = $_POST['id_usuarios'];
 $usuario = $_POST['usuario'];
 $nombre= $_POST['nombre'];
 $rol= $_POST['rol'];
+$usuario_local= $_POST['usuario_local'];
 
 $controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
 

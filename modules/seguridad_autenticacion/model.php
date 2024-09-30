@@ -36,5 +36,9 @@ class UserModel {
     public function getAllUsers() {
         return $this->conn->query("SELECT * FROM usuarios");
     }
+    public function getLocales() {
+        return $this->conn->query("SELECT * FROM locales");
+    }
+
 }
 ?>
