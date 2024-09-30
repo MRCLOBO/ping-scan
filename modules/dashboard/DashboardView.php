@@ -7,16 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../../public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../../public/css/personalizado.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/personalizado.css">
 </head>
 
-<body>
-    <div class="container col-md-12 bg-dark text-light" style="height:100vh;"> <!--div principal-->
+<body class="bg-dark text-light">
+    <div class="container col-md-12" style="height:100vh;"> <!--div principal-->
     <?php require '../componentes/navbar.php';?> <!-- llamada al navbar -->
     <h2 class="text-center m-2">PANEL PRINCIPAL</h2>
     <div class="row"><!-- row principal -->
-    <div class="col-4 p-2">
+    <div class="col-md-4 col-12 p-2">
             <div class="card-opcion">
             <form method="POST" action="../seguridad_autenticacion/view.php">
                 <button type="submit" class="card-opcion-boton">
@@ -26,7 +26,7 @@
             </form>
         </div>
         </div>
-        <div class="col-4 p-2">
+        <div class="col-md-4 col-12 p-2">
             <div class="card-opcion">
             <form method="POST" action=""> <!-- definir donde va -->
                 <button type="submit" class="card-opcion-boton">
@@ -36,7 +36,7 @@
             </form>
         </div>
         </div>
-        <div class="col-4 p-2">
+        <div class="col-md-4 col-12 p-2  mb-3">
             <div class="card-opcion">
             <form method="POST" action="../administrar-dispositivos/vista.php">
                 <button type="submit" class="card-opcion-boton">

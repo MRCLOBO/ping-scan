@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="usuario">Usuario: </label>
                 <input name="usuario" id="usuario"
                 type="text" placeholder="Ingrese su usuario"
-                style="width:70%" required
+                style="width:70%" required class="mb-3"
                 />
 </div><div class="col-sm-12 col-md-6"> <!-- inicio de la columna responsiva 2 y final de la 1 -->
                 <label for="contrasena">Contraseña:</label>

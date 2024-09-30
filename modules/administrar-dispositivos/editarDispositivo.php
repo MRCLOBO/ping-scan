@@ -1,6 +1,6 @@
 <?php 
  //Conectar a la BD
- require_once('../../config/conectar.php');
+ require_once($_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php');
  $conexion = new Conectar();
  $conn = $conexion->getConexion();
  //Llamar al controlador

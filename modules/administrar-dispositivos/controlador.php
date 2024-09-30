@@ -1,12 +1,9 @@
 <?php
 //require '../../config/conectar.php';
-require './modelo.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/administrar-dispositivos/modelo.php';
 
-/* 
-###
-PROBLEMA DE PROP DRILLING EN ESTA CLASE
-##
-*/
+
+
 
 class ControladorDispositivos {
     private $model;

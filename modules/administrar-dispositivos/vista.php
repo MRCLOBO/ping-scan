@@ -1,4 +1,5 @@
 <?php
+
 require_once($_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php');
 
 /*Inicia la conexion con la base de datos*/ 
@@ -7,13 +8,13 @@ $conn = $conexion->getConexion();
 
 
 /*Requerimiento de controller.php ?? */
-require './controlador.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/administrar-dispositivos/controlador.php';
 
 // Instanciar la clase de controller.php
 $controlador = new ControladorDispositivos($conn);
 
 // Generar una instancia para reutilizar codigo
-require '../componentes/componentes.php';
+require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/componentes/componentes.php';
 $componentes = new Componentes();
 
 
@@ -37,7 +38,14 @@ if (isset($_GET['eliminar_dispositivo'])) {
 }
 //INICIAR SECCION
 session_start();
-$user = json_decode(json_encode($_SESSION['usuario']));
+if (!isset($_SESSION['usuario'])) {
+    header('Location: /ping-scan/public/login.php');
+    exit();
+}
+else{
+    // Enviar los datos necesarios a la vista
+    $user = json_decode(json_encode($_SESSION['usuario']));
+}
 
 ?>
 
@@ -47,16 +55,16 @@ $user = json_decode(json_encode($_SESSION['usuario']));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administracion de Dispositivos</title>
-    <link rel="stylesheet" href="<?php $_SERVER['DOCUMENT_ROOT'];?>/ping-scan/public/css/personalizado.css">
-    <link rel="stylesheet" href="<?php $_SERVER['DOCUMENT_ROOT'];?>/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/personalizado.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
-<?php require_once "../componentes/navbar.php"?>
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Dispositivos</h2></div>
     <div class="row"><!-- inicio del segundo row -->
-        <div class="col col-1"></div> <!--columna de relleno -->
-    <div class="col col-9"><!-- inicio de la columna para la tabla-->
+        <div class="col-0 col-md-1"></div> <!--columna de relleno -->
+    <div class="col col-12 col-lg-9"><!-- inicio de la columna para la tabla-->
     <table class="tabla-monitorear-dispositivos">
         <thead >
             <tr>
@@ -71,11 +79,6 @@ $user = json_decode(json_encode($_SESSION['usuario']));
         ?>
         <tbody >
             <?php while ($row = $dispositivos->fetch_assoc()):
-            /*Dentro del bucle para analizar cada fila de la respuesta que tuvo la consulta
-            analizamos cada columna obtenida y lo juntamos para que den una IP, esto sirve solamente
-            para la fila que se esta analizando en ese instante del bucle, una vez pase a otra fila 
-            tendra otro valor por el cual se sobreescribira.
-            Se almacena el valor de la IP para poder reutilizarlo como ID y mostrarlo en pantalla*/ 
                 $ip1= htmlspecialchars($row['ip1']);
                 $ip2=htmlspecialchars($row['tipo_dispositivo_ip2']);
                 $ip3=htmlspecialchars($row['locales_ip3']);
@@ -101,14 +104,8 @@ $user = json_decode(json_encode($_SESSION['usuario']));
     </table>
             </div><!-- fin de la columna para la tabla -->
 
-            <div class="col col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
-            <!--Logica del boton:
-                El boton llama de nuevo a este formulario y envia como parametro una variable con
-                el valor de 1,el formulario ya espera en su primer renderizado esta variable por si
-                la recibe en el metodo GET, como le mandamos un valor la variable $añadirDispositivo
-                se pone como verdadero y hace aparecer el formulario para poder añadir el dispositivo
-                V 1.2.1
-            -->
+            <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
+
             <a href="?añadir_dispositivo=1">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Dispositivo"/>
             </a>
@@ -120,7 +117,7 @@ $user = json_decode(json_encode($_SESSION['usuario']));
             </a>    
             </div>
 
-            <label>Dispositivos registrados:</label><p id="auxiliar-iterador"><?php echo $iterador ?></p>
+            <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
             </div><!--final del segundo row -->
 
 

@@ -64,8 +64,8 @@
   border-radius: 5%;
 }
 .icono{
-  width:40px;
-  height:40px;
+  width:38px;
+  height:38px;
   margin-top:10px;
 }
 .usuario-icono-info{
@@ -162,12 +162,13 @@ align-content: center;
 .tabla-monitorear-dispositivos > thead > tr > th{
   padding:10px;
   background-color: rgb(60,60,255);
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-align: center;
 } 
 .tabla-monitorear-dispositivos > tbody > tr > td{
   padding: 10px;
   border:thin solid white;
+  font-size:1em;
 }
 .col-acciones{
   display: flex;
@@ -191,6 +192,40 @@ align-content: center;
 border: thin solid black;
 background-color: rgb(255,255,255,0.1);
 }
- /* Formato responsive para celulares*/
+.row{
+  margin-left:0 !important;
+  margin-right:0 !important;
+}
+.container{
+  padding-bottom: 120px;
+}
+/* Diseño responsive*/
+@media (max-width:992px){
+  .tabla-monitorear-dispositivos > thead > tr > th{
+    padding:10px;
+    background-color: rgb(60,60,255);
+    font-size: 0.8em;
+    text-align: center;
+  } 
+  .tabla-monitorear-dispositivos > tbody > tr > td{
+    padding: 10px;
+    border:thin solid white;
+    font-size:0.6em;
+  }
+  .col-acciones{
+    position:fixed;
+    bottom:50px;
+    width:50% !important;
+    flex-direction: row;
+    left: 25%;
+    min-width: 200px;
+    padding:5px;
+    box-shadow:0 0 20px black;
+  }
+  .col-acciones > a > img{
+    width:1.5em;
+    height: 1.5em;
+  }
 
 
+}
