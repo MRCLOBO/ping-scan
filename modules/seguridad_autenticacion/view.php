@@ -1,6 +1,6 @@
 <?php
-require '../../config/conectar.php';
-require 'controller.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controlador.php';
 
 session_start();
 $user = json_decode(json_encode($_SESSION['usuario']));
@@ -16,18 +16,18 @@ if (!isset($_SESSION['usuario']) || $user->rol !== 'admin') {
 $conexion = new Conectar();
 $conn = $conexion->getConexion();
 
-$controller = new UserController($conn);
+$controlador = new UserController($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'GET') {
-    $controller->handleRequest();
+    $controlador->handleRequest();
 }
 
 $userToEdit = null;
 if (isset($_GET['edit_user'])) {
-    $userToEdit = $controller->getUserToEdit($_GET['edit_user']);
+    $userToEdit = $controlador->getUserToEdit($_GET['edit_user']);
 }
 
-$users = $controller->getAllUsers();
+$users = $controlador->getAllUsers();
 ?>
 
 <!DOCTYPE html>
@@ -36,14 +36,19 @@ $users = $controller->getAllUsers();
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Usuarios</title>
-    <link rel="stylesheet" href="../../public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../../public/css/personalizado.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/personalizado.css">
 </head>
 
 <body class="bg-dark text-light">
+    <?php require_once $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/componentes/navbar.php'?>
+
+
+
+    
 <!-- Inicio del div CONTAINER -->   
 <div class="container p-5" >
-    <h2 class="text-center mb-4">Gestión de Usuarios</h2>
+    <h2 class="text-center">Gestión de Usuarios</h2>
 
     <!-- Mostrar mensajes de éxito o error -->
         <?php if (isset($_SESSION['message'])): ?>

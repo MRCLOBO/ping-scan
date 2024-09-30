@@ -14,9 +14,9 @@ class UserModel {
        
     }
 
-    public function updateUser($id, $username, $role) {
-        $stmt = $this->conn->prepare("UPDATE usuarios SET usuario = ?, rol = ? WHERE id_usuarios = ?");
-        $stmt->bind_param("ssi", $username, $role, $id);
+    public function updateUsuario($id_usuarios, $usuario, $nombre, $rol) {
+        $stmt = $this->conn->prepare("UPDATE usuarios SET usuario = ?, nombre = ?, rol = ? WHERE id_usuarios = ?");
+        $stmt->bind_param("sssi", $usuario, $nombre, $rol, $id_usuarios);
         return $stmt->execute();
     }
 

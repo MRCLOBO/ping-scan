@@ -3,7 +3,7 @@
 require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/model.php';
 
 
-class UserController {
+class ControladorUsuarios {
     private $model;
     private $conn;
 
@@ -43,13 +43,13 @@ class UserController {
         } else {
             $_SESSION['error'] = "Por favor, complete todos los campos.";
         }
-        header("Location: view.php");
+        header("Location: vista.php");
     }
 
 
-    private function editUser($id, $username, $role) {
-        if (!empty($id) && !empty($username) && !empty($role)) {
-            if ($this->model->updateUser($id, $username, $role)) {
+    public function editarUsuario($id_usuarios, $usuario, $nombre, $rol) {
+        if (!empty($id_usuarios) && !empty($usuario) && !empty($nombre) && !empty($rol)) {
+            if ($this->model->updateUsuario($id_usuarios, $usuario, $nombre,$rol)) {
                 $_SESSION['message'] = "Usuario actualizado exitosamente.";
             } else {
                 $_SESSION['error'] = "Error al actualizar usuario.";
@@ -57,7 +57,7 @@ class UserController {
         } else {
             $_SESSION['error'] = "Por favor, complete todos los campos.";
         }
-        header("Location: view.php");
+        header("Location: vista.php");
     }
 
 

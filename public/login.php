@@ -5,9 +5,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-require '../config/conectar.php'; 
-if (file_exists('../modules/seguridad_autenticacion/controller.php')) {
-    require '../modules/seguridad_autenticacion/controller.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php'; 
+if (file_exists($_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controlador.php')) {
+    require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controlador.php';
 } else {
     echo "Archivo controller.php no encontrado<br>";
 }
@@ -21,14 +21,14 @@ $conexion = new Conectar();
 $conn = $conexion->getConexion();
 
 // Crear una instancia del controlador de usuario
-$controller = new UserController($conn);
+$controlador = new ControladorUsuarios($conn);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['usuario'];
     $password = $_POST['contrasena'];
     
     
-    if ($controller->login($username, $password)) {
+    if ($controlador->login($username, $password)) {
         header("Location: ../modules/dashboard/DashboardView.php");
         exit(); // Asegúrate de usar exit() después de header()
     } else {
@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ping scan</title>
-    <link rel="stylesheet" href="./css/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="./css/personalizado.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/personalizado.css">
     
 </head>
 <body class="bg-dark">
@@ -57,29 +57,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    
     <div class="row fila-inicio-seccion">
         <div class="card imagen-usuario">
-            <img src="./media/imagenes/imagen-usuario.png" alt="usuario"/>
+            <img src="/ping-scan/public/media/imagenes/imagen-usuario.png" alt="usuario"/>
         </div>    
     </div>
     <div class="row fila-inicio-seccion">
     <div class="col-12 col-sm-12 ">
-        <div class="card card-body">
+        <div class="card card-body m-5">
             <form  action="login.php" method="POST">
             <div class="card-title text-center"><h2>INICIO DE SECCION</h2></div>
             <div class="card-body">
                 <div class="row"> <!-- inicio del row para modificar la apariencia de los inputs -->
-                    <div class="col-sm-12 col-md-6">   <!-- inicio de la columna responsiva 1 -->
-                <label for="usuario">Usuario: </label>
+                <label for="usuario" class="col-12 col-lg-1 text-center">Usuario: </label>
                 <input name="usuario" id="usuario"
                 type="text" placeholder="Ingrese su usuario"
-                style="width:70%" required class="mb-3"
+            required class="col-12 col-lg-4 mb-3"
                 />
-</div><div class="col-sm-12 col-md-6"> <!-- inicio de la columna responsiva 2 y final de la 1 -->
-                <label for="contrasena">Contraseña:</label>
+                <div class="col-0 col-lg-1"></div>
+
+                <label for="contrasena" class="col-12 col-lg-2 text-center">Contraseña:</label>
                 <input type="password" id="contrasena" 
                 name="contrasena" placeholder="Ingrese su contraseña"
-                style="width:70%" required
+                 required class="col-12 col-lg-4 mb-3"
                 />
-                    </div><!-- final de la columna responsiva 2-->
+
                 </div><!--Final del row para los inputs -->
             </div>
             <div class="card-footer text-center"><button class="btn btn-primary btn-inicio-seccion">Iniciar Seccion</button></div>
