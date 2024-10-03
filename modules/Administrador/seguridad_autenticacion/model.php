@@ -13,6 +13,12 @@ class UserModel {
         return $stmt->execute();
        
     }
+    public function restaurarContrasena($id_usuarios){
+        $hashedContrasena = password_hash("password", PASSWORD_DEFAULT);
+        $stmt = $this->conn->prepare("UPDATE usuarios SET contrasena = ? WHERE id_usuarios = ?");
+        $stmt->bind_param("si", $hashedContrasena, $id_usuarios);
+        return $stmt->execute();
+    }
 
     public function updateUsuario($id_usuarios, $usuario, $nombre, $rol) {
         $stmt = $this->conn->prepare("UPDATE usuarios SET usuario = ?, nombre = ?, rol = ? WHERE id_usuarios = ?");

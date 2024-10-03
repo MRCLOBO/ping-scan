@@ -118,5 +118,8 @@ class ControladorUsuarios {
     public function eliminarUsuarioLocal($usuario){
         return $this->model->eliminarUsuarioLocal($usuario);
     }
+    public function restaurarContrasena($id_usuarios){
+        return $this->model->restaurarContrasena($id_usuarios);
+    }
 }
 ?>

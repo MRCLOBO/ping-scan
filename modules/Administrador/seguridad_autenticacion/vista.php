@@ -34,6 +34,9 @@ $eliminarUsuario=null;
 if (isset($_GET['eliminar_usuario'])) {
     $eliminarUsuario = $controlador->getUserToEdit($_GET['eliminar_usuario']);
 }
+if (isset($_GET['restaurar_contrasena'])) {
+    $controlador->restaurarContrasena($_GET['restaurar_contrasena']);
+}
 $locales = $controlador->getLocales();
 $usuarios = $controlador->getAllUsers();
 ?>
@@ -91,11 +94,17 @@ $usuarios = $controlador->getAllUsers();
             </a>
             <a href="?eliminar_usuario=" id="eliminar-usuario">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Usuario"/>    
-            </a>    
+            </a>
+            <a href="?restaurar_contrasena" id="restaurar-contrasena">
+            <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Usuario"/>    
+            </a>     
             </div>
+            
 
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
             </div><!--final del segundo row -->
+
+
 
 
 
@@ -139,6 +148,9 @@ $usuarios = $controlador->getAllUsers();
     </div> <!-- fin de editar-fondo --> 
             <?php endif;?> <!-- fin de añadir dispositivo -->
     
+
+
+
 
             <?php if($editarUsuario): ?>
         <div class="editar-fondo">  <!-- inicio de editar dispositivo -->
@@ -211,10 +223,17 @@ $usuarios = $controlador->getAllUsers();
             <!-- Local perteneciente del usuario -->
             <label for="usuario-local">Local del usuario:</label>
             <input id="usuario-local" name="usuario_local" 
-            value="<?php $usuarioLocal = $controlador->getUsuarioLocal($eliminarUsuario['id_usuarios']);
-            echo htmlspecialchars($usuarioLocal['denominacion']);?>" disabled/>
+            value="<?php
+            if($eliminarUsuario['rol'] === 'user'){
+                $usuarioLocal = $controlador->getUsuarioLocal($eliminarUsuario['id_usuarios']);
+                $eliminarUsuarioLocal = htmlspecialchars($usuarioLocal['denominacion']);
+                echo $eliminarUsuarioLocal;
+            }else{
+                echo "Sin local fijo";
+            }
+            ?>" disabled/>
         </br>
-    <p>¿Estas Seguro de que deseas eliminar el dispositivo?</p>
+    <p>¿Estas Seguro de que deseas eliminar el usuario?</p>
                 <button type="submit" class="btn btn-danger">Enviar</button>
                 </form>
     </div>
@@ -239,6 +258,9 @@ $usuarios = $controlador->getAllUsers();
             document.getElementById("editar-usuario").href="?editar_usuario="+document.getElementById(valorActual).children[0].id;
             //cambiar la ruta del boton para eliminar
             document.getElementById("eliminar-usuario").href="?eliminar_usuario="+document.getElementById(valorActual).children[0].id;
+             //cambiar la ruta del boton para restaurar contraseña
+             document.getElementById("restaurar-contrasena").href="?restaurar_contrasena="+document.getElementById(valorActual).children[0].id;
+
         });
     }
     //Boton atras
