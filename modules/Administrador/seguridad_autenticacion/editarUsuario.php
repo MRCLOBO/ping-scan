@@ -13,11 +13,15 @@ $nombre= $_POST['nombre'];
 $rol= $_POST['rol'];
 $usuario_local= $_POST['usuario_local'];
 
-$controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
 
+if($rol === "user"){
+    $controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
+    $controlador->editarUsuarioLocal($usuario_local,$usuario);
+}
+if($_POST['rol'] == "admin"){
+    $controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
+    $controlador->eliminarUsuarioLocal($usuario);
+}
     header("Location: vista.php");
     die();
-
-
-
 ?>

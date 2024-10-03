@@ -1,6 +1,6 @@
 <?php
 //require '../../config/conectar.php';
-require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/administrar-dispositivos/modelo.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/administrar-dispositivos/modelo.php';
 
 
 

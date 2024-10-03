@@ -1,6 +1,6 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php';
-require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controlador.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/controlador.php';
 
 session_start();
 
@@ -12,7 +12,7 @@ $conn = $conexion->getConexion();
 $controlador = new ControladorUsuarios($conn);
 
 if (!isset($_SESSION['usuario'])) {
-    header('Location: '.$_SERVER['DOCUMENT_ROOT'].'/ping-scan/public/login.php');
+    header('Location: /ping-scan/public/login.php');
     exit();
 }
 else{

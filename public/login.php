@@ -6,8 +6,8 @@ error_reporting(E_ALL);
 
 
 require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php'; 
-if (file_exists($_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controlador.php')) {
-    require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controlador.php';
+if (file_exists($_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/controlador.php')) {
+    require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/controlador.php';
 } else {
     echo "Archivo controller.php no encontrado<br>";
 }
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     
     if ($controlador->login($username, $password)) {
-        header("Location: ../modules/dashboard/DashboardView.php");
+        header("Location: ../modules/Administrador/dashboard/DashboardView.php");
         exit(); // Asegúrate de usar exit() después de header()
     } else {
         $error = "Nombre de usuario o contraseña incorrectos.";

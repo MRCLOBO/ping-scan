@@ -1,6 +1,6 @@
 <?php
 //require '../../config/conectar.php';
-require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/model.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/model.php';
 
 
 class ControladorUsuarios {
@@ -15,7 +15,7 @@ class ControladorUsuarios {
     public function logout() {
         // session_start();  // Inicia la sesión
         session_destroy(); // Destruye la sesión
-        header("Location: ../../public/login.php"); // Redirige al index.php
+        header("Location: ../../../public/login.php"); // Redirige al index.php
         exit(); // Asegura que se detiene la ejecución
     }
 
@@ -33,9 +33,9 @@ class ControladorUsuarios {
         }
     }
 
-    private function addUser($username, $password, $role) {
-        if (!empty($username) && !empty($password) && !empty($role)) {
-            if ($this->model->addUser($username, $password, $role)) {
+    public function añadirUsuario($usuario, $nombre, $rol,$contrasena) {
+        if (!empty($usuario) && !empty($nombre) && !empty($rol) && !empty($contrasena)) {
+            if ($this->model->añadirUsuario($usuario, $nombre, $rol, $contrasena)) {
                 $_SESSION['message'] = "Usuario agregado exitosamente.";
             } else {
                 $_SESSION['error'] = "Error al agregar usuario.";
@@ -45,7 +45,9 @@ class ControladorUsuarios {
         }
         header("Location: vista.php");
     }
-
+    public function añadirUsuarioLocal($denominacion,$usuario){
+        return $this->model->añadirUsuarioLocal($denominacion,$usuario);
+    }
     
     public function editarUsuario($id_usuarios, $usuario, $nombre, $rol) {
         if (!empty($id_usuarios) && !empty($usuario) && !empty($nombre) && !empty($rol)) {
@@ -106,6 +108,15 @@ class ControladorUsuarios {
         } else {
             return false;
         }
+    }
+    public function getUsuarioLocal($id_usuarios){
+        return $this->model->getUsuarioLocal($id_usuarios);
+    }
+    public function editarUsuarioLocal($denominacion,$usuario){
+        return $this->model->editarUsuarioLocal($denominacion,$usuario);
+    }
+    public function eliminarUsuarioLocal($usuario){
+        return $this->model->eliminarUsuarioLocal($usuario);
     }
 }
 ?>

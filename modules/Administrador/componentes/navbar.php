@@ -19,7 +19,7 @@
             <!-- Fin de info usuario nav-->
              <div class="col-3 col-md-6"></div>
         <div class="col-2 col-md-1 btn-cerrar-seccion">
-        <form action="/ping-scan/modules/componentes/controlador.php?action=logout" method="POST">
+        <form action="/ping-scan/modules/Administrador/componentes/controlador.php?action=logout" method="POST">
             <button class="btn btn-danger" type="submit">Salir</button>
         </form>
         </div>

@@ -1,6 +1,6 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php';
-require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controlador.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/controlador.php';
 
 session_start();
 $user = json_decode(json_encode($_SESSION['usuario']));
@@ -8,7 +8,7 @@ $user = json_decode(json_encode($_SESSION['usuario']));
  //Verificar si el usuario es administrador
     
 if (!isset($_SESSION['usuario']) || $user->rol !== 'admin') {
-    header("Location: ../../public/login.php");
+    header("Location: ../../../public/login.php");
     exit();
 }
 
@@ -26,6 +26,14 @@ $editarUsuario = null;
 if (isset($_GET['editar_usuario'])) {
     $editarUsuario = $controlador->getUserToEdit($_GET['editar_usuario']);
 }
+$añadirUsuario=null;
+if (isset($_GET['añadir_usuario'])) {
+    $añadirUsuario = true;
+}
+$eliminarUsuario=null;
+if (isset($_GET['eliminar_usuario'])) {
+    $eliminarUsuario = $controlador->getUserToEdit($_GET['eliminar_usuario']);
+}
 $locales = $controlador->getLocales();
 $usuarios = $controlador->getAllUsers();
 ?>
@@ -39,7 +47,7 @@ $usuarios = $controlador->getAllUsers();
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
-<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/componentes/navbar.php"?>
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Usuarios</h2></div>
     <div class="row"><!-- inicio del segundo row -->
@@ -60,7 +68,7 @@ $usuarios = $controlador->getAllUsers();
         <tbody >
             <?php while ($row = $usuarios->fetch_assoc()):?>
                 
-                <tr id=<?php echo $iterador?> class="fila-datos">
+                <tr id=<?php echo $iterador?>>
                     <td id=<?php echo htmlspecialchars($row['id_usuarios']);?>><?php echo htmlspecialchars($row['id_usuarios']);?></</td>
                     <td><?php echo htmlspecialchars($row['usuario']);?></td>
                     <td><?php echo htmlspecialchars($row['nombre']);?></td>
@@ -75,14 +83,14 @@ $usuarios = $controlador->getAllUsers();
 
             <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
 
-            <a href="?añadir_dispositivo=1">
-                <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Dispositivo"/>
+            <a href="?añadir_usuario=1">
+                <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Usuario"/>
             </a>
             <a href="?editar_usuario=" id="editar-usuario">
-            <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar dispositivo"/>
+            <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar Usuario"/>
             </a>
             <a href="?eliminar_usuario=" id="eliminar-usuario">
-            <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Añadir Dispositivo"/>    
+            <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Usuario"/>    
             </a>    
             </div>
 
@@ -91,8 +99,44 @@ $usuarios = $controlador->getAllUsers();
 
 
 
-        <?php if($añadirDispositivo): ?>
-            <?php $componentes->ventanaDispositivo();?>
+        <?php if($añadirUsuario): ?>
+            <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
+            <div class="formulario-añadir-dispositivo">
+            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+                <h2>Añadir Usuario</h2>
+                <form method="POST" action="añadirUsuario.php">
+                <label for="usuario">Usuario:</label>
+                </br><input type="text" name="usuario" placeholder="Inserte el usuario" 
+                id="usuario"class="mb-3 col-11 col-md-6 text-center" required/>
+                </br>
+                <label for="nombre">Nombre:</label>
+                </br><input type="text" id="nombre" name="nombre" placeholder="Inserte el nombre"
+                class="mb-3 col-11 col-md-6 text-center" required/>
+                </br>
+                <label>Contraseña:</label>
+                </br><input type="password" id="contrasena" name="contrasena" placeholder="Introduzca una contraseña"
+                class="mb-3 col-11 col-md-6 text-center" required/>
+        </br>
+                <label for="edit_role">Rol:</label>
+            </br>
+                <select id="edit_role" name="rol" class="mb-3" required>
+                <option value="admin">Administrador</option>
+                <option value="user">Usuario</option>
+                </select>
+            </br>
+            <!-- Local perteneciente del usuario -->
+            <div id="container-elegir-local" class="elegir-local-ocultar">
+            <label for="usuario-local">Especificar el local del usuario:</label>
+            </br><select name="usuario_local" class="mb-3" id="usuario-local">
+                <?php while ($rowEditar = $locales->fetch_assoc()):?>
+                    <option value="<?php echo $rowEditar['denominacion']?>"><?php echo $rowEditar['denominacion']?></option>
+                <?php endwhile; ?>
+            </select>
+            </div>
+                <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                </form>
+    </div> <!-- fin de la ventana añadir usuario -->
+    </div> <!-- fin de editar-fondo --> 
             <?php endif;?> <!-- fin de añadir dispositivo -->
     
 
@@ -131,37 +175,45 @@ $usuarios = $controlador->getAllUsers();
             </div>
                 <button type="submit" class="btn btn-primary mb-3">Enviar</button>
                 </form>
-    </div>
-    </div> 
+    </div> <!-- fin de la ventana editar usuario -->
+    </div> <!-- fin de editar-fondo --> 
             <?php endif;?> <!-- fin de editar dispositivo -->
 
-            <?php if($eliminarDispositivo): ?><!-- inicio de eliminar dispositivo -->
+
+
+
+
+            <?php if($eliminarUsuario): ?><!-- inicio de eliminar dispositivo -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
-                <h3 class="p-3 bg-danger">Eliminar dispositivo</h3>
-                <form method="POST" action="eliminarDispositivo.php">
-                <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($eliminarDispositivo['id_dispositivos']); ?>">
-                <label for="ip1">Direccion IP del dispositivo:</label>
-                <div class="solicitar-ip">
-                <input  type="number" max="255" min="0" id="ip1" name="ip1" required disabled
-                value="<?php echo $eliminarDispositivo['ip1']?>"/>
-                <label for="ip2">.</label>
-                <input type="number" max="255" min="0" id="ip2" name="ip2" required disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['tipo_dispositivo_ip2'])?>"/>
-                <label for="ip3">.</label>
-                <input type="number" max="255" min="0" id="ip3" name="ip3" required disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['locales_ip3'])?>"/>
-                <label for="ip4">.</label>
-                <input type="number" max="255" min="0" id="ip4" name="ip4" required disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['ip4'])?>"/>
-                </div>
-    </br>
-                <label for="nombre_equipo">Nombre del dispositivo</label>
+                <h3 class="p-3 bg-danger">Eliminar Usuario</h3>
+                <form method="POST" action="eliminarUsuario.php">
+                <input type="hidden" name="id_usuarios" 
+                value="<?php echo htmlspecialchars($eliminarUsuario['id_usuarios']); ?>" >
+                <label for="usuario">Usuario:</label>
+                </br><input type="text" name="usuario" placeholder="Inserte el usuario" 
+                id="usuario" value="<?php echo htmlspecialchars($eliminarUsuario['usuario']); ?>"
+                class="mb-3 col-11 col-md-6 text-center" required disabled/>
                 </br>
-                <input type="text" id="nombre_equipo" name="nombre_equipo" disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['nombre_equipo'])?>"/>
-    </br>
+                <label for="nombre">Nombre:</label>
+                </br><input type="text" id="nombre" name="nombre" placeholder="Inserte el nombre"
+                value="<?php echo htmlspecialchars($eliminarUsuario['nombre'])?>"
+                class="mb-3 col-11 col-md-6 text-center" required disabled/>
+                </br>
+                <label for="edit_role">Rol:</label>
+            </br>
+                <select id="edit_role" name="rol" class="mb-3" required disabled>
+                <option value="admin" <?php echo $eliminarUsuario['rol'] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
+                <option value="user" <?php echo $eliminarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>
+                </select>
+            </br>
+            <!-- Local perteneciente del usuario -->
+            <label for="usuario-local">Local del usuario:</label>
+            <input id="usuario-local" name="usuario_local" 
+            value="<?php $usuarioLocal = $controlador->getUsuarioLocal($eliminarUsuario['id_usuarios']);
+            echo htmlspecialchars($usuarioLocal['denominacion']);?>" disabled/>
+        </br>
     <p>¿Estas Seguro de que deseas eliminar el dispositivo?</p>
                 <button type="submit" class="btn btn-danger">Enviar</button>
                 </form>
@@ -190,10 +242,10 @@ $usuarios = $controlador->getAllUsers();
         });
     }
     //Boton atras
-    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/dashboard/DashboardView.php";})
+    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
     //Logica para poner el local del usuario de acuerdo a una condicion, y hacerlo obligatorio
-    document.getElementById("edit_role").addEventListener("click",()=>{
     if(document.getElementById("edit_role")!==null){
+    document.getElementById("edit_role").addEventListener("click",()=>{
         if(document.getElementById("edit_role").value==="user"){
         //poner al local del usuario obligatorio
         document.getElementById("container-elegir-local").className="elegir-local-mostrar";
@@ -203,7 +255,8 @@ $usuarios = $controlador->getAllUsers();
             document.getElementById("container-elegir-local").className="elegir-local-ocultar";
             document.getElementById("usuario-local").required=false;
         }
-    }})//fin de logica para poner el local del usuario
+    })}//fin de logica para poner el local del usuario
+    
     </script>
 </body>
 </html>

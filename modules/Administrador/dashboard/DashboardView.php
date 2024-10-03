@@ -18,9 +18,9 @@
     <div class="row"><!-- row principal -->
     <div class="col-md-4 col-12 p-2">
             <div class="card-opcion">
-            <form method="POST" action="/ping-scan/modules/seguridad_autenticacion/vista.php">
+            <form method="POST" action="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">
                 <button type="submit" class="card-opcion-boton">
-            <img src="../../public/media/imagenes/icono-usuarios.png" alt="">
+            <img src="/ping-scan/public/media/imagenes/icono-usuarios.png" alt="">
             <h3 class="card-opcion-h3">Administrar Usuarios</h3>    
             </button>
             </form>
@@ -38,7 +38,7 @@
         </div>
         <div class="col-md-4 col-12 p-2  mb-3">
             <div class="card-opcion">
-            <form method="POST" action="/ping-scan/modules/administrar-dispositivos/vista.php">
+            <form method="POST" action="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">
                 <button type="submit" class="card-opcion-boton">
             <img src="/ping-scan/public/media/imagenes/icono-red.png" alt="">
             <h3 class="card-opcion-h3">Gestionar Dispositivos</h3>    

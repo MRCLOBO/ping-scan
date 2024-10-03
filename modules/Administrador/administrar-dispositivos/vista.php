@@ -8,13 +8,13 @@ $conn = $conexion->getConexion();
 
 
 /*Requerimiento de controller.php ?? */
-require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/administrar-dispositivos/controlador.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/administrar-dispositivos/controlador.php';
 
 // Instanciar la clase de controller.php
 $controlador = new ControladorDispositivos($conn);
 
 // Generar una instancia para reutilizar codigo
-require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/componentes/componentes.php';
+require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/componentes/componentes.php';
 $componentes = new Componentes();
 
 
@@ -59,7 +59,7 @@ else{
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
-<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/componentes/navbar.php"?>
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Dispositivos</h2></div>
     <div class="row"><!-- inicio del segundo row -->
@@ -220,7 +220,7 @@ else{
     }
   //console.log("<?php// echo $_SERVER['DOCUMENT_ROOT']?>") respuesta: C:/laragon/www
     //Boton atras
-    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "../dashboard/DashboardView.php";})
+    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
     </script>
 </body>
 </html>
