@@ -34,9 +34,12 @@ $eliminarUsuario=null;
 if (isset($_GET['eliminar_usuario'])) {
     $eliminarUsuario = $controlador->getUserToEdit($_GET['eliminar_usuario']);
 }
+$restaurarContrasena = null;
 if (isset($_GET['restaurar_contrasena'])) {
-    $controlador->restaurarContrasena($_GET['restaurar_contrasena']);
+    $usuario_restaurarContrasena =  $controlador->getUserToEdit($_GET['restaurar_contrasena']);
+    $restaurarContrasena = true;
 }
+
 $locales = $controlador->getLocales();
 $usuarios = $controlador->getAllUsers();
 ?>
@@ -96,7 +99,7 @@ $usuarios = $controlador->getAllUsers();
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Usuario"/>    
             </a>
             <a href="?restaurar_contrasena" id="restaurar-contrasena">
-            <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Usuario"/>    
+            <img src="/ping-scan/public/media/imagenes/icono-desbloquear.png" alt="Desbloqueo"/>    
             </a>     
             </div>
             
@@ -189,13 +192,33 @@ $usuarios = $controlador->getAllUsers();
                 </form>
     </div> <!-- fin de la ventana editar usuario -->
     </div> <!-- fin de editar-fondo --> 
-            <?php endif;?> <!-- fin de editar dispositivo -->
+            <?php endif;?> <!-- fin de editar usuario -->
 
 
 
 
 
-            <?php if($eliminarUsuario): ?><!-- inicio de eliminar dispositivo -->
+            <?php if($restaurarContrasena): ?><!-- inicio de eliminar usuario -->
+                <div class="editar-fondo">
+            <div class="formulario-añadir-dispositivo">
+            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+                <h3 class="p-3 bg-danger">¿Esta seguro que quiere restaurar la contraseña actual?</h3>
+                <form method="POST" action="restaurarContrasena.php">
+                <input type="hidden" name="id_usuarios" 
+                value="<?php echo $usuario_restaurarContrasena['id_usuarios'];?>" >
+                <p class="m-3">Al realizar esta accion el usuario seleccionado tendra la contraseña por defecto "password" la cual debera de ser cambiada una vez este lo utilice</p>
+                <a class="btn bg-light m-3" href="<?php echo $_SERVER['HTTP_REFERER']?>">Volver</a>
+                <button type="submit" class="btn btn-danger m-3">Restaurar contraseña</button>
+                </form>
+    </div>
+    </div> 
+            <?php endif; ?> <!-- fin de eliminar usuario -->
+            
+
+
+
+
+            <?php if($eliminarUsuario): ?><!-- inicio de restaurar contrasena -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
@@ -215,14 +238,14 @@ $usuarios = $controlador->getAllUsers();
                 </br>
                 <label for="edit_role">Rol:</label>
             </br>
-                <select id="edit_role" name="rol" class="mb-3" required disabled>
+                <select id="edit_role" name="rol" class="p-1 mb-3" required disabled>
                 <option value="admin" <?php echo $eliminarUsuario['rol'] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
                 <option value="user" <?php echo $eliminarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>
                 </select>
             </br>
             <!-- Local perteneciente del usuario -->
             <label for="usuario-local">Local del usuario:</label>
-            <input id="usuario-local" name="usuario_local" 
+            </br><input id="usuario-local" name="usuario_local" class="text-center p-1"
             value="<?php
             if($eliminarUsuario['rol'] === 'user'){
                 $usuarioLocal = $controlador->getUsuarioLocal($eliminarUsuario['id_usuarios']);
@@ -234,12 +257,11 @@ $usuarios = $controlador->getAllUsers();
             ?>" disabled/>
         </br>
     <p>¿Estas Seguro de que deseas eliminar el usuario?</p>
-                <button type="submit" class="btn btn-danger">Enviar</button>
+                <button type="submit" class="btn btn-danger mb-3">Enviar</button>
                 </form>
     </div>
     </div> 
-            <?php endif; ?> <!-- fin de eliminar dispositivo -->
-            
+            <?php endif; ?> <!-- fin de restaurar contrasena -->
     </div><!-- Fin del div principal -->
     <script>
     const tamañoTabla=<?php echo $iterador ?>;
