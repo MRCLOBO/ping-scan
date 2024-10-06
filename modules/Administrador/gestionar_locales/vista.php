@@ -1,0 +1,265 @@
+<?php
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php');
+
+/*Inicia la conexion con la base de datos*/ 
+$conexion = new Conectar();
+$conn = $conexion->getConexion();
+
+
+/*Requerimiento de controller.php ?? */
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/gestionar_locales/controlador.php';
+
+// Instanciar la clase de controller.php
+$controlador = new ControladorLocales($conn);
+
+// Generar una instancia para reutilizar codigo
+require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/componentes/componentes.php';
+$componentes = new Componentes();
+
+
+//Guardo el resultado de la consulta de mostrarLocales en $locales
+$locales = $controlador->getLocales();
+
+//funcion para añadir local
+$añadirLocal = null;
+if (isset($_GET['añadir_local'])) {
+    $añadirLocal = true;
+}
+//funcion para editar un local seleccionado
+$editarLocal = null;
+if (isset($_GET['editar_local'])) {
+    $editarLocal = $controlador->getEditarLocal($_GET['editar_local']);
+}
+//funcion para eliminar local seleccionado
+$eliminarLocal = null;
+if (isset($_GET['eliminar_local'])) {
+    $eliminarLocal = $controlador->getEditarLocal($_GET['eliminar_local']);
+}
+$mostrarDetalles = null;
+if (isset($_GET['mostrar_detalles'])) {
+    $mostrarDetalles = $controlador->getEditarLocal($_GET['mostrar_detalles']);
+}
+//INICIAR SECCION
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: /ping-scan/public/login.php');
+    exit();
+}
+else{
+    // Enviar los datos necesarios a la vista
+    $user = json_decode(json_encode($_SESSION['usuario']));
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Locales</title>
+    <link rel="stylesheet" href="/ping-scan/public/css/personalizado.css">
+    <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
+</head>
+<body class="bg-dark text-light">
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
+    <div class="container"> <!-- Inicio del div principal -->
+        <div class="row text-center"><h2>Gestion de Locales</h2></div>
+    <div class="row"><!-- inicio del segundo row -->
+        <div class="col-0 col-md-1"></div> <!--columna de relleno -->
+    <div class="col col-12 col-lg-9"><!-- inicio de la columna para la tabla-->
+        <div class="row"><!--inicio de la fila para los iconos de locales -->
+
+
+
+        <?php 
+        $iterador=0;
+        ?>
+
+
+
+
+            <?php while ($row = $locales->fetch_assoc()):?>
+            <div class="col-6 col-lg-4 "><!-- div de cada card del local -->
+                <div class="card-local">
+                <h4><?php echo htmlspecialchars($row['denominacion']);?></h4>
+                <img src="/ping-scan/public/media/imagenes/super6.png" alt="Local"/>
+                <div class="card-local-info"><!-- card-local-info-->
+                <p>Dispositivos registrados:</p>
+                <p>VLAN del local: <?php echo htmlspecialchars($row['ip3']);?></p>
+                </div><!-- fin de card-local-info-->
+                <a class="btn btn-primary" href="?mostrar_detalles=<?php echo htmlspecialchars($row['id_locales'])?>">Más Detalles</a>
+                </div>
+            </div><!-- fin de div de cada card del local -->
+                 <?php $iterador= $iterador+1;?>
+                
+            <?php endwhile; ?>
+
+            </div> <!-- fin del row para los iconos de los locales -->
+            </div><!-- fin de la columna para la tabla -->
+
+
+
+
+
+
+
+
+            <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
+
+            <a href="?añadir_local=1">
+                <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Local"/>
+            </a>
+            <a href="?editar_dispositivo=" id="editar-dispositivo">
+            <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar Local"/>
+            </a>
+            <a href="?eliminar_dispositivo" id="eliminar-local">
+            <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Local"/>    
+            </a>    
+            </div>
+
+            <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
+            </div><!--final del segundo row -->
+
+
+
+        <?php if($añadirLocal): ?>
+            <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
+            <div class="formulario-añadir-dispositivo">
+            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+                <h2>Añadir Local</h2>
+                <form method="POST" action="añadirLocal.php">
+                <label for="denominacion">Nombre del local:</label>
+                </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
+                id="denominacion"class="mb-3 col-11 text-center" required/>
+                </br>
+                <label for="ciudad">Ciudad:</label>
+                </br><input type="text" id="ciudad" name="ciudad" placeholder="Ciudad perteneciente"
+                class="mb-3 col-11 text-center" required/>
+                </br>
+                <label for="direccion">Direccion:</label>
+                </br><input type="text" id="direccion" name="direccion" placeholder="Introduzca la direccion"
+                class="mb-3 col-11 text-center" required/>
+            </br>
+                <label for="ip3">VLAN del local:</label>
+            </br>
+                <input type="number" max="255" min="0" name="ip3" id="ip3" 
+                placeholder="X.X.Numero.X" required/>
+            </br>
+            
+                <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                </form>
+    </div> <!-- fin de la ventana añadir local -->
+    </div> <!-- fin de editar-fondo --> 
+            <?php endif;?> <!-- fin de añadir Local -->
+    
+
+            <?php if($editarDispositivo): ?>
+        <div class="editar-fondo">  <!-- inicio de editar dispositivo -->
+            <div class="formulario-añadir-dispositivo">
+            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+                <h2>Editar dispositivo</h2>
+                <form method="POST" action="editarDispositivo.php">
+                <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($editarDispositivo['id_dispositivos']); ?>">
+                <label for="ip1">Direccion IP del dispositivo:</label>
+                <div class="solicitar-ip"><!-- poner la ip completa -->
+                <input  type="number" max="255" min="0" id="ip1" name="ip1" required
+                value="<?php echo $editarDispositivo['ip1']?>"/>
+                <label for="ip2">.</label>
+                <input type="number" max="255" min="0" id="ip2" name="ip2" required
+                value="<?php echo htmlspecialchars($editarDispositivo['tipo_dispositivo_ip2'])?>"/>
+                <label for="ip3">.</label>
+                <input type="number" max="255" min="0" id="ip3" name="ip3" required
+                value="<?php echo htmlspecialchars($editarDispositivo['locales_ip3'])?>"/>
+                <label for="ip4">.</label>
+                <input type="number" max="255" min="0" id="ip4" name="ip4" required
+                value="<?php echo htmlspecialchars($editarDispositivo['ip4'])?>"/>
+                </div> <!--fin de poner la ip completa -->
+    </br>
+                <label for="nombre_equipo">Nombre del dispositivo</label>
+                </br>
+                <input type="text" id="nombre_equipo" name="nombre_equipo"
+                value="<?php echo htmlspecialchars($editarDispositivo['nombre_equipo'])?>"/>
+    </br>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+    </div>
+    </div> 
+            <?php endif;?> <!-- fin de editar dispositivo -->
+
+            <?php if($eliminarDispositivo): ?><!-- inicio de eliminar dispositivo -->
+                <div class="editar-fondo">
+            <div class="formulario-añadir-dispositivo">
+            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+                <h3 class="p-3 bg-danger">Eliminar dispositivo</h3>
+                <form method="POST" action="eliminarDispositivo.php">
+                <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($eliminarDispositivo['id_dispositivos']); ?>">
+                <label for="ip1">Direccion IP del dispositivo:</label>
+                <div class="solicitar-ip">
+                <input  type="number" max="255" min="0" id="ip1" name="ip1" required disabled
+                value="<?php echo $eliminarDispositivo['ip1']?>"/>
+                <label for="ip2">.</label>
+                <input type="number" max="255" min="0" id="ip2" name="ip2" required disabled
+                value="<?php echo htmlspecialchars($eliminarDispositivo['tipo_dispositivo_ip2'])?>"/>
+                <label for="ip3">.</label>
+                <input type="number" max="255" min="0" id="ip3" name="ip3" required disabled
+                value="<?php echo htmlspecialchars($eliminarDispositivo['locales_ip3'])?>"/>
+                <label for="ip4">.</label>
+                <input type="number" max="255" min="0" id="ip4" name="ip4" required disabled
+                value="<?php echo htmlspecialchars($eliminarDispositivo['ip4'])?>"/>
+                </div>
+    </br>
+                <label for="nombre_equipo">Nombre del dispositivo</label>
+                </br>
+                <input type="text" id="nombre_equipo" name="nombre_equipo" disabled
+                value="<?php echo htmlspecialchars($eliminarDispositivo['nombre_equipo'])?>"/>
+    </br>
+    <p>¿Estas Seguro de que deseas eliminar el dispositivo?</p>
+                <button type="submit" class="btn btn-danger">Enviar</button>
+                </form>
+    </div>
+    </div> 
+            <?php endif; ?> <!-- fin de eliminar dispositivo -->
+
+            <?php if($mostrarDetalles): ?>
+            <div class="editar-fondo">  <!-- inicio de mostrar local -->
+            <div class="card-mostrar-detalles">
+            <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
+                <h2><?php echo htmlspecialchars($mostrarDetalles['denominacion'])?></h2>
+                <div class="row"> <!-- inicio de card-mostrar-detalles-body -->
+                    
+                <div class="col-lg-9"><!-- columna de detalles-->
+                <p>Ciudad: <?php echo htmlspecialchars($mostrarDetalles['ciudad'])?></p>
+                <p>Direccion: <?php echo htmlspecialchars($mostrarDetalles['direccion'])?></p>
+                <p>VLAN: <bold><?php echo htmlspecialchars($mostrarDetalles['ip3'])?></bold></p>
+                <p>Dispositivos registrados: </p>
+                </div><!--fin de columna de detalles -->
+
+                <div class="col-lg-3 align-content-center"><!-- columna imagen -->
+                    <img src="/ping-scan/public/media/imagenes/super6.png" alt="Local"
+                    style="width:100%;border-radius:10px;border:thin solid;border-radius:10px;margin:2%;"/>
+                </div><!--fin de columna imagen -->
+                </div><!-- fin de card-mostrar-detalles-body -->
+
+                <div class="card-mostrar-detalles-footer"><!-- inicio de card-mostrar-detalles-footer -->
+                <a href="/ping-scan/modules/Administrador/gestionar_locales/vista.php?editar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
+                class="btn btn-primary">Editar</a>
+                <a href="/ping-scan/modules/Administrador/gestionar_locales/vista.php?eliminar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
+                class="btn btn-danger">Eliminar</a>    
+                <a class="btn btn-warning card-mostrar-detalles-mostrar-dispositivos">Mostrar Dispositivos</a>
+            </div>
+                </div><!-- fin de card-mostrar-detalles-footer -->
+            </div> <!-- fin de la ventana mostrar local -->
+            </div> <!-- fin de editar-fondo --> 
+            <?php endif;?> <!-- fin de mostrar detalles -->
+    
+    </div><!-- Fin del div principal -->
+
+
+   <script>
+    //Boton atras
+    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
+    </script>
+</body>
+</html>

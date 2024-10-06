@@ -100,5 +100,6 @@ class UserModel {
         $stmt->bind_param("s", $usuario);
         return $stmt->execute();
     }
+
 }
 ?>
