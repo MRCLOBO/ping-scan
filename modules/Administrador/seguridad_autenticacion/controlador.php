@@ -18,7 +18,6 @@ class ControladorUsuarios {
         header("Location: ../../../public/login.php"); // Redirige al index.php
         exit(); // Asegura que se detiene la ejecución
     }
-
     public function handleRequest() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['add_user'])) {
@@ -64,9 +63,9 @@ class ControladorUsuarios {
     }
 
 
-    private function deleteUser($id) {
+    public function eliminarUsuario($id) {
         if (!empty($id)) {
-            if ($this->model->deleteUser($id)) {
+            if ($this->model->eliminarUsuario($id)) {
                 $_SESSION['message'] = "Usuario eliminado exitosamente.";
             } else {
                 $_SESSION['error'] = "Error al eliminar usuario.";
@@ -74,7 +73,8 @@ class ControladorUsuarios {
         } else {
             $_SESSION['error'] = "ID de usuario inválido.";
         }
-        header("Location: view.php");
+        header("Location: vista.php");
+        die();
     }
 
     public function getUserToEdit($id) {

@@ -26,7 +26,7 @@ class UserModel {
         return $stmt->execute();
     }
 
-    public function deleteUser($id) {
+    public function eliminarUsuario($id) {
         $stmt = $this->conn->prepare("DELETE FROM usuarios WHERE id_usuarios = ?");
         $stmt->bind_param("i", $id);
         return $stmt->execute();
@@ -96,11 +96,8 @@ class UserModel {
         }
     }
     public function eliminarUsuarioLocal($usuario){
-        $pedirIDUsuario = $this->idPorUsuario($usuario);
-        $id_usuarios= htmlspecialchars($pedirIDUsuario['id_usuarios']);
-
-        $stmt = $this->conn->prepare("DELETE FROM usuario_local WHERE usuarios_id_usuarios = ?");
-        $stmt->bind_param("i", $id_usuarios);
+        $stmt = $this->conn->prepare("DELETE FROM usuario_local WHERE usuario_nombre = ?");
+        $stmt->bind_param("s", $usuario);
         return $stmt->execute();
     }
 }

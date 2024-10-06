@@ -226,19 +226,26 @@ $usuarios = $controlador->getAllUsers();
                 <form method="POST" action="eliminarUsuario.php">
                 <input type="hidden" name="id_usuarios" 
                 value="<?php echo htmlspecialchars($eliminarUsuario['id_usuarios']); ?>" >
+                <input type="hidden" name="rol" 
+                value="<?php echo htmlspecialchars($eliminarUsuario['rol']); ?>" >
+                <input type="hidden" name="usuario" 
+                value="<?php echo htmlspecialchars($eliminarUsuario['usuario']); ?>" >
+
                 <label for="usuario">Usuario:</label>
-                </br><input type="text" name="usuario" placeholder="Inserte el usuario" 
+                </br><input type="text" name="usuario_" placeholder="Inserte el usuario" 
                 id="usuario" value="<?php echo htmlspecialchars($eliminarUsuario['usuario']); ?>"
                 class="mb-3 col-11 col-md-6 text-center" required disabled/>
                 </br>
+
                 <label for="nombre">Nombre:</label>
                 </br><input type="text" id="nombre" name="nombre" placeholder="Inserte el nombre"
                 value="<?php echo htmlspecialchars($eliminarUsuario['nombre'])?>"
                 class="mb-3 col-11 col-md-6 text-center" required disabled/>
                 </br>
+                
                 <label for="edit_role">Rol:</label>
             </br>
-                <select id="edit_role" name="rol" class="p-1 mb-3" required disabled>
+                <select id="edit_role" name="rol_" class="p-1 mb-3" required disabled>
                 <option value="admin" <?php echo $eliminarUsuario['rol'] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
                 <option value="user" <?php echo $eliminarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>
                 </select>
