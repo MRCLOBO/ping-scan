@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ping scan</title>
+    <title>Inicio de Seccion</title>
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="/ping-scan/public/css/personalizado.css">
     
@@ -91,30 +91,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 </html>
-<!-- Logica de V.1.0.0 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="../../styles/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../../styles/personalizado.css">
-</head>
-<body>
-    
-    
-    <?php if (isset($error)): ?>
-        <p><?php echo htmlspecialchars($error); ?></p>
-    <?php endif; ?>
-
-    <form action="login.php" method="POST">
-        <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" name="usuario" required>
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" id="contrasena" name="contrasena" required>
-        <button type="submit">Iniciar Sesión</button>
-    </form>
-    
-</body>
-</html> 
-    -->
