@@ -82,8 +82,8 @@ else{
 
             <?php while ($row = $locales->fetch_assoc()):?>
             <div class="col-6 col-lg-4 "><!-- div de cada card del local -->
-                <div class="card-local">
-                <h4><?php echo htmlspecialchars($row['denominacion']);?></h4>
+                <div id="<?php echo $iterador?>" class="card-local">
+                <h4 id="<?php echo htmlspecialchars($row['id_locales']);?>"><?php echo htmlspecialchars($row['denominacion']);?></h4>
                 <img src="/ping-scan/public/media/imagenes/super6.png" alt="Local"/>
                 <div class="card-local-info"><!-- card-local-info-->
                 <p>Dispositivos registrados:</p>
@@ -111,10 +111,10 @@ else{
             <a href="?añadir_local=1">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Local"/>
             </a>
-            <a href="?editar_dispositivo=" id="editar-dispositivo">
+            <a href="?editar_local" id="editar-local">
             <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar Local"/>
             </a>
-            <a href="?eliminar_dispositivo" id="eliminar-local">
+            <a href="?eliminar_local" id="eliminar-local">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Local"/>    
             </a>    
             </div>
@@ -132,23 +132,23 @@ else{
                 <form method="POST" action="añadirLocal.php">
                 <label for="denominacion">Nombre del local:</label>
                 </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
-                id="denominacion"class="mb-3 col-11 text-center" required/>
+                id="denominacion"class="mb-3 col-9 text-center" required/>
                 </br>
                 <label for="ciudad">Ciudad:</label>
                 </br><input type="text" id="ciudad" name="ciudad" placeholder="Ciudad perteneciente"
-                class="mb-3 col-11 text-center" required/>
+                class="mb-3 col-9 text-center" required/>
                 </br>
                 <label for="direccion">Direccion:</label>
                 </br><input type="text" id="direccion" name="direccion" placeholder="Introduzca la direccion"
-                class="mb-3 col-11 text-center" required/>
+                class="mb-3 col-9 text-center" required/>
             </br>
                 <label for="ip3">VLAN del local:</label>
             </br>
                 <input type="number" max="255" min="0" name="ip3" id="ip3" 
-                placeholder="X.X.Numero.X" required/>
+                placeholder="X.X.Numero.X" required class="col-5 text-center"/>
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                <button type="submit" class="btn btn-primary mb-3">Añadir Local</button>
                 </form>
     </div> <!-- fin de la ventana añadir local -->
     </div> <!-- fin de editar-fondo --> 
@@ -188,39 +188,42 @@ else{
     </div> 
             <?php endif;?> <!-- fin de editar dispositivo -->
 
-            <?php if($eliminarDispositivo): ?><!-- inicio de eliminar dispositivo -->
+
+
+            <?php if($eliminarLocal): ?><!-- inicio de eliminar dispositivo -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
-                <h3 class="p-3 bg-danger">Eliminar dispositivo</h3>
-                <form method="POST" action="eliminarDispositivo.php">
-                <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($eliminarDispositivo['id_dispositivos']); ?>">
-                <label for="ip1">Direccion IP del dispositivo:</label>
-                <div class="solicitar-ip">
-                <input  type="number" max="255" min="0" id="ip1" name="ip1" required disabled
-                value="<?php echo $eliminarDispositivo['ip1']?>"/>
-                <label for="ip2">.</label>
-                <input type="number" max="255" min="0" id="ip2" name="ip2" required disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['tipo_dispositivo_ip2'])?>"/>
-                <label for="ip3">.</label>
-                <input type="number" max="255" min="0" id="ip3" name="ip3" required disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['locales_ip3'])?>"/>
-                <label for="ip4">.</label>
-                <input type="number" max="255" min="0" id="ip4" name="ip4" required disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['ip4'])?>"/>
-                </div>
-    </br>
-                <label for="nombre_equipo">Nombre del dispositivo</label>
+                <h2>¿Estas seguro de eliminar este local?</h2>
+                <form method="POST" action="eliminarLocal.php">
+                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eliminarLocal['id_locales']);?>">
+                <input type="hidden" name="ip3" value="<?php echo htmlspecialchars($eliminarLocal['ip3']); ?>">
+                <input type="hidden" name="denominacion" value="<?php echo htmlspecialchars($eliminarLocal['denominacion']); ?>">
+                <label for="denominacion">Nombre del local:</label>
+                </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
+                id="denominacion"class="mb-3 col-9 text-center" required disabled
+                value="<?php echo htmlspecialchars($eliminarLocal['denominacion'])?>"/>
                 </br>
-                <input type="text" id="nombre_equipo" name="nombre_equipo" disabled
-                value="<?php echo htmlspecialchars($eliminarDispositivo['nombre_equipo'])?>"/>
-    </br>
-    <p>¿Estas Seguro de que deseas eliminar el dispositivo?</p>
-                <button type="submit" class="btn btn-danger">Enviar</button>
+                <label for="ciudad">Ciudad:</label>
+                </br><input type="text" id="ciudad" name="ciudad" placeholder="Ciudad perteneciente" disabled
+                class="mb-3 col-9 text-center" required value="<?php echo htmlspecialchars($eliminarLocal['ciudad'])?>"/>
+                </br>
+                <label for="direccion">Direccion:</label>
+                </br><input type="text" id="direccion" name="direccion" placeholder="Introduzca la direccion" disabled
+                class="mb-3 col-9 text-center" required value="<?php echo htmlspecialchars($eliminarLocal['direccion'])?>"/>
+            </br>
+                <label for="ip3">VLAN del local:</label>
+            </br>
+                <input type="number" max="255" min="0" name="ip3" id="ip3" 
+                placeholder="X.X.Numero.X" required class="col-5 text-center"
+                value="<?php echo htmlspecialchars($eliminarLocal['ip3'])?>" disabled/>
+            </br>
+            
+                <button type="submit" class="btn btn-primary mb-3">Eliminar Local</button>
                 </form>
-    </div>
-    </div> 
-            <?php endif; ?> <!-- fin de eliminar dispositivo -->
+    </div> <!-- fin de la ventana borrar local -->
+    </div> <!-- fin de editar-fondo --> 
+            <?php endif; ?> <!-- fin de eliminar local -->
 
             <?php if($mostrarDetalles): ?>
             <div class="editar-fondo">  <!-- inicio de mostrar local -->
@@ -258,6 +261,23 @@ else{
 
 
    <script>
+    const tamañoTabla=<?php echo $iterador ?>;
+    let n;
+    for(n=0;n<tamañoTabla;n++){
+        const valorActual=n;
+        document.getElementById(valorActual).addEventListener("click",() => {
+            //eliminar el foco actual
+            if(document.getElementsByClassName("card-local-seleccionado")[0]){
+            document.getElementsByClassName("card-local-seleccionado")[0].className="card-local";
+            }
+            //cambiar el foco actual por el elemento seleccionado
+            document.getElementById(valorActual).className="card-local-seleccionado";
+            //cambiar la ruta del boton para editar
+            document.getElementById("editar-local").href="?editar_local="+document.getElementById(valorActual).children[0].id;
+            //cambiar la ruta del boton para eliminar
+            document.getElementById("eliminar-local").href="?eliminar_local="+document.getElementById(valorActual).children[0].id;
+        });
+    }
     //Boton atras
     document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
     </script>

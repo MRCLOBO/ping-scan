@@ -125,6 +125,7 @@ align-content: center;
 }
 .boton-atras{
   float:right;
+  margin: 1% 1% 0 0;
 }
 .solicitar-ip{
   border:thin solid rgb(255,255,255);
@@ -247,7 +248,17 @@ background-color: rgb(255,255,255,0.1);
   color:black;
   outline: 2px solid rgb(40,150,80);
 }
-.card-local > img{
+.card-local-seleccionado{
+  background-color: rgb(230,230,255);
+  color:black;
+  outline: 2px solid rgb(40,150,80);
+  border-radius: 15px;
+  width: 90%;
+  margin: 5% auto;
+  padding:10px;
+  text-align:center;
+}
+.card-local > img, .card-local-seleccionado > img{
   width: 100%;
   max-height: 90px;
   max-width: 160px;

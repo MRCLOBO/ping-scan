@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-4 col-12 p-2">
             <div class="card-opcion">
-            <form method="POST" action=""> <!-- definir donde va -->
+            <form method="POST" action="/ping-scan/modules/Administrador/gestionar_locales/vista.php"> <!-- definir donde va -->
                 <button type="submit" class="card-opcion-boton">
             <img src="/ping-scan/public/media/imagenes/icono-local.png" alt="">
             <h3 class="card-opcion-h3">Gestionar Locales</h3>    

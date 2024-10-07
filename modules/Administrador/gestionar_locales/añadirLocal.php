@@ -5,14 +5,14 @@
     $conn = $conexion->getConexion();
     //Llamar al controlador
     require './controlador.php';
-    $controlador = new ControladorDispositivos($conn);
+    $controlador = new ControladorLocales($conn);
 
-    $ip1 = $_POST['ip1'];
-    $ip2 = $_POST['ip2'];
-    $ip3 = $_POST['ip3'];
-    $ip4 = $_POST['ip4'];
-    $nombre_equipo = $_POST['nombre_equipo'];
-    $controlador->añadirDispositivo($ip1,$ip2,$ip3,$ip4,$nombre_equipo);
+        $denominacion = $_POST['denominacion'];
+        $ciudad = $_POST['ciudad'];
+        $direccion = $_POST['direccion'];
+        $ip3 = $_POST['ip3'];
+
+        $controlador->añadirLocal($denominacion,$ciudad,$direccion,$ip3);
 
     // Codigo para ir a la pagina anterior: header('Location:' . getenv('HTTP_REFERER'));
 
