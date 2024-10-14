@@ -52,7 +52,7 @@ $_SESSION['local'] = null;
 </div> <!-- cierre de div principal-->
 <script>
         //Boton atras
-        document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "../../public/login.php";})
+        document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/public/login.php";})
 </script>
 </body>
 </html>

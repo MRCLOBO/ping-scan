@@ -29,8 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     
     if ($controlador->login($username, $password)) {
-        header("Location: ../modules/Administrador/dashboard/DashboardView.php");
+        if($_SESSION['rol'] === 'admin'){
+        header("Location: /ping-scan/modules/Administrador/dashboard/DashboardView.php");
         exit(); // Asegúrate de usar exit() después de header()
+        }else if($_SESSION['rol'] === 'user'){
+
+            header("Location: /ping-scan/modules/Usuario/administrar-dispositivos/vista.php");
+            exit();
+        }
+    
     } else {
         $error = "Nombre de usuario o contraseña incorrectos.";
     }

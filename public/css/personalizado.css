@@ -164,6 +164,12 @@ align-content: center;
   font-size: 1.2em;
   text-align: center;
 } 
+.tabla-monitorear-dispositivos-usuario > thead > tr > th{
+  padding:10px;
+  background-color: #198754;
+  font-size: 1.2em;
+  text-align: center;
+} 
 .tabla-monitorear-dispositivos > tbody > tr > td{
   padding: 10px;
   border:thin solid white;
@@ -181,6 +187,19 @@ align-content: center;
   position: sticky;
   top: 100px;
   min-height: 400px;
+}
+.col-acciones-usuario{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #198754;
+  border-radius: 10px;
+  text-align: center;
+  border: thin solid white;
+  max-height: 200px;
+  position: sticky;
+  top: 300px;
+  min-height: 200px;
 }
 .col-acciones > a > img{
   width: 48px;
@@ -300,12 +319,18 @@ background-color: rgb(255,255,255,0.1);
     font-size: 0.8em;
     text-align: center;
   } 
+  .tabla-monitorear-dispositivos-usuario > thead > tr > th{
+    padding:10px;
+    background-color: #198754;
+    font-size: 0.8em;
+    text-align: center;
+  } 
   .tabla-monitorear-dispositivos > tbody > tr > td{
     padding: 10px;
     border:thin solid white;
     font-size:0.6em;
   }
-  .col-acciones{
+  .col-acciones,.col-acciones-usuario{
     position:fixed;
     bottom:50px;
     width:50% !important;
@@ -318,6 +343,7 @@ background-color: rgb(255,255,255,0.1);
     left: 50%;
     transform: translate(-50%);
   }
+  
   .col-acciones > a > img{
     width:1.5em;
     height: 1.5em;
