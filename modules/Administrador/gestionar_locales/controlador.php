@@ -43,6 +43,21 @@ class ControladorLocales {
         //Eliminar los usuarios de la tabla usuarios,para eliminarlos en conjunto al local
         public function eliminarUsuario($id_usuarios){
             return $this->model->eliminarUsuario($id_usuarios);
-    }
+        }
+        public function editarLocal($id_usuarios,$denominacion,$ciudad,$direccion,$ip3){
+            return $this->model->editarLocal($id_usuarios,$denominacion,$ciudad,$direccion,$ip3);
+        }
+        public function editarLocalDeDispositivos($id_locales,$ip3){
+            return $this->model->editarLocalDeDispositivos($id_locales,$ip3);
+        }
+        public function editarUsuarioLocal($id_locales,$denominacion){
+            return $this->model->editarUsuarioLocal($id_locales,$denominacion);
+        }
+        public function getDispositivosDeLocalCantidad($locales_ip3){
+            return $this->model->getDispositivosDeLocalCantidad($locales_ip3);
+        }
+        public function getDispositivosDeLocal($locales_ip3){
+            return $this->model->getDispositivosDeLocal($locales_ip3);
+        }
 }
 ?>

@@ -1,4 +1,5 @@
 <?php require 'DashboardController.php';
+$_SESSION['local'] = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -61,5 +61,34 @@ class ModeloLocales {
         $stmt->bind_param("i", $id_usuarios);
         return  $stmt->execute(); 
     }
+    public function editarUsuario($id_locales,$denominacion,$ciudad,$direccion,$ip3){
+        $stmt = $this->conn->prepare("UPDATE locales SET  denominacion= ?, ciudad = ?, direccion = ?, ip3 = ?
+        WHERE id_locales = ?");
+        $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);
+        return $stmt->execute();
+    }
+    public function editarUsuarioLocal($id_locales,$denominacion){
+        $stmt = $this->conn->prepare("UPDATE usuario_local SET  denominacion= ?
+        WHERE locales_id_locales = ?");
+        $stmt->bind_param("si", $denominacion,$id_locales);
+        return $stmt->execute();
+    }
+    public function editarLocalDeDispositivos($id_locales,$ip3){
+        $stmt = $this->conn->prepare("UPDATE dispositivos SET  locales_ip3= ?
+        WHERE locales_id_locales = ?");
+        $stmt->bind_param("ii", $ip3,$id_locales);
+        return $stmt->execute();
+    }
+    public function getDispositivosDeLocalCantidad($locales_ip3){
+        $stmt = $this->conn->prepare("SELECT count(*) from dispositivos where locales_ip3 = ?");
+        $stmt->bind_param("i", $locales_ip3);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+    public function getDispositivosDeLocal($locales_ip3){
+        $stmt = $this->conn->prepare("SELECT * from dispositivos where locales_ip3 = ?");
+        $stmt->bind_param("i", $locales_ip3);
+        return $stmt->execute();
+    }
 }
 ?>

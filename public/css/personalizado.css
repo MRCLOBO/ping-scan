@@ -180,6 +180,7 @@ align-content: center;
   max-height: 500px;
   position: sticky;
   top: 100px;
+  min-height: 400px;
 }
 .col-acciones > a > img{
   width: 48px;
@@ -289,6 +290,7 @@ background-color: rgb(255,255,255,0.1);
 }
 .card-mostrar-detalles-mostrar-dispositivos{
   float:right;
+  margin-top:-6%;
 }
 /* Diseño responsive*/
 @media (max-width:992px){
@@ -308,11 +310,13 @@ background-color: rgb(255,255,255,0.1);
     bottom:50px;
     width:50% !important;
     flex-direction: row;
-    left: 25%;
-    min-width: 200px;
+    min-width: 250px;
     padding:5px;
     box-shadow:0 0 20px black;
     top:auto;
+    min-height: auto;
+    left: 50%;
+    transform: translate(-50%);
   }
   .col-acciones > a > img{
     width:1.5em;
@@ -324,8 +328,22 @@ background-color: rgb(255,255,255,0.1);
 
   .card-mostrar-detalles-mostrar-dispositivos{
     float:none;
+    margin:10px;
   }
   .card-mostrar-detalles-footer > a{
     margin:2%;
+  }
+  .card-local-info{
+    font-size:0.8rem;
+  }
+  .card-local > h4{
+    font-size: 1rem;
+  }
+  .container{
+    padding:0 0 110px 0 ;
+  }
+  .col-12{
+    padding:0;
+    min-width: 300px;
   }
 }

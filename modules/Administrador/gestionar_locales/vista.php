@@ -86,7 +86,13 @@ else{
                 <h4 id="<?php echo htmlspecialchars($row['id_locales']);?>"><?php echo htmlspecialchars($row['denominacion']);?></h4>
                 <img src="/ping-scan/public/media/imagenes/super6.png" alt="Local"/>
                 <div class="card-local-info"><!-- card-local-info-->
-                <p>Dispositivos registrados:</p>
+                <p>Dispositivos registrados:
+                    <?php 
+                     $dispositivosDeLocal = $controlador->getDispositivosDeLocalCantidad($row['ip3']);
+                     $mostrarDispositivosDeLocal = $dispositivosDeLocal->fetch_assoc();
+                     echo htmlspecialchars($mostrarDispositivosDeLocal['count(*)']);
+                    ?>
+                </p>
                 <p>VLAN del local: <?php echo htmlspecialchars($row['ip3']);?></p>
                 </div><!-- fin de card-local-info-->
                 <a class="btn btn-primary" href="?mostrar_detalles=<?php echo htmlspecialchars($row['id_locales'])?>">Más Detalles</a>
@@ -155,38 +161,38 @@ else{
             <?php endif;?> <!-- fin de añadir Local -->
     
 
-            <?php if($editarDispositivo): ?>
-        <div class="editar-fondo">  <!-- inicio de editar dispositivo -->
+            <?php if($editarLocal): ?>
+                <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
-                <h2>Editar dispositivo</h2>
-                <form method="POST" action="editarDispositivo.php">
-                <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($editarDispositivo['id_dispositivos']); ?>">
-                <label for="ip1">Direccion IP del dispositivo:</label>
-                <div class="solicitar-ip"><!-- poner la ip completa -->
-                <input  type="number" max="255" min="0" id="ip1" name="ip1" required
-                value="<?php echo $editarDispositivo['ip1']?>"/>
-                <label for="ip2">.</label>
-                <input type="number" max="255" min="0" id="ip2" name="ip2" required
-                value="<?php echo htmlspecialchars($editarDispositivo['tipo_dispositivo_ip2'])?>"/>
-                <label for="ip3">.</label>
-                <input type="number" max="255" min="0" id="ip3" name="ip3" required
-                value="<?php echo htmlspecialchars($editarDispositivo['locales_ip3'])?>"/>
-                <label for="ip4">.</label>
-                <input type="number" max="255" min="0" id="ip4" name="ip4" required
-                value="<?php echo htmlspecialchars($editarDispositivo['ip4'])?>"/>
-                </div> <!--fin de poner la ip completa -->
-    </br>
-                <label for="nombre_equipo">Nombre del dispositivo</label>
+            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+                <h2>Editar Local</h2>
+                <form method="POST" action="editarLocal.php">
+                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eLocal['id_locales']);?>">
+                <label for="denominacion">Nombre del local:</label>
+                </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
+                id="denominacion"class="mb-3 col-9 text-center" required 
+                value="<?php echo htmlspecialchars($editarLocal['denominacion'])?>"/>
                 </br>
-                <input type="text" id="nombre_equipo" name="nombre_equipo"
-                value="<?php echo htmlspecialchars($editarDispositivo['nombre_equipo'])?>"/>
-    </br>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <label for="ciudad">Ciudad:</label>
+                </br><input type="text" id="ciudad" name="ciudad" placeholder="Ciudad perteneciente" 
+                class="mb-3 col-9 text-center" required value="<?php echo htmlspecialchars($editarLocal['ciudad'])?>"/>
+                </br>
+                <label for="direccion">Direccion:</label>
+                </br><input type="text" id="direccion" name="direccion" placeholder="Introduzca la direccion"
+                class="mb-3 col-9 text-center" required value="<?php echo htmlspecialchars($editarLocal['direccion'])?>"/>
+            </br>
+                <label for="ip3">VLAN del local:</label>
+            </br>
+                <input type="number" max="255" min="0" name="ip3" id="ip3" 
+                placeholder="X.X.Numero.X" required class="col-5 text-center"
+                value="<?php echo htmlspecialchars($editarLocal['ip3'])?>"/>
+            </br>
+            
+                <button type="submit" class="btn btn-primary mb-3">Eliminar Local</button>
                 </form>
-    </div>
-    </div> 
-            <?php endif;?> <!-- fin de editar dispositivo -->
+    </div> <!-- fin de la ventana editar local -->
+    </div> <!-- fin de editar-fondo --> 
+                <?php endif;?> <!-- fin de editar local -->
 
 
 
@@ -236,7 +242,11 @@ else{
                 <p>Ciudad: <?php echo htmlspecialchars($mostrarDetalles['ciudad'])?></p>
                 <p>Direccion: <?php echo htmlspecialchars($mostrarDetalles['direccion'])?></p>
                 <p>VLAN: <bold><?php echo htmlspecialchars($mostrarDetalles['ip3'])?></bold></p>
-                <p>Dispositivos registrados: </p>
+                <p>Dispositivos registrados: <?php 
+                     $dispositivosDeLocal = $controlador->getDispositivosDeLocalCantidad($mostrarDetalles['ip3']);
+                     $mostrarDispositivosDeLocal = $dispositivosDeLocal->fetch_assoc();
+                     echo htmlspecialchars($mostrarDispositivosDeLocal['count(*)']);
+                    ?></p>
                 </div><!--fin de columna de detalles -->
 
                 <div class="col-lg-3 align-content-center"><!-- columna imagen -->
@@ -249,8 +259,11 @@ else{
                 <a href="/ping-scan/modules/Administrador/gestionar_locales/vista.php?editar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
                 class="btn btn-primary">Editar</a>
                 <a href="/ping-scan/modules/Administrador/gestionar_locales/vista.php?eliminar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
-                class="btn btn-danger">Eliminar</a>    
-                <a class="btn btn-warning card-mostrar-detalles-mostrar-dispositivos">Mostrar Dispositivos</a>
+                class="btn btn-danger">Eliminar</a>
+            <form method="POST" action="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">    
+            <input type="hidden" name="locales_ip3" value="<?php echo htmlspecialchars($mostrarDetalles['ip3']);?>">
+            <button class="btn btn-warning card-mostrar-detalles-mostrar-dispositivos" type="submit">Mostrar Dispositivos</button>
+                <form>
             </div>
                 </div><!-- fin de card-mostrar-detalles-footer -->
             </div> <!-- fin de la ventana mostrar local -->

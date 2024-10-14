@@ -49,5 +49,8 @@ class ControladorDispositivos {
     public function eliminarDispositivo($id_dispositivos){
         return $this->model->eliminarDispositivo($id_dispositivos);
     }
+    public function getDispositivosDeLocal($locales_ip3){
+        return $this->model->getDispositivosDeLocal($locales_ip3);
+    }
 }
 ?>

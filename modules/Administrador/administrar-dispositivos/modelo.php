@@ -72,5 +72,11 @@ class ModeloDispositivos {
         return  $stmt->execute();
       
     }
+    public function getDispositivosDeLocal($locales_ip3){
+        $stmt = $this->conn->prepare("SELECT * from dispositivos where locales_ip3 = ?");
+        $stmt->bind_param("i", $locales_ip3);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
 ?>

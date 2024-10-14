@@ -17,10 +17,20 @@ $controlador = new ControladorDispositivos($conn);
 require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/componentes/componentes.php';
 $componentes = new Componentes();
 
+//INICIAR SECCION
+session_start();
+//Mostrar los locales de manera filtrada
+if(isset($_POST['locales_ip3'])){
+    //  $dispositivos =$controlador->getDispositivosDeLocal($_POST['locales_ip3']);
+    $_SESSION['local'] = $_POST['locales_ip3'];
+}
 
 //Guardo el resultado de la consulta de mostrarDispositivos en $dispositivos
+if($_SESSION['local'] !== null){ //si tiene el valor de un local mostrara una lista de solamente de ese local
+    $dispositivos =$controlador->getDispositivosDeLocal($_SESSION['local']);
+}else{
 $dispositivos = $controlador->mostrarDispositivos();
-
+}
 //funcion para añadir dispositivo
 $añadirDispositivo = null;
 if (isset($_GET['añadir_dispositivo'])) {
@@ -36,8 +46,7 @@ $eliminarDispositivo = null;
 if (isset($_GET['eliminar_dispositivo'])) {
     $eliminarDispositivo = $controlador->getEditarDispositivo($_GET['eliminar_dispositivo']);
 }
-//INICIAR SECCION
-session_start();
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: /ping-scan/public/login.php');
     exit();
@@ -114,7 +123,12 @@ else{
             </a>
             <a href="?eliminar_dispositivo=>" id="eliminar-dispositivo">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Añadir Dispositivo"/>    
-            </a>    
+            </a>
+            <?php if($_SESSION['local'] !== null): ?>   
+            <a href="?generar_documento=" id="generar-documento">
+            <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
+            </a>
+            <?php endif; ?> 
             </div>
 
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
