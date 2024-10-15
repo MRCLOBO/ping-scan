@@ -251,7 +251,7 @@ else{
 
                 <div class="col-lg-3 align-content-center"><!-- columna imagen -->
                     <img src="/ping-scan/public/media/imagenes/super6.png" alt="Local"
-                    style="width:100%;border-radius:10px;border:thin solid;border-radius:10px;margin:2%;"/>
+                    style="width:100%;border-radius:10px;border:thin solid;border-radius:10px;margin:2%;max-height: 200px;"/>
                 </div><!--fin de columna imagen -->
                 </div><!-- fin de card-mostrar-detalles-body -->
 

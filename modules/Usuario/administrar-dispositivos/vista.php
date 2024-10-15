@@ -27,10 +27,12 @@ $_SESSION['local'] = $getLocal['ip3'];
 //Guardo el resultado de la consulta de mostrarDispositivos en $dispositivos
 if($_SESSION['local'] !== null){ //si tiene el valor de un local mostrara una lista de solamente de ese local
     $dispositivos =$controlador->getDispositivosDeLocal($_SESSION['local']);
+    $condicionDispositivos= $controlador->getDispositivosDeLocal($_SESSION['local']);
 }else{
     $dispositivos = $controlador->mostrarDispositivos();
+    $condicionDispositivos = $controlador->mostrarDispositivos();
     }
-
+$condicionDispositivosAuxiliar = $condicionDispositivos->fetch_assoc() !== null;
 if (!isset($_SESSION['usuario'])) {
     header('Location: /ping-scan/public/login.php');
     exit();
@@ -58,6 +60,12 @@ else{
     <div class="row"><!-- inicio del segundo row -->
         <div class="col-0 col-md-1"></div> <!--columna de relleno -->
     <div class="col col-12 col-lg-9"><!-- inicio de la columna para la tabla-->
+    <?php if($condicionDispositivosAuxiliar === false):?> <!-- inicio de mostrar dispositivos -->
+        <div class="advertencia-dispositivos"><!-- inicio de advertencia-dispositivos -->
+        <h1>Aun no hay dispositivos registrados dentro de este local</h1>
+        </div><!-- fin de advertencia-dispositivos -->
+    <?php endif; ?>
+    <?php if($condicionDispositivosAuxiliar === true):?> <!-- inicio de mostrar dispositivos -->
     <table class="tabla-monitorear-dispositivos tabla-monitorear-dispositivos-usuario">
         <thead >
             <tr>
@@ -108,13 +116,15 @@ else{
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
             </div><!--final del segundo row -->
 
-            
+            <?php endif; ?> <!-- fin de mostrar dispositivos -->
     </div><!-- Fin del div principal -->
 
-
+    <?php if($dispositivos->fetch_assoc() !== null):?> <!-- inicio de pingear dispositivos-->
     <script  src="script.js" type="module">
     </script>
+    <?php endif;?><!-- fin de pingear dispositivos -->
     <script>
+
     //Boton atras
     document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/public/login.php";})
     </script>
