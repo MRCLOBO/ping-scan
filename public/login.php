@@ -15,7 +15,7 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/segu
 
 
 session_start();
-
+$_SESSION['OS']= php_uname("a");
 // Crear una instancia de la clase Conectar y obtener la conexión
 $conexion = new Conectar();
 $conn = $conexion->getConexion();
@@ -32,6 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($_SESSION['rol'] === 'admin'){
         header("Location: /ping-scan/modules/Administrador/dashboard/DashboardView.php");
         exit(); // Asegúrate de usar exit() después de header()
+        }else if ($_SESSION['rol'] === 'tecnico'){
+            header("Location: /ping-scan/modules/Tecnico/dashboard/DashboardView.php");
+            exit();
         }else if($_SESSION['rol'] === 'user'){
 
             header("Location: /ping-scan/modules/Usuario/administrar-dispositivos/vista.php");
@@ -96,5 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     </div>
 </main>
+<script>
+    console.log("<?php $_SESSION['OS'] ;?>")
+</script>
 </body>
 </html>

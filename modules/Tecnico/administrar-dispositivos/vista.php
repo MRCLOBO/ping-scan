@@ -8,13 +8,13 @@ $conn = $conexion->getConexion();
 
 
 /*Requerimiento de controller.php ?? */
-require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/administrar-dispositivos/controlador.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Tecnico/administrar-dispositivos/controlador.php';
 
 // Instanciar la clase de controller.php
 $controlador = new ControladorDispositivos($conn);
 
 // Generar una instancia para reutilizar codigo
-require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/componentes/componentes.php';
+require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Tecnico/componentes/componentes.php';
 $componentes = new Componentes();
 
 //INICIAR SECCION
@@ -71,7 +71,7 @@ else{
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
-<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Tecnico/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Dispositivos</h2></div>
     <div class="row"><!-- inicio del segundo row -->
@@ -79,7 +79,7 @@ else{
     <div class="col col-12 col-lg-9"><!-- inicio de la columna para la tabla-->
 
     <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de mostrar dispositivos -->
-    <table class="tabla-monitorear-dispositivos">
+    <table class="tabla-monitorear-dispositivos tabla-monitorear-dispositivos-tecnico">
         <thead >
             <tr>
                 <th>IP</th>
@@ -118,7 +118,7 @@ else{
     </table>
             </div><!-- fin de la columna para la tabla -->
 
-            <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
+            <div class="col-1 col-acciones col-acciones-tecnico"> <!-- inicio de la columna para las herramientas -->
 
             <a href="?añadir_dispositivo=1">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Dispositivo"/>
@@ -251,7 +251,7 @@ else{
 
     <script>
     //Boton atras
-    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
+    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Tecnico/dashboard/DashboardView.php";})
     </script>
 </body>
 </html>

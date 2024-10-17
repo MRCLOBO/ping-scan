@@ -18,7 +18,7 @@ if($rol === "user"){
     $controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
     $controlador->editarUsuarioLocal($usuario_local,$usuario);
 }
-if($_POST['rol'] == "admin"){
+if($_POST['rol'] == "admin" || $_POST['rol'] == "tecnico"){
     $controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
     $controlador->eliminarUsuarioLocal($usuario);
 }

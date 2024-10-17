@@ -76,7 +76,7 @@
 text-align: center;
 align-content: center;
 }
-.card-opcion{
+.card-opcion,.card-opcion-tecnico{
   margin:auto;
   background-color: rgb(230,230,250,0.9);
   width:85%;
@@ -97,13 +97,25 @@ align-content: center;
   border: thick solid rgb(50,50,255);
   width: 90%;
   transition-duration: 0.5s;
+}
 
+.card-opcion-tecnico:hover{
+  border: thick solid #198754;
+  width: 90%;
+  transition-duration: 0.5s;
 }
 .card-opcion-h3{
   font-size:1.5em;
   margin: 5px;
   padding: 5px;
   background-color: rgb(50,50,255);
+  border-radius: 10px;
+}
+.card-opcion-tecnico-h3{
+  font-size:1.5em;
+  margin: 5px;
+  padding: 5px;
+  background-color: #198754;
   border-radius: 10px;
 }
 .tabla-opcion-admin{
@@ -164,7 +176,7 @@ align-content: center;
   font-size: 1.2em;
   text-align: center;
 } 
-.tabla-monitorear-dispositivos-usuario > thead > tr > th{
+.tabla-monitorear-dispositivos-usuario > thead > tr > th,.tabla-monitorear-dispositivos-tecnico > thead > tr > th{
   padding:10px;
   background-color: #198754;
   font-size: 1.2em;
@@ -200,6 +212,19 @@ align-content: center;
   position: sticky;
   top: 300px;
   min-height: 200px;
+}
+.col-acciones-tecnico{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #198754;
+  border-radius: 10px;
+  text-align: center;
+  border: thin solid white;
+  max-height: 500px;
+  position: sticky;
+  top: 100px;
+  min-height: 400px;
 }
 .col-acciones > a > img{
   width: 48px;
@@ -262,6 +287,17 @@ background-color: rgb(255,255,255,0.1);
   text-align:center;
   outline: 2px solid rgb(13,110,253);
 }
+.card-local-tecnico{
+  transition:0.3s;
+  background-color: rgb(40,40,40);
+  border-radius: 15px;
+  width: 90%;
+  margin: 5% auto;
+  color:white;
+  padding:10px;
+  text-align:center;
+  outline: 2px solid #198754;
+}
 .card-local:hover{
   background-color: rgb(230,230,255);
   transition-duration: 0.7s;
@@ -323,19 +359,19 @@ background-color: rgb(255,255,255,0.1);
 /* Diseño responsive*/
 @media (max-width:992px){
   .tabla-monitorear-dispositivos > thead > tr > th{
-    padding:10px;
+    padding:5px;
     background-color: rgb(60,60,255);
     font-size: 0.8em;
     text-align: center;
   } 
   .tabla-monitorear-dispositivos-usuario > thead > tr > th{
-    padding:10px;
+    padding:5px;
     background-color: #198754;
     font-size: 0.8em;
     text-align: center;
   } 
   .tabla-monitorear-dispositivos > tbody > tr > td{
-    padding: 10px;
+    padding: 5px;
     border:thin solid white;
     font-size:0.6em;
   }
@@ -375,10 +411,13 @@ background-color: rgb(255,255,255,0.1);
     font-size: 1rem;
   }
   .container{
-    padding:0 0 110px 0 ;
+    padding-top:0;
+    padding-bottom:110px;
+    padding-left:0;
+    padding-right:0;
   }
   .col-12{
     padding:0;
-    min-width: 300px;
+
   }
 }

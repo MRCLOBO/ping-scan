@@ -1,6 +1,6 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php';
-require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/seguridad_autenticacion/controller.php';
+require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/controlador.php';
 
 session_start();
 
@@ -9,10 +9,10 @@ $conexion = new Conectar();
 $conn = $conexion->getConexion();
 
 // Crear una instancia del controlador de usuario
-$controller = new UserController($conn);
+$controlador = new ControladorUsuarios($conn);
 
 if (!isset($_SESSION['usuario'])) {
-    header("Location: ".$_SERVER['DOCUMENT_ROOT']."/ping-scan/public/login.php");
+    header('Location: /ping-scan/public/login.php');
     exit();
 }
 else{
@@ -22,10 +22,10 @@ else{
 
 // Si es una solicitud para cerrar sesión
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'logout') {
-    $controller->logout();
+    $controlador->logout();
    /* header("Location: ../seguridad_autenticacion/login.php");
     exit();*/
 }
 
-require_once './MenuPrincipal.php';
+require_once 'DashboardView.php';
 ?>

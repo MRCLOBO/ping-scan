@@ -133,6 +133,7 @@ $usuarios = $controlador->getAllUsers();
             </br>
                 <select id="edit_role" name="rol" class="mb-3" required>
                 <option value="admin">Administrador</option>
+                <option value="tecnico">Técnico</option>
                 <option value="user">Usuario</option>
                 </select>
             </br>
@@ -176,7 +177,8 @@ $usuarios = $controlador->getAllUsers();
             </br>
                 <select id="edit_role" name="rol" class="mb-3" required>
                 <option value="admin" <?php echo $editarUsuario['rol'] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
-                <option value="user" <?php echo $editarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>
+                <option value="tecnico" <?php echo $editarUsuario['rol'] === 'tecnico' ? 'selected' : ''; ?>>Tecnico</option>
+                <option value="user" <?php echo $editarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>    
                 </select>
             </br>
             <!-- Local perteneciente del usuario -->
@@ -245,8 +247,9 @@ $usuarios = $controlador->getAllUsers();
                 
                 <label for="edit_role">Rol:</label>
             </br>
-                <select id="edit_role" name="rol_" class="p-1 mb-3" required disabled>
+                <select id="edit_role" name="rol" class="p-1 mb-3" required disabled>
                 <option value="admin" <?php echo $eliminarUsuario['rol'] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
+                <option value="tecnico" <?php echo $eliminarUsuario['rol'] === 'tecnico' ? 'selected' : ''; ?>>Tecnico</option>
                 <option value="user" <?php echo $eliminarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>
                 </select>
             </br>

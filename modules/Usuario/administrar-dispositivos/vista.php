@@ -119,7 +119,7 @@ else{
             <?php endif; ?> <!-- fin de mostrar dispositivos -->
     </div><!-- Fin del div principal -->
 
-    <?php if($dispositivos->fetch_assoc() !== null):?> <!-- inicio de pingear dispositivos-->
+    <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de pingear dispositivos-->
     <script  src="script.js" type="module">
     </script>
     <?php endif;?><!-- fin de pingear dispositivos -->
