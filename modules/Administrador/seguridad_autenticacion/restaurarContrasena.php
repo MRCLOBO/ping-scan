@@ -11,6 +11,8 @@
 
     $controlador->añadirUsuario($usuario,$nombre,$rol,$contrasena);
     $controlador->restaurarContrasena($id_usuarios);
+    session_start();
+    $_SESSION['notificacion']="Contraseña Restaurada";
     header("Location: vista.php");
     die();
 ?>

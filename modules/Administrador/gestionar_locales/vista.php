@@ -63,6 +63,7 @@ else{
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php"?>
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Gestion de Locales</h2></div>
@@ -133,7 +134,7 @@ else{
         <?php if($añadirLocal): ?>
             <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
                 <h2>Añadir Local</h2>
                 <form method="POST" action="añadirLocal.php">
                 <label for="denominacion">Nombre del local:</label>
@@ -164,7 +165,7 @@ else{
             <?php if($editarLocal): ?>
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
                 <h2>Editar Local</h2>
                 <form method="POST" action="editarLocal.php">
                 <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eLocal['id_locales']);?>">
@@ -188,7 +189,7 @@ else{
                 value="<?php echo htmlspecialchars($editarLocal['ip3'])?>"/>
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Eliminar Local</button>
+                <button type="submit" class="btn btn-primary mb-3">Editar Local</button>
                 </form>
     </div> <!-- fin de la ventana editar local -->
     </div> <!-- fin de editar-fondo --> 
@@ -199,7 +200,7 @@ else{
             <?php if($eliminarLocal): ?><!-- inicio de eliminar dispositivo -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
                 <h2>¿Estas seguro de eliminar este local?</h2>
                 <form method="POST" action="eliminarLocal.php">
                 <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eliminarLocal['id_locales']);?>">
@@ -293,6 +294,16 @@ else{
     }
     //Boton atras
     document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
+    setInterval(()=>{
+    document.getElementById("notificacion").className="notificacion-desaparecer"
+    },3000)
+
+    for(let m=0;m < document.getElementsByClassName("col-acciones")[0].children.length;m++){
+        document.getElementsByClassName("col-acciones")[0].children[m].addEventListener("click",()=>{
+            <?php $_SESSION['notificacion']="";?>
+        })
+    }
+    //codigo    document.getElementsByClassName("col-acciones")[0].children[n]
     </script>
 </body>
 </html>

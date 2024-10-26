@@ -35,12 +35,12 @@ class ControladorUsuarios {
     public function añadirUsuario($usuario, $nombre, $rol,$contrasena) {
         if (!empty($usuario) && !empty($nombre) && !empty($rol) && !empty($contrasena)) {
             if ($this->model->añadirUsuario($usuario, $nombre, $rol, $contrasena)) {
-                $_SESSION['message'] = "Usuario agregado exitosamente.";
+                $_SESSION['notificacion'] = "Usuario agregado exitosamente.";
             } else {
-                $_SESSION['error'] = "Error al agregar usuario.";
+                $_SESSION['notificacion'] = "Error al agregar usuario.";
             }
         } else {
-            $_SESSION['error'] = "Por favor, complete todos los campos.";
+            $_SESSION['notificacion'] = "Por favor, complete todos los campos.";
         }
         header("Location: vista.php");
     }
@@ -64,14 +64,15 @@ class ControladorUsuarios {
 
 
     public function eliminarUsuario($id) {
+        session_start();
         if (!empty($id)) {
             if ($this->model->eliminarUsuario($id)) {
-                $_SESSION['message'] = "Usuario eliminado exitosamente.";
+                $_SESSION['notificacion'] = "Usuario eliminado exitosamente.";
             } else {
-                $_SESSION['error'] = "Error al eliminar usuario.";
+                $_SESSION['notificacion'] = "Error al eliminar usuario.";
             }
         } else {
-            $_SESSION['error'] = "ID de usuario inválido.";
+            $_SESSION['notificacion'] = "ID de usuario inválido.";
         }
         header("Location: vista.php");
         die();

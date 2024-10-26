@@ -22,6 +22,8 @@ if($_POST['rol'] == "admin" || $_POST['rol'] == "tecnico"){
     $controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
     $controlador->eliminarUsuarioLocal($usuario);
 }
+session_start();
+$_SESSION['notificacion']="Usuario Modificado";
     header("Location: vista.php");
     die();
 ?>

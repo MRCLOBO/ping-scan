@@ -18,8 +18,9 @@
     if($_POST['rol'] == 'user'){
         $controlador->añadirUsuarioLocal($usuario_local,$usuario);
     };
+    session_start();
+    $_SESSION['notificacion']="Usuario Añadido";
     // Codigo para ir a la pagina anterior: header('Location:' . getenv('HTTP_REFERER'));
-
     header("Location: vista.php");
     die();
 ?>

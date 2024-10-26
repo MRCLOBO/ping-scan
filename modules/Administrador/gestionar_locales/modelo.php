@@ -61,7 +61,9 @@ class ModeloLocales {
         $stmt->bind_param("i", $id_usuarios);
         return  $stmt->execute(); 
     }
-    public function editarUsuario($id_locales,$denominacion,$ciudad,$direccion,$ip3){
+    public function editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3){
+        $this->editarLocalDeDispositivos($id_locales,$ip3);
+        $this->editarUsuarioLocal($id_locales,$denominacion);
         $stmt = $this->conn->prepare("UPDATE locales SET  denominacion= ?, ciudad = ?, direccion = ?, ip3 = ?
         WHERE id_locales = ?");
         $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);

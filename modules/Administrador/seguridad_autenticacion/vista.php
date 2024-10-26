@@ -53,6 +53,7 @@ $usuarios = $controlador->getAllUsers();
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php"?>
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Usuarios</h2></div>
@@ -310,7 +311,9 @@ $usuarios = $controlador->getAllUsers();
             document.getElementById("usuario-local").required=false;
         }
     })}//fin de logica para poner el local del usuario
-    
+    setInterval(()=>{
+    document.getElementById("notificacion").className="notificacion-desaparecer"
+    },3000)
     </script>
 </body>
 </html>

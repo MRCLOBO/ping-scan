@@ -63,6 +63,7 @@ else{
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php"?>
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Tecnico/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Gestion de Locales</h2></div>
@@ -293,6 +294,9 @@ else{
     }
     //Boton atras
     document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Tecnico/dashboard/DashboardView.php";})
+    setInterval(()=>{
+    document.getElementById("notificacion").className="notificacion-desaparecer"
+    },3000)
     </script>
 </body>
 </html>

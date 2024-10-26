@@ -13,6 +13,8 @@ $_SESSION['local'] = null;
 </head>
 
 <body class="bg-dark text-light">
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php"?>
+
     <div class="container col-md-12" style="height:100vh;"> <!--div principal-->
     <?php require '../componentes/navbar.php';?> <!-- llamada al navbar -->
     <h2 class="text-center m-2">PANEL PRINCIPAL</h2>
@@ -52,7 +54,14 @@ $_SESSION['local'] = null;
 </div> <!-- cierre de div principal-->
 <script>
         //Boton atras
-        document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/public/login.php";})
+        document.getElementById("boton-atras").addEventListener("click",() =>{ window.location.href = "/ping-scan/public/login.php"})
+        setInterval(()=>{
+        document.getElementById("notificacion").className="notificacion-desaparecer"
+        },3000)
+    //Vaciar la cadena de notificacion cuando se entre a una de las opciones
+    for(let i=0; i < document.querySelectorAll(".card-opcion-boton").length ; i++){
+    document.querySelectorAll(".card-opcion-boton")[i].addEventListener("click",() => {<?php $_SESSION['notificacion']= "" ?>})
+    }
 </script>
 </body>
 </html>

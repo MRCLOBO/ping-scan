@@ -13,6 +13,7 @@ $_SESSION['local'] = null;
 </head>
 
 <body class="bg-dark text-light">
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php"?>
     <div class="container col-md-12" style="height:100vh;"> <!--div principal-->
     <?php require '../componentes/navbar.php';?> <!-- llamada al navbar -->
     <h2 class="text-center m-2">PANEL PRINCIPAL</h2>
@@ -54,6 +55,9 @@ $_SESSION['local'] = null;
 <script>
         //Boton atras
         document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/public/login.php";})
+        setInterval(()=>{
+    document.getElementById("notificacion").className="notificacion-desaparecer"
+    },3000)
 </script>
 </body>
 </html>
