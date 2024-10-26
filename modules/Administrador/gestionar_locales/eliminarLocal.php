@@ -7,6 +7,8 @@
     require './controlador.php';
     $controlador = new ControladorLocales($conn);
 
+    session_start();
+
     $id_locales = $_POST['id_locales'];
     $ip3 = $_POST['ip3'];
     $denominacion = $_POST['denominacion'];
@@ -24,6 +26,8 @@
     $controlador->eliminarDispositivosDeLocal($ip3);
     //Se elimina como ultimo el local ya que es una clave de la cual dependen los demas componentes
     $controlador->eliminarLocal($id_locales);
+
+    $_SESSION['notificacion']= $denominacion." Eliminado correctamente";
     header("Location: vista.php");
     die();
 ?>

@@ -7,6 +7,7 @@
     require './controlador.php';
     $controlador = new ControladorUsuarios($conn);
 
+
     $id_usuarios = $_POST['id_usuarios'];
     $rol = $_POST['rol'];
     $usuario = $_POST['usuario'];
@@ -15,6 +16,7 @@
         $controlador->eliminarUsuarioLocal($usuario);
     }
     $controlador->eliminarUsuario($id_usuarios);
+
 
     die();
 ?>

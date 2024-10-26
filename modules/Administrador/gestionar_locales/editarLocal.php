@@ -15,10 +15,10 @@
 
     
     $patron_texto="/^[a-zA-ZáéíóúÁÉÍÓÚüÜàèìòùÀÈÌÒÙ\s]+$/";
-    $patron_texto_numero = "/^[a-zA-ZáéíóúÁÉÍÓÚüÜàèìòùÀÈÌÒÙ123456789\s]+$/";
+    $patron_texto_numero = "/^[a-zA-ZáéíóúÁÉÍÓÚüÜàèìòùÀÈÌÒÙ1234567890\s]+$/";
     $patron_numero = "/[0-9]/";
     if( preg_match($patron_texto_numero, $denominacion) !== 1){
-        $_SESSION['notificacion']="¡Ingrese solamente letras para el nombre del local!";
+        $_SESSION['notificacion']="¡Ingrese solo numeros y letras para el nombre del local!";
         header('Location:'.getenv('HTTP_REFERER'));
         die();
     }else if(preg_match($patron_texto, $ciudad) !== 1){
@@ -37,7 +37,7 @@
         $controlador->editarUsuarioLocal($id_locales,$denominacion);
         $controlador->editarLocalDeDispositivos($id_locales,$ip3);
         $controlador->editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3);    
-        $_SESSION['notificacion']= $denominacion+" editado correctamente";
+        $_SESSION['notificacion']= $denominacion." editado correctamente";
     }
     
     header("Location: vista.php");

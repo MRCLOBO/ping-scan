@@ -53,7 +53,9 @@ $usuarios = $controlador->getAllUsers();
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
-<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php"?>
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php";
+#Despues de llamar a la notificacion se limpia la variable para que en cada renderizado no vuelva a aparecer
+$_SESSION['notificacion']="";?>
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Usuarios</h2></div>
@@ -115,7 +117,7 @@ $usuarios = $controlador->getAllUsers();
         <?php if($añadirUsuario): ?>
             <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">X</a>
                 <h2>Añadir Usuario</h2>
                 <form method="POST" action="añadirUsuario.php">
                 <label for="usuario">Usuario:</label>
@@ -160,7 +162,7 @@ $usuarios = $controlador->getAllUsers();
             <?php if($editarUsuario): ?>
         <div class="editar-fondo">  <!-- inicio de editar dispositivo -->
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">X</a>
                 <h2>Editar informacion</h2>
                 <form method="POST" action="editarUsuario.php">
                 <input type="hidden" name="id_usuarios" value="<?php echo htmlspecialchars($editarUsuario['id_usuarios']); ?>">
@@ -204,7 +206,7 @@ $usuarios = $controlador->getAllUsers();
             <?php if($restaurarContrasena): ?><!-- inicio de eliminar usuario -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">X</a>
                 <h3 class="p-3 bg-danger">¿Esta seguro que quiere restaurar la contraseña actual?</h3>
                 <form method="POST" action="restaurarContrasena.php">
                 <input type="hidden" name="id_usuarios" 
@@ -224,7 +226,7 @@ $usuarios = $controlador->getAllUsers();
             <?php if($eliminarUsuario): ?><!-- inicio de restaurar contrasena -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">X</a>
                 <h3 class="p-3 bg-danger">Eliminar Usuario</h3>
                 <form method="POST" action="eliminarUsuario.php">
                 <input type="hidden" name="id_usuarios" 

@@ -357,7 +357,7 @@ background-color: rgb(255,255,255,0.1);
   text-align: center;
 }
 .notificacion{
-  position:absolute;
+  position:fixed;
   z-index:100;
   background-color: #ffc107;
   color:rgb(40,40,40);
@@ -372,7 +372,7 @@ background-color: rgb(255,255,255,0.1);
   margin: 10px;
 }
 .notificacion-desaparecer{
-  position:absolute;
+  position:fixed;
   background-color: #ffc107;
   color:rgb(40,40,40);
   outline: thin solid rgb(40,40,40);
@@ -381,9 +381,10 @@ background-color: rgb(255,255,255,0.1);
   font-size:15px;
   text-align:center;
   width:100%;
-  transition-duration:2s ;
+  transition-duration:3s ;
   opacity: 0;
   z-index: -100;
+  transform: translateY(-100px);
 }
 /* Diseño responsive*/
 @media (max-width:992px){

@@ -165,10 +165,10 @@ else{
             <?php if($editarLocal): ?>
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
+            <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
                 <h2>Editar Local</h2>
                 <form method="POST" action="editarLocal.php">
-                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eLocal['id_locales']);?>">
+                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($editarLocal['id_locales']);?>">
                 <label for="denominacion">Nombre del local:</label>
                 </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
                 id="denominacion"class="mb-3 col-9 text-center" required 
