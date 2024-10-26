@@ -71,7 +71,8 @@ else{
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body class="bg-dark text-light">
-<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php"?>
+<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php";
+$_SESSION['notificacion']="";?>
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Tecnico/componentes/navbar.php"?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Dispositivos</h2></div>
@@ -194,6 +195,12 @@ else{
                 <h3 class="p-3 bg-danger">Eliminar dispositivo</h3>
                 <form method="POST" action="eliminarDispositivo.php">
                 <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($eliminarDispositivo['id_dispositivos']); ?>">
+                <input type="hidden" name="ip1" value="<?php echo htmlspecialchars($eliminarDispositivo['ip1']); ?>">
+                <input type="hidden" name="ip2" value="<?php echo htmlspecialchars($eliminarDispositivo['tipo_dispositivo_ip2']); ?>">
+                <input type="hidden" name="ip3" value="<?php echo htmlspecialchars($eliminarDispositivo['locales_ip3']); ?>">
+                <input type="hidden" name="ip4" value="<?php echo htmlspecialchars($eliminarDispositivo['ip4']); ?>">
+                <input type="hidden" name="nombre_equipo" value="<?php echo htmlspecialchars($eliminarDispositivo['nombre_equipo']); ?>">
+                
                 <label for="ip1">Direccion IP del dispositivo:</label>
                 <div class="solicitar-ip">
                 <input  type="number" max="255" min="0" id="ip1" name="ip1" required disabled

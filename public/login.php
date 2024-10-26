@@ -30,7 +30,7 @@ $controlador = new ControladorUsuarios($conn);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['usuario'];
     $password = $_POST['contrasena'];
-    $patron_texto = "/^[a-zA-ZáéíóúÁÉÍÓÚüÜàèìòùÀÈÌÒÙ\s]+$/";
+    $patron_texto = "/^[a-zA-ZáéíóúÁÉÍÓÚüÜàèìòùÀÈÌÒÙ0123456789\s]+$/";
 
     if( preg_match($patron_texto, $_POST['usuario']) ){
         if ($controlador->login($username, $password)) {
