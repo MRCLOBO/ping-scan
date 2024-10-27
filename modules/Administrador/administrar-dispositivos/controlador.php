@@ -52,5 +52,8 @@ class ControladorDispositivos {
     public function getDispositivosDeLocal($locales_ip3){
         return $this->model->getDispositivosDeLocal($locales_ip3);
     }
+    public function getDispositivosDeTipo($tipo_dispositivo_ip2){
+        return $this->model->getDispositivosDeTipo($tipo_dispositivo_ip2);
+    }
 }
 ?>

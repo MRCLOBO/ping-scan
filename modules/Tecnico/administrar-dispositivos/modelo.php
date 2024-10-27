@@ -78,5 +78,11 @@ class ModeloDispositivos {
         $stmt->execute();
         return $stmt->get_result();
     }
+    public function getDispositivosDeTipo($tipo_dispositivo_ip2){
+        $stmt = $this->conn->prepare("SELECT * from dispositivos where tipo_dispositivo_ip2 = ?");
+        $stmt->bind_param("i", $tipo_dispositivo_ip2);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
 ?>

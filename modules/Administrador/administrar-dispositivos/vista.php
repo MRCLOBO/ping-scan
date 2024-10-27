@@ -24,11 +24,17 @@ if(isset($_POST['locales_ip3'])){
     //  $dispositivos =$controlador->getDispositivosDeLocal($_POST['locales_ip3']);
     $_SESSION['local'] = $_POST['locales_ip3'];
 }
+if(isset($_POST['tipo_dispositivo_ip2'])){
+    $_SESSION['tipo_dispositivo'] = $_POST['tipo_dispositivo_ip2'];
+}
 
 //Guardo el resultado de la consulta de mostrarDispositivos en $dispositivos
 if($_SESSION['local'] !== null){ //si tiene el valor de un local mostrara una lista de solamente de ese local
     $dispositivos =$controlador->getDispositivosDeLocal($_SESSION['local']);
     $condicionDispositivos =$controlador->getDispositivosDeLocal($_SESSION['local']);
+}else if($_SESSION['tipo_dispositivo'] !== null){
+    $dispositivos =$controlador->getDispositivosDeTipo($_SESSION['tipo_dispositivo']);
+    $condicionDispositivos =$controlador->getDispositivosDeTipo($_SESSION['tipo_dispositivo']);
 }else{
 $dispositivos = $controlador->mostrarDispositivos();
 $condicionDispositivos = $controlador->mostrarDispositivos();

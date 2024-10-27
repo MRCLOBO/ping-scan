@@ -1,5 +1,6 @@
 <?php require 'DashboardController.php';
 $_SESSION['local'] = null;
+$_SESSION['tipo_dispositivo']=null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,7 +21,7 @@ $_SESSION['notificacion']="";?>
     <h2 class="text-center m-2">PANEL PRINCIPAL</h2>
     <div class="row"><!-- row principal -->
 
-        <div class="col-md-4 col-12 p-2">
+        <div class="col-md-3 col-12 p-2">
             <div class="card-opcion-tecnico">
             <form method="POST" action="/ping-scan/modules/Tecnico/gestionar_locales/vista.php"> <!-- definir donde va -->
                 <button type="submit" class="card-opcion-boton">
@@ -30,7 +31,20 @@ $_SESSION['notificacion']="";?>
             </form>
             </div>
         </div>
-        <div class="col-md-4 col-12 p-2  mb-3">
+
+                
+        <div class="col-md-3 col-12 p-2">
+            <div class="card-opcion-tecnico">
+            <form method="POST" action="/ping-scan/modules/Tecnico/tipo_dispositivo/vista.php"> <!-- definir donde va -->
+                <button type="submit" class="card-opcion-boton">
+            <img src="/ping-scan/public/media/imagenes/icono-pc.png" alt="">
+            <h3 class="card-opcion-tecnico-h3">Administrar Tipos de Dispositivos</h3>    
+            </button>
+            </form>
+        </div>
+        </div>
+
+        <div class="col-md-3 col-12 p-2  mb-3">
             <div class="card-opcion-tecnico">
             <form method="POST" action="/ping-scan/modules/Tecnico/administrar-dispositivos/vista.php">
                 <button type="submit" class="card-opcion-boton">
@@ -40,7 +54,7 @@ $_SESSION['notificacion']="";?>
             </form>
             </div>
         </div>
-        <div class="col-md-4 col-12 p-2  mb-3">
+        <div class="col-md-3 col-12 p-2  mb-3">
             <div class="card-opcion-tecnico">
             <form method="POST" action="/ping-scan/modules/Tecnico/administrar-dispositivos/vista.php">
                 <button type="submit" class="card-opcion-boton">
@@ -50,6 +64,9 @@ $_SESSION['notificacion']="";?>
             </form>
             </div>
         </div>
+
+    
+    
     </div>
     
 </div> <!-- cierre de div principal-->

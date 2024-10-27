@@ -386,6 +386,24 @@ background-color: rgb(255,255,255,0.1);
   z-index: -100;
   transform: translateY(-100px);
 }
+.card-dispositivo > img{
+  width:70%;
+  max-height: none;
+  max-width: none;
+}
+.card-dispositivo-seleccionado{
+  background-color: rgb(230,230,255);
+  color:black;
+  outline: 2px solid rgb(40,150,80);
+  border-radius: 15px;
+  width: 90%;
+  margin: 5% auto;
+  padding:10px;
+  text-align:center;
+}
+.card-dispositivo-seleccionado > img{
+  width:70%;
+}
 /* Diseño responsive*/
 @media (max-width:992px){
   .tabla-monitorear-dispositivos > thead > tr > th{
