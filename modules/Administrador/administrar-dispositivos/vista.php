@@ -145,6 +145,7 @@ $_SESSION['notificacion']="";?>
             </div>
 
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
+            <p id="os" style="z-index:-10;position:fixed;color:transparent"><?php echo $_SESSION['OS']?></p>
             </div><!--final del segundo row -->
                 <?php endif;?> <!-- fin de mostrar dispositivos -->
 
@@ -238,6 +239,7 @@ $_SESSION['notificacion']="";?>
 
 
     <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de pingear dispositivos-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script  src="script.js" type="module">
     </script>
 

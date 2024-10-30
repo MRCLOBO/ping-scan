@@ -33,14 +33,21 @@ setInterval(()=>{
 //Quinta prueba codigo limpio - CODIGO FINAL
 let i; //iterador
 let max = Number(document.getElementById("auxiliar-iterador").textContent) //Cantidad de filas de la tabla
+let os = document.getElementById("os").textContent.substring(0,1) //devuelve W o L dependiendo del tipo de SO
 
+/*
+Logica de V 1.5.1
 setInterval(()=>{
     for(i=0;i<max;i++){
         let ipActual= document.getElementById(i).children[0].textContent;    
-        pingeo(ipActual,i)
+        pingeo(ipActual,i,os)
     }
 },5000);//Se ira ejecutando la funcion cada 1 segundo
-
+*/
+for(i=0;i<max;i++){
+    let ipActual= document.getElementById(i).children[0].textContent;    
+    pingeo(ipActual,i,os)
+}
 
 //funcion para poner la IP
     function siguienteSegmento(ip){

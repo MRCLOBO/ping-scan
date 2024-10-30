@@ -15,7 +15,7 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/segu
 
 
 session_start();
-$_SESSION['OS']= php_uname("a");
+$_SESSION['OS']= php_uname("s");
 if(!isset($_SESSION['notificacion'])){
     $_SESSION['notificacion']="";
 }
@@ -113,8 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </main>
 <script>
-    console.log("<?php $_SESSION['OS'] ;?>")
-    
     //Ejemplo despues de perder el foco 
     //document.getElementById("contrasena").addEventListener("blur", function() {document.getElementById("contrasena").style.backgroundColor="blue"})
 
