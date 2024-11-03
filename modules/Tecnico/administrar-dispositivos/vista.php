@@ -39,7 +39,35 @@ if($_SESSION['local'] !== null){ //si tiene el valor de un local mostrara una li
 $dispositivos = $controlador->mostrarDispositivos();
 $condicionDispositivos = $controlador->mostrarDispositivos();
 }
+
 $condicionDispositivosAuxiliar = $condicionDispositivos->fetch_assoc() !== null;
+
+
+        //Filtro de dispositivos de acuerdo a varios parametros
+        if(isset($_POST['locales']) || isset($_POST['tipo_dispositivos']) || isset($_POST['orden'])){
+    
+            if(isset($_POST['locales'])){
+                $localesFiltro = $_POST['locales'];
+            }else{
+                $localesFiltro = false;
+            }
+        
+            if(isset($_POST['tipo_dispositivos'])){
+                $tiposDispositivosFiltro = $_POST['tipo_dispositivos'];
+            }else{
+                $tiposDispositivosFiltro = false;
+            }
+        
+            if(isset($_POST['orden'])){
+                $ordenFiltro = $_POST['orden'];
+            }else{
+                $ordenFiltro = false;
+            }
+            var_dump($_POST);
+            $dispositivos = $controlador->getDispositivosConFiltro($localesFiltro,$tiposDispositivosFiltro,$ordenFiltro);
+        
+        }
+            
 //funcion para añadir dispositivo
 $añadirDispositivo = null;
 if (isset($_GET['añadir_dispositivo'])) {
@@ -55,6 +83,20 @@ $eliminarDispositivo = null;
 if (isset($_GET['eliminar_dispositivo'])) {
     $eliminarDispositivo = $controlador->getEditarDispositivo($_GET['eliminar_dispositivo']);
 }
+
+
+
+
+
+$filtrarDispositivos = null;
+if (isset($_GET['filtrar_dispositivos'])) {
+    $filtrarDispositivos = $_GET['filtrar_dispositivos'];
+    $tiposDispositivos = $controlador->getTipoDispositivos();
+    $locales= $controlador->getLocales();
+    }
+
+
+
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: /ping-scan/public/login.php');
@@ -83,10 +125,23 @@ $_SESSION['notificacion']="";?>
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Dispositivos</h2></div>
     <div class="row"><!-- inicio del segundo row -->
+
         <div class="col-0 col-md-1"></div> <!--columna de relleno -->
     <div class="col col-12 col-lg-9"><!-- inicio de la columna para la tabla-->
 
-    <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de mostrar dispositivos -->
+            <!-- Inicio el cuadro de busqueda -->
+    <div class="row">
+            <div class="col-10 text-center" style="align-content: center;">
+            <form id="cuadro_busqueda">
+                <input type="text" placeholder="Buscar equipo"/>
+            </form>
+            </div>
+            <div class="col-2 p-1 text-center">
+            <a href="?filtrar_dispositivos=1" class="btn-warning">Filtrar</a>
+            </div>
+            <!-- Fin del cuadro de busqueda-->
+    </div>
+            <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de mostrar dispositivos -->
     <table class="tabla-monitorear-dispositivos tabla-monitorear-dispositivos-tecnico">
         <thead >
             <tr>
@@ -189,7 +244,7 @@ $_SESSION['notificacion']="";?>
                 <input type="text" id="nombre_equipo" name="nombre_equipo"
                 value="<?php echo htmlspecialchars($editarDispositivo['nombre_equipo'])?>"/>
     </br>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" class="btn btn-primary ">Enviar</button>
                 </form>
     </div>
     </div> 
@@ -234,7 +289,42 @@ $_SESSION['notificacion']="";?>
     </div>
     </div> 
             <?php endif; ?> <!-- fin de eliminar dispositivo -->
-            
+
+
+
+            <?php if($filtrarDispositivos): ?>
+        <div class="editar-fondo">  <!-- inicio de filtrar dispositivos -->
+            <div class="formulario-añadir-dispositivo">
+            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+                <h2>Filtrar Dispositivos</h2>
+                <form method="POST" action="./vista.php">
+               <p>Locales de los dispositivos:</p>
+                <?php while ($row = $locales->fetch_assoc()):?>
+                    <label>
+                        <input type="checkbox" name="locales[]" value="<?php echo htmlspecialchars($row['ip3']); ?>"/>
+                        <?php echo htmlspecialchars($row['denominacion']);?>
+                    </label>
+                <?php endwhile; ?>
+                </br></br>
+                <p>Tipos de los dispositivos:</p>
+                <?php while ($row = $tiposDispositivos->fetch_assoc()):?>
+                    <label>
+                        <input type="checkbox" name="tipo_dispositivos[]" value="<?php echo htmlspecialchars($row['ip2']); ?>"/>
+                        <?php echo htmlspecialchars($row['equipo']);?>
+                    </label>
+                <?php endwhile; ?>
+            </br></br>
+            <p>Ordenar de manera:</p>
+            <label><input type="radio" name="orden" value="ASC"/> Ascendente</label>
+            <label><input type="radio" name="orden" value="DESC"/> Descendente</label>
+                </br>
+                <button type="submit" class="btn btn-primary mb-3 ">Enviar</button>
+                </form>
+    </div>
+    </div> <!-- Fin de filtrar dispositivos -->
+    <?php endif; ?> 
+
+
     </div><!-- Fin del div principal -->
 
 

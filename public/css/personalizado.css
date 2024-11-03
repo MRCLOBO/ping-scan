@@ -404,6 +404,10 @@ background-color: rgb(255,255,255,0.1);
 .card-dispositivo-seleccionado > img{
   width:70%;
 }
+#cuadro_busqueda > input{
+  width:90%;
+  border-radius: 10px;
+}
 /* Diseño responsive*/
 @media (max-width:992px){
   .tabla-monitorear-dispositivos > thead > tr > th{

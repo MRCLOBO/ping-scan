@@ -9,6 +9,12 @@ class ModeloDispositivos {
     public function mostrarDispositivos() {
         return $this->conn->query("SELECT * FROM dispositivos");
     }
+    public function getLocales(){
+        return $this->conn->query("SELECT * FROM locales");
+    }
+    public function getTipoDispositivos(){
+        return $this->conn->query("SELECT * FROM tipo_dispositivo");
+    }
 
     public function localDeDispositivo($ip_local){
         $stmt = $this->conn->prepare("SELECT * FROM locales WHERE ip3 = ?");
@@ -83,6 +89,65 @@ class ModeloDispositivos {
         $stmt->bind_param("i", $tipo_dispositivo_ip2);
         $stmt->execute();
         return $stmt->get_result();
+    }
+    public function getDispositivosConFiltro($localesFiltro,$tipoDispositivosFiltro,$ordenFiltro){
+        $consultaLocal = "";
+        $consultaTipoDispositivos = "";
+        $cantidadConsultaLocal= "";
+        $cantidadConsultaTipoDispositivos="";
+        $tamanoLocal = count($localesFiltro);
+        $tamanoTipoDispositivo = count($tipoDispositivosFiltro);
+
+            //bucle para concatenar todos los locales para mostrar
+            for($i1 = 0; $i1 < $tamanoLocal ; ++$i1 ){
+                if($i1 == 0){
+                    $consultaLocal = $localesFiltro[$i1];
+                    $cantidadConsultaLocal = "?";
+                    $bindLocal = "i";
+                }else{
+                    $consultaLocal = $consultaLocal.",". $localesFiltro[$i1];
+                    $cantidadConsultaLocal = $cantidadConsultaLocal." OR locales_ip3 = ?";
+                    $bindLocal = $bindLocal."i";
+                }
+            }
+            //bucle para concatenar a todos los tipos de dispositivo que se quieran mostrar
+            for($i2 = 0; $i2 < $tamanoTipoDispositivo ; ++$i2 ){
+                if($i2 == 0){
+                    $consultaTipoDispositivos = $tipoDispositivosFiltro[$i2];
+                    $cantidadConsultaTipoDispositivos = "?";
+                    $bindTipoDispositivos = "i";
+                }else{
+                    $consultaTipoDispositivos = $consultaTipoDispositivos.",". $tipoDispositivosFiltro[$i2];
+                    $cantidadConsultaTipoDispositivos = $cantidadConsultaTipoDispositivos." OR tipo_dispositivo_ip2 = ?";
+                    $bindTipoDispositivos = $bindTipoDispositivos."i";
+                }
+            }
+            $consultaCompleta = array_merge($localesFiltro,$tipoDispositivosFiltro);
+
+            if($ordenFiltro == "ASC"){
+            $stmt = $this->conn->prepare("SELECT * from dispositivos where locales_ip3 =". $cantidadConsultaLocal." OR tipo_dispositivo_ip2 =". $cantidadConsultaTipoDispositivos." ORDER BY nombre_equipo ASC");
+            } else if($ordenFiltro == "DESC"){
+                $stmt = $this->conn->prepare("SELECT * from dispositivos where locales_ip3 =". $cantidadConsultaLocal." OR tipo_dispositivo_ip2 =". $cantidadConsultaTipoDispositivos." ORDER BY nombre_equipo DESC");
+            }else{
+                $stmt = $this->conn->prepare("SELECT * from dispositivos where locales_ip3 =". $cantidadConsultaLocal." OR tipo_dispositivo_ip2 =". $cantidadConsultaTipoDispositivos);
+            }
+            //problema en el bind
+            //$stmt->bind_param($bindLocal.$bindTipoDispositivos,$localesFiltro,$tipoDispositivosFiltro);
+            $stmt->execute($consultaCompleta);
+            return $stmt->get_result();
+            
+            
+            
+            /* Funciona
+            $i32=32;
+            $i63=63;
+            $stmt = $this->conn->prepare("SELECT * from dispositivos where (locales_ip3 = ?) OR (tipo_dispositivo_ip2 = ?) ORDER BY nombre_equipo ASC");
+            $stmt->bind_param("ii",$i32,$i63);
+            $stmt->execute();
+            return $stmt->get_result();
+            */
+
+
     }
 }
 ?>

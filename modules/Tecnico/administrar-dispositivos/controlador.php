@@ -55,5 +55,14 @@ class ControladorDispositivos {
     public function getDispositivosDeTipo($tipo_dispositivo_ip2){
         return $this->model->getDispositivosDeTipo($tipo_dispositivo_ip2);
     }
+    public function getLocales(){
+        return $this->model->getLocales();
+    }
+    public function getTipoDispositivos(){
+        return $this->model->getTipoDispositivos();
+    }
+    public function getDispositivosConFiltro($localesFiltro,$tipoDispositivosFiltro,$ordenFiltro){
+        return $this->model->getDispositivosConFiltro($localesFiltro,$tipoDispositivosFiltro,$ordenFiltro);
+    }
 }
 ?>
