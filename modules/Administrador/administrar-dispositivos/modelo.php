@@ -9,7 +9,12 @@ class ModeloDispositivos {
     public function mostrarDispositivos() {
         return $this->conn->query("SELECT * FROM dispositivos");
     }
-
+    public function getLocales(){
+        return $this->conn->query("SELECT * FROM locales");
+    }
+    public function getTipoDispositivos(){
+        return $this->conn->query("SELECT * FROM tipo_dispositivo");
+    }
     public function localDeDispositivo($ip_local){
         $stmt = $this->conn->prepare("SELECT * FROM locales WHERE ip3 = ?");
         $stmt->bind_param("i", $ip_local);
@@ -83,6 +88,107 @@ class ModeloDispositivos {
         $stmt->bind_param("i", $tipo_dispositivo_ip2);
         $stmt->execute();
         return $stmt->get_result();
+    }
+    public function getDispositivosConFiltro($localesFiltro,$tipoDispositivosFiltro,$ordenFiltro){
+        $consultaLocal = "";
+        $consultaTipoDispositivos = "";
+        $cantidadConsultaLocal= "";
+        $cantidadConsultaTipoDispositivos="";
+
+        if($localesFiltro !== false){
+            $tamanoLocal = count($localesFiltro);
+            //bucle para concatenar todos los locales para mostrar
+            for($i1 = 0; $i1 < $tamanoLocal ; ++$i1 ){
+                if($i1 == 0){
+                    $consultaLocal = $localesFiltro[$i1];
+                    $cantidadConsultaLocal = "locales_ip3 = ?";
+                }else{
+                    $consultaLocal = $consultaLocal.",". $localesFiltro[$i1];
+                    $cantidadConsultaLocal = $cantidadConsultaLocal." OR locales_ip3 = ?";
+                }
+            }
+        }
+        if($tipoDispositivosFiltro !== false){
+        $tamanoTipoDispositivo = count($tipoDispositivosFiltro);
+            //bucle para concatenar a todos los tipos de dispositivo que se quieran mostrar
+            for($i2 = 0; $i2 < $tamanoTipoDispositivo ; ++$i2 ){
+                if($i2 == 0){
+                    if($localesFiltro == false){
+                    $consultaTipoDispositivos = $tipoDispositivosFiltro[$i2];
+                    $cantidadConsultaTipoDispositivos = "tipo_dispositivo_ip2 = ?";
+                    }else{
+                     $consultaTipoDispositivos = $tipoDispositivosFiltro[$i2];
+                        if($i2 == ($tamanoTipoDispositivo - 1)){
+                        $cantidadConsultaTipoDispositivos = " AND tipo_dispositivo_ip2 = ?";      
+                        }else{
+                        $cantidadConsultaTipoDispositivos = " AND (tipo_dispositivo_ip2 = ?";  
+                    }}
+                }else{
+
+                    //Dentro de la consulta intermedia
+                    if($localesFiltro !== false && $i2 == ($tamanoTipoDispositivo - 1)){
+                    $consultaTipoDispositivos = $consultaTipoDispositivos.",". $tipoDispositivosFiltro[$i2];
+                    $cantidadConsultaTipoDispositivos = $cantidadConsultaTipoDispositivos." OR tipo_dispositivo_ip2 = ?)";
+
+                    }else if($i2 == ($tamanoTipoDispositivo - 1) && $localesFiltro === false){
+                    $consultaTipoDispositivos = $consultaTipoDispositivos.",". $tipoDispositivosFiltro[$i2];
+                    $cantidadConsultaTipoDispositivos = $cantidadConsultaTipoDispositivos." OR tipo_dispositivo_ip2 = ?";
+
+                    }else if($i2 !== ($tamanoTipoDispositivo - 1)){
+                        $consultaTipoDispositivos = $consultaTipoDispositivos.",". $tipoDispositivosFiltro[$i2];
+                        $cantidadConsultaTipoDispositivos = $cantidadConsultaTipoDispositivos." OR tipo_dispositivo_ip2 = ?";    
+                    }
+                }
+            }
+        }
+            if($localesFiltro !== false && $tipoDispositivosFiltro !== false){
+            $consultaCompleta = array_merge($localesFiltro,$tipoDispositivosFiltro);
+            }else if($localesFiltro !== false && $tipoDispositivosFiltro === false){
+                $consultaCompleta = $localesFiltro;
+            }else if($localesFiltro === false && $tipoDispositivosFiltro !== false){
+                $consultaCompleta = $tipoDispositivosFiltro;
+            }
+
+        if($localesFiltro !== false || $tipoDispositivosFiltro !== false){
+            if($ordenFiltro == "ASC"){
+            $stmt = $this->conn->prepare("SELECT * from dispositivos where ". $cantidadConsultaLocal.$cantidadConsultaTipoDispositivos." ORDER BY nombre_equipo ASC");
+            } else if($ordenFiltro == "DESC"){
+                $stmt = $this->conn->prepare("SELECT * from dispositivos where ". $cantidadConsultaLocal.$cantidadConsultaTipoDispositivos." ORDER BY nombre_equipo DESC");
+            }else{
+                $stmt = $this->conn->prepare("SELECT * from dispositivos where ".$cantidadConsultaLocal.$cantidadConsultaTipoDispositivos);
+            }
+            $_SESSION['notificacion']="Filtro aplicado";
+            $stmt->execute($consultaCompleta);
+        
+        }else{
+            if($ordenFiltro == "ASC"){
+            $stmt = $this->conn->prepare("SELECT * from dispositivos ORDER BY nombre_equipo ASC");
+            } else if($ordenFiltro == "DESC"){
+                $stmt = $this->conn->prepare("SELECT * from dispositivos ORDER BY nombre_equipo DESC");
+            }else{
+                $stmt = $this->conn->prepare("SELECT * from dispositivos");
+            }
+            $_SESSION['notificacion']="Filtro aplicado";
+            $stmt->execute();
+
+        }
+            //problema en el bind
+            //$stmt->bind_param($bindLocal.$bindTipoDispositivos,$localesFiltro,$tipoDispositivosFiltro);
+
+            return $stmt->get_result();
+            
+            
+            
+            /* Funciona
+            $i32=32;
+            $i63=63;
+            $stmt = $this->conn->prepare("SELECT * from dispositivos where (locales_ip3 = ?) OR (tipo_dispositivo_ip2 = ?) ORDER BY nombre_equipo ASC");
+            $stmt->bind_param("ii",$i32,$i63);
+            $stmt->execute();
+            return $stmt->get_result();
+            */
+
+
     }
 }
 ?>

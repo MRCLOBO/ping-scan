@@ -283,7 +283,7 @@ $_SESSION['notificacion']=""; ?>
         document.getElementById(valorActual).addEventListener("click",() => {
             //eliminar el foco actual
             if(document.getElementsByClassName("card-local-seleccionado")[0]){
-            document.getElementsByClassName("card-local-seleccionado")[0].className="card-local-tecnico";
+            document.getElementsByClassName("card-local-seleccionado")[0].className="card-local card-local-tecnico";
             }
             //cambiar el foco actual por el elemento seleccionado
             document.getElementById(valorActual).className="card-local-seleccionado";

@@ -19,6 +19,8 @@ $componentes = new Componentes();
 
 //INICIAR SECCION
 session_start();
+
+
 //Mostrar los locales de manera filtrada
 if(isset($_POST['locales_ip3'])){
     //  $dispositivos =$controlador->getDispositivosDeLocal($_POST['locales_ip3']);
@@ -35,17 +37,14 @@ if($_SESSION['local'] !== null){ //si tiene el valor de un local mostrara una li
 }else if($_SESSION['tipo_dispositivo'] !== null){
     $dispositivos =$controlador->getDispositivosDeTipo($_SESSION['tipo_dispositivo']);
     $condicionDispositivos =$controlador->getDispositivosDeTipo($_SESSION['tipo_dispositivo']);
-}else{
+}else if($_SESSION['local'] == null && $_SESSION['tipo_dispositivo'] == null && !isset($_POST['locales']) && !isset($_POST['tipo_dispositivos']) && !isset($_POST['orden'])){
 $dispositivos = $controlador->mostrarDispositivos();
 $condicionDispositivos = $controlador->mostrarDispositivos();
 }
 
-$condicionDispositivosAuxiliar = $condicionDispositivos->fetch_assoc() !== null;
-
-
         //Filtro de dispositivos de acuerdo a varios parametros
         if(isset($_POST['locales']) || isset($_POST['tipo_dispositivos']) || isset($_POST['orden'])){
-    
+
             if(isset($_POST['locales'])){
                 $localesFiltro = $_POST['locales'];
             }else{
@@ -63,10 +62,12 @@ $condicionDispositivosAuxiliar = $condicionDispositivos->fetch_assoc() !== null;
             }else{
                 $ordenFiltro = false;
             }
-            var_dump($_POST);
             $dispositivos = $controlador->getDispositivosConFiltro($localesFiltro,$tiposDispositivosFiltro,$ordenFiltro);
-        
+            $condicionDispositivos = $controlador->getDispositivosConFiltro($localesFiltro,$tiposDispositivosFiltro,$ordenFiltro);
         }
+
+        
+$condicionDispositivosAuxiliar = $condicionDispositivos->fetch_assoc() !== null;
             
 //funcion para añadir dispositivo
 $añadirDispositivo = null;
@@ -132,11 +133,10 @@ $_SESSION['notificacion']="";?>
             <!-- Inicio el cuadro de busqueda -->
     <div class="row">
             <div class="col-10 text-center" style="align-content: center;">
-            <form id="cuadro_busqueda">
-                <input type="text" placeholder="Buscar equipo"/>
-            </form>
+            
+                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda"/>
             </div>
-            <div class="col-2 p-1 text-center">
+            <div class="col-2 p-1 text-center btn-filtrar">
             <a href="?filtrar_dispositivos=1" class="btn-warning">Filtrar</a>
             </div>
             <!-- Fin del cuadro de busqueda-->
@@ -297,26 +297,28 @@ $_SESSION['notificacion']="";?>
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
                 <h2>Filtrar Dispositivos</h2>
-                <form method="POST" action="./vista.php">
+                <form method="POST" action="./vista.php" class="formulario-filtro">
                <p>Locales de los dispositivos:</p>
-                <?php while ($row = $locales->fetch_assoc()):?>
-                    <label>
-                        <input type="checkbox" name="locales[]" value="<?php echo htmlspecialchars($row['ip3']); ?>"/>
+                <?php while ($row = $locales->fetch_assoc()):
+                    $ipDelLocal = $row['ip3']?>
+                    <label class="input-filtro <?php if($ipDelLocal == $_SESSION['local']){ echo "input-filtro-seleccionado";} ?>">
+                        <input type="checkbox" name="locales[]" value="<?php echo htmlspecialchars($ipDelLocal);?>" <?php if($ipDelLocal == $_SESSION['local']){echo "checked"; }?>/>
                         <?php echo htmlspecialchars($row['denominacion']);?>
                     </label>
                 <?php endwhile; ?>
                 </br></br>
                 <p>Tipos de los dispositivos:</p>
-                <?php while ($row = $tiposDispositivos->fetch_assoc()):?>
-                    <label>
-                        <input type="checkbox" name="tipo_dispositivos[]" value="<?php echo htmlspecialchars($row['ip2']); ?>"/>
+                <?php while ($row = $tiposDispositivos->fetch_assoc()):
+                    $ipDelTipo = $row['ip2']?>
+                    <label class="input-filtro <?php if($ipDelTipo == $_SESSION['tipo_dispositivo']){ echo "input-filtro-seleccionado";} ?>">
+                        <input type="checkbox" name="tipo_dispositivos[]" value="<?php echo htmlspecialchars($row['ip2']); ?>"  <?php if($ipDelTipo == $_SESSION['tipo_dispositivo']){ echo "checked";} ?>/>
                         <?php echo htmlspecialchars($row['equipo']);?>
                     </label>
                 <?php endwhile; ?>
             </br></br>
             <p>Ordenar de manera:</p>
-            <label><input type="radio" name="orden" value="ASC"/> Ascendente</label>
-            <label><input type="radio" name="orden" value="DESC"/> Descendente</label>
+            <label class="input-filtro-radio" ><input type="radio" name="orden" value="ASC"/> Ascendente</label>
+            <label class="input-filtro-radio" ><input type="radio" name="orden" value="DESC"/> Descendente</label>
                 </br>
                 <button type="submit" class="btn btn-primary mb-3 ">Enviar</button>
                 </form>
@@ -360,6 +362,46 @@ $_SESSION['notificacion']="";?>
     setInterval(()=>{
     document.getElementById("notificacion").className="notificacion-desaparecer"
     },3000)
+
+    
+    //Logica para cambiar el color del boton de filtro al checkearlo
+    for(let m=0;m<document.getElementsByClassName("input-filtro").length;m++){
+        document.getElementsByClassName("input-filtro")[m].addEventListener("click", () =>{
+            if(document.getElementsByClassName("input-filtro")[m].children[0].checked === true){
+                document.getElementsByClassName("input-filtro")[m].className += " input-filtro-seleccionado";
+            }else{
+                document.getElementsByClassName("input-filtro")[m].className = "input-filtro";
+            }
+        })
+    }
+    //funcion para poder realizar la busqueda de un dispositivo 
+    let cuadroBusqueda = document.getElementById("cuadro_busqueda");
+    cuadroBusqueda.addEventListener("change", (e) =>{ //evento "change" en este caso cada vez que el elemento pierda el foco ejecutara la funcion
+        for(i=0;i<max;i++){
+            if(e.target.value == ""){
+                document.getElementById(i).className="fila-datos"
+            }
+            if(document.getElementById(i).children[1].textContent.includes(e.target.value)){//si existe una coincidencia en la celda con el cuadro de busqueda
+            //utilizamos string.search("palabra");
+                const indicePrincipal = document.getElementById(i).children[1].textContent.search(e.target.value);
+                const indiceFinal = indicePrincipal + (e.target.value.length);
+                //console.log(document.getElementById(0).children[1].textContent.replace("DEF", 'XD'));
+                //document.getElementById(i).children[1].textContent[indiceFinal]="xd";
+                //document.getElementById(i).children[1].textContent[indicePrincipal]="xd"
+                document.getElementById(i).children[1].innerHTML=document.getElementById(i).children[1].textContent.substring(0,indicePrincipal)+"<bold style='background-color:red;'>"+e.target.value+"</bold>"+document.getElementById(i).children[1].textContent.substring(indiceFinal);
+                document.getElementById(i).className="fila-datos";
+
+
+            }else{
+                document.getElementById(i).className="busqueda-incorrecta";
+            }
+
+        }//fin del bucle
+    
+})//fin del evento
+
+
+
     </script>
 </body>
 </html>

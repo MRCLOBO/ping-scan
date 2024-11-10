@@ -36,16 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($controlador->login($username, $password)) {
             if($_SESSION['rol'] === 'admin'){
             header("Location: /ping-scan/modules/Administrador/dashboard/DashboardView.php");
-            $_SESSION['notificacion'] = "Seccion Iniciada";
+            $_SESSION['notificacion'] = "Sesion Iniciada";
             exit(); // Asegúrate de usar exit() después de header()
             }else if ($_SESSION['rol'] === 'tecnico'){
                 header("Location: /ping-scan/modules/Tecnico/dashboard/DashboardView.php");
-                $_SESSION['notificacion'] = "Seccion Iniciada";
+                $_SESSION['notificacion'] = "Sesion Iniciada";
                 exit();
             }else if($_SESSION['rol'] === 'user'){
     
                 header("Location: /ping-scan/modules/Usuario/administrar-dispositivos/vista.php");
-                $_SESSION['notificacion'] = "Seccion Iniciada";
+                $_SESSION['notificacion'] = "Sesion Iniciada";
                 exit();
             }
         
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="col-12 col-sm-12 ">
         <div class="card card-body m-5">
             <form  action="login.php" method="POST">
-            <div class="card-title text-center"><h2>INICIO DE SECCION</h2></div>
+            <div class="card-title text-center"><h2>INICIO DE SESION</h2></div>
             <div class="card-body">
                 <div class="row"> <!-- inicio del row para modificar la apariencia de los inputs -->
                 <label for="usuario" class="col-12 col-lg-1 text-center">Usuario: </label>
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div><!--Final del row para los inputs -->
             </div>
-            <div class="card-footer text-center"><button class="btn btn-primary btn-inicio-seccion">Iniciar Seccion</button></div>
+            <div class="card-footer text-center"><button class="btn btn-primary btn-inicio-seccion">Iniciar Sesion</button></div>
             </form>
         </div>
     </div>

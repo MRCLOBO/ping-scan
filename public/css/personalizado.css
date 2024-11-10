@@ -105,14 +105,14 @@ align-content: center;
   transition-duration: 0.5s;
 }
 .card-opcion-h3{
-  font-size:1.5em;
+  font-size:0.9em;
   margin: 5px;
   padding: 5px;
   background-color: rgb(50,50,255);
   border-radius: 10px;
 }
 .card-opcion-tecnico-h3{
-  font-size:1.5em;
+  font-size:0.9em;
   margin: 5px;
   padding: 5px;
   background-color: #198754;
@@ -404,9 +404,57 @@ background-color: rgb(255,255,255,0.1);
 .card-dispositivo-seleccionado > img{
   width:70%;
 }
-#cuadro_busqueda > input{
+#cuadro_busqueda{
   width:90%;
   border-radius: 10px;
+}
+
+.btn-filtrar > a{
+  display: block;
+  border-radius: 10px;
+  padding: 3px;
+  text-decoration: none;
+}
+.input-filtro{
+  margin: 1vw;
+    font-size: 1.1em;
+    background: #ffc107;
+    padding: 0.5vw;
+    border-radius: 5px;
+    color: black;
+}
+.input-filtro-seleccionado{
+  color:white;
+  background-color: #198754;
+  
+}
+.input-filtro-radio{  
+  margin: 1vw;
+    font-size: 1.1em;
+    background: #fd7e14;
+    padding: 0.5vw;
+    border-radius: 5px;
+    color: black;
+}
+.formulario-filtro > p{
+  font-size: 1.4em;
+  border-bottom: thin solid white;
+  width: 90%;
+  margin: auto;
+}
+.busqueda-incorrecta{
+  height: 0px;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+}
+.busqueda-incorrecta > td{
+  height: 0px !important;
+    overflow: hidden;
+    padding: 0px !important;
+    margin: 0px;
+    font-size: 0px !important;
+    border: 0px !important;
 }
 /* Diseño responsive*/
 @media (max-width:992px){

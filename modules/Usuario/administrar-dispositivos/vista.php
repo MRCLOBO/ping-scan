@@ -62,6 +62,20 @@ $_SESSION['notificacion']="";?>
     <div class="row"><!-- inicio del segundo row -->
         <div class="col-0 col-md-1"></div> <!--columna de relleno -->
     <div class="col col-12 col-lg-9"><!-- inicio de la columna para la tabla-->
+        
+
+
+            <!-- Inicio el cuadro de busqueda -->
+    <div class="row">
+            <div class="col-10 text-center" style="align-content: center;">
+            
+                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda"/>
+            </div>
+</div>
+            <!-- Fin del cuadro de busqueda-->
+
+
+
     <?php if($condicionDispositivosAuxiliar === false):?> <!-- inicio de mostrar dispositivos -->
         <div class="advertencia-dispositivos"><!-- inicio de advertencia-dispositivos -->
         <h1>Aun no hay dispositivos registrados dentro de este local</h1>
@@ -105,9 +119,11 @@ $_SESSION['notificacion']="";?>
             <?php endwhile; ?>
             </tbody>
     </table>
-            </div><!-- fin de la columna para la tabla -->
+   
 
-            <div class="col-1 col-acciones-usuario"> <!-- inicio de la columna para las herramientas -->
+            <?php endif; ?> <!-- fin de mostrar dispositivos -->
+    </div><!-- Fin del div principal -->
+ <div class="col-1 col-acciones-usuario"> <!-- inicio de la columna para las herramientas -->
             <?php if($_SESSION['local'] !== null): ?>   
             <a href="?generar_documento=" id="generar-documento">
             <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
@@ -115,13 +131,12 @@ $_SESSION['notificacion']="";?>
             <?php endif; ?> 
             </div>
 
+            </div><!-- fin de la columna para la tabla -->
+
+
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
             <p id="os" style="z-index:-10;position:fixed;color:transparent"><?php echo $_SESSION['OS']?></p>    
         </div><!--final del segundo row -->
-
-            <?php endif; ?> <!-- fin de mostrar dispositivos -->
-    </div><!-- Fin del div principal -->
-
     <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de pingear dispositivos-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script  src="script.js" type="module">
@@ -135,6 +150,40 @@ $_SESSION['notificacion']="";?>
     setInterval(()=>{
     document.getElementById("notificacion").className="notificacion-desaparecer"
     },3000)
+
+
+     //funcion para poder realizar la busqueda de un dispositivo 
+     let cuadroBusqueda = document.getElementById("cuadro_busqueda");
+    cuadroBusqueda.addEventListener("change", (e) =>{ //evento "change" en este caso cada vez que el elemento pierda el foco ejecutara la funcion
+        for(i=0;i< Number(document.getElementById("auxiliar-iterador").textContent);i++){
+            if(e.target.value == ""){
+                document.getElementById(i).className="fila-datos"
+            }
+            if(document.getElementById(i).children[1].textContent.includes(e.target.value)){//si existe una coincidencia en la celda con el cuadro de busqueda
+            //utilizamos string.search("palabra");
+                const indicePrincipal = document.getElementById(i).children[1].textContent.search(e.target.value);
+                const indiceFinal = indicePrincipal + (e.target.value.length);
+                //console.log(document.getElementById(0).children[1].textContent.replace("DEF", 'XD'));
+                //document.getElementById(i).children[1].textContent[indiceFinal]="xd";
+                //document.getElementById(i).children[1].textContent[indicePrincipal]="xd"
+                document.getElementById(i).children[1].innerHTML=document.getElementById(i).children[1].textContent.substring(0,indicePrincipal)+"<bold style='background-color:red;'>"+e.target.value+"</bold>"+document.getElementById(i).children[1].textContent.substring(indiceFinal);
+                document.getElementById(i).className="fila-datos";
+
+
+            }else{
+                document.getElementById(i).className="busqueda-incorrecta";
+            }
+
+        }//fin del bucle
+    
+})//fin del evento
+
+
+
+
+
+
+
     </script>
 </body>
 </html>
