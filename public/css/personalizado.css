@@ -407,13 +407,21 @@ background-color: rgb(255,255,255,0.1);
 #cuadro_busqueda{
   width:90%;
   border-radius: 10px;
+  margin-bottom: 10px;
 }
-
+.btn-filtrar{
+  padding: 0px 1% !important;
+  min-width: 56px;
+  min-height: 30px;
+  margin:1px;
+}
 .btn-filtrar > a{
   display: block;
   border-radius: 10px;
   padding: 3px;
   text-decoration: none;
+  outline: thin solid white;
+  font-size: 1rem;
 }
 .input-filtro{
   margin: 1vw;
@@ -455,6 +463,21 @@ background-color: rgb(255,255,255,0.1);
     margin: 0px;
     font-size: 0px !important;
     border: 0px !important;
+}
+.icono-busqueda{
+  background-color: #ffc107;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  outline: thin white solid;
+  min-width: 40px;
+  min-height: 35px;
+  max-height: 35px;
+  cursor:pointer;
+  text-align: center;
+}
+.icono-busqueda > img{
+  width:16px;
+  height: 16x;
 }
 /* Diseño responsive*/
 @media (max-width:992px){

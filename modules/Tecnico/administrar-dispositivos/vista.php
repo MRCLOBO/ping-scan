@@ -132,11 +132,11 @@ $_SESSION['notificacion']="";?>
 
             <!-- Inicio el cuadro de busqueda -->
     <div class="row">
-            <div class="col-10 text-center" style="align-content: center;">
-            
+            <div class="col-8 text-center" style="align-content: center;">
                 <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda"/>
             </div>
-            <div class="col-2 p-1 text-center btn-filtrar">
+            <div class="col-1 icono-busqueda"><img src="/ping-scan/public/media/imagenes/icono-lupa.png"/></div>
+            <div class="col-2 text-center btn-filtrar">
             <a href="?filtrar_dispositivos=1" class="btn-warning">Filtrar</a>
             </div>
             <!-- Fin del cuadro de busqueda-->
