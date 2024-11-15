@@ -169,7 +169,7 @@ $_SESSION['notificacion']=""; ?>
             <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
                 <h2>Editar Local</h2>
                 <form method="POST" action="editarLocal.php">
-                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eLocal['id_locales']);?>">
+                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($editarLocal['id_locales']);?>">
                 <label for="denominacion">Nombre del local:</label>
                 </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
                 id="denominacion"class="mb-3 col-9 text-center" required 
@@ -190,7 +190,7 @@ $_SESSION['notificacion']=""; ?>
                 value="<?php echo htmlspecialchars($editarLocal['ip3'])?>"/>
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Eliminar Local</button>
+                <button type="submit" class="btn btn-primary mb-3">Editar Local</button>
                 </form>
     </div> <!-- fin de la ventana editar local -->
     </div> <!-- fin de editar-fondo --> 
@@ -258,9 +258,9 @@ $_SESSION['notificacion']=""; ?>
                 </div><!-- fin de card-mostrar-detalles-body -->
 
                 <div class="card-mostrar-detalles-footer"><!-- inicio de card-mostrar-detalles-footer -->
-                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?editar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
+                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?editar_local=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
                 class="btn btn-primary">Editar</a>
-                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?eliminar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
+                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?eliminar_local=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
                 class="btn btn-danger">Eliminar</a>
             <form method="POST" action="/ping-scan/modules/Tecnico/administrar-dispositivos/vista.php">    
             <input type="hidden" name="locales_ip3" value="<?php echo htmlspecialchars($mostrarDetalles['ip3']);?>">

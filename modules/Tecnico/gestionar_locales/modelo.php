@@ -67,6 +67,12 @@ class ModeloLocales {
         $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);
         return $stmt->execute();
     }
+    public function editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3){
+        $stmt = $this->conn->prepare("UPDATE locales SET  denominacion= ?, ciudad = ?, direccion = ?, ip3 = ?
+        WHERE id_locales = ?");
+        $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);
+        return $stmt->execute();
+    }
     public function editarUsuarioLocal($id_locales,$denominacion){
         $stmt = $this->conn->prepare("UPDATE usuario_local SET  denominacion= ?
         WHERE locales_id_locales = ?");
@@ -90,11 +96,6 @@ class ModeloLocales {
         $stmt->bind_param("i", $locales_ip3);
         return $stmt->execute();
     }
-    public function editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3){
-        $stmt = $this->conn->prepare("UPDATE locales SET  denominacion= ?, ciudad = ?, direccion = ?, ip3 = ?
-        WHERE id_locales = ?");
-        $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);
-        return $stmt->execute();
-    }
+
 }
 ?>

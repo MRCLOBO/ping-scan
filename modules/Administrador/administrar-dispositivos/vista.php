@@ -206,30 +206,61 @@ $_SESSION['notificacion']="";?>
 
 
         <?php if($añadirDispositivo): ?>
-            <?php $componentes->ventanaDispositivo();?>
+            <div class='editar-fondo'> 
+            <div class='formulario-añadir-dispositivo'>
+            <a class='btn bg-danger text-light boton-atras' href='/ping-scan/modules/Administrador/administrar-dispositivos/vista.php'>X</a>
+            <h2>Añadir dispositivo</h2>
+            <form method='POST' action='añadirDispositivo.php'>
+            <label for='ip1'>Ingrese la direccion IP del dispositivo:</label>
+            <div class='solicitar-ip'> 
+            <input  type='number' max='255' min='0' id='ip1' name='ip1' <?php if(isset($_POST['ip1_advertencia'])){ echo "value=".$_POST['ip1_advertencia'];}?> required  />
+            <label for='ip2'>.</label>
+            <input type='number' max='255' min='0' id='ip2' name='ip2' <?php if(isset($_POST['ip2_advertencia'])){ echo "value=".$_POST['ip2_advertencia'];}?>  required/>
+            <label for='ip3'>.</label>
+            <input type='number' max='255' min='0' id='ip3' name='ip3' <?php if(isset($_POST['ip3_advertencia'])){ echo "value=".$_POST['ip3_advertencia'];}?>  required/>
+            <label for='ip4'>.</label>
+            <input type='number' max='255' min='0' id='ip4' name='ip4' <?php if(isset($_POST['ip4_advertencia'])){ echo "value=".$_POST['ip4_advertencia'];}?>  required/>
+            </div>
+            </br>
+            <label for='nombre_equipo'>Nombre del dispositivo</label>
+            </br>
+            <input type='text' id='nombre_equipo' name='nombre_equipo' <?php if(isset($_POST['nombre_equipo_advertencia'])){ echo "value=".$_POST['nombre_equipo_advertencia'];}?> />
+            </br>
+            <button type='submit' class='btn btn-primary mb-3'>Enviar</button>
+            </form>
+            </div>
+            </div>
             <?php endif;?> <!-- fin de añadir dispositivo -->
     
 
             <?php if($editarDispositivo): ?>
         <div class="editar-fondo">  <!-- inicio de editar dispositivo -->
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-danger text-light boton-atras" href='/ping-scan/modules/Administrador/administrar-dispositivos/vista.php'>X</a>
                 <h2>Editar dispositivo</h2>
                 <form method="POST" action="editarDispositivo.php">
                 <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($editarDispositivo['id_dispositivos']); ?>">
                 <label for="ip1">Direccion IP del dispositivo:</label>
                 <div class="solicitar-ip"><!-- poner la ip completa -->
                 <input  type="number" max="255" min="0" id="ip1" name="ip1" required
-                value="<?php echo $editarDispositivo['ip1']?>"/>
+                value="<?php  if(isset($_POST['ip1_advertencia'])){ echo $_POST['ip1_advertencia'];
+                }else{ echo $editarDispositivo['ip1'];}
+               ?>"  />
                 <label for="ip2">.</label>
                 <input type="number" max="255" min="0" id="ip2" name="ip2" required
-                value="<?php echo htmlspecialchars($editarDispositivo['tipo_dispositivo_ip2'])?>"/>
+                value="<?php if(isset($_POST['ip2_advertencia'])){ echo $_POST['ip2_advertencia'];
+                }else{ echo htmlspecialchars($editarDispositivo['tipo_dispositivo_ip2']);
+                }?>" />
                 <label for="ip3">.</label>
                 <input type="number" max="255" min="0" id="ip3" name="ip3" required
-                value="<?php echo htmlspecialchars($editarDispositivo['locales_ip3'])?>"/>
+                value="<?php if(isset($_POST['ip3_advertencia'])){ echo $_POST['ip3_advertencia'];
+                }else{ echo htmlspecialchars($editarDispositivo['locales_ip3']);
+                }?>" />
                 <label for="ip4">.</label>
                 <input type="number" max="255" min="0" id="ip4" name="ip4" required
-                value="<?php echo htmlspecialchars($editarDispositivo['ip4'])?>"/>
+                value="<?php if(isset($_POST['ip4_advertencia'])){ echo $_POST['ip4_advertencia'];
+                }else{ echo htmlspecialchars($editarDispositivo['ip4']);
+                }?>" />
                 </div> <!--fin de poner la ip completa -->
     </br>
                 <label for="nombre_equipo">Nombre del dispositivo</label>
@@ -246,7 +277,7 @@ $_SESSION['notificacion']="";?>
             <?php if($eliminarDispositivo): ?><!-- inicio de eliminar dispositivo -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-dark text-light boton-atras" href='/ping-scan/modules/Administrador/administrar-dispositivos/vista.php'>X</a>
                 <h3 class="p-3 bg-danger">Eliminar dispositivo</h3>
                 <form method="POST" action="eliminarDispositivo.php">
                 <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($eliminarDispositivo['id_dispositivos']); ?>">
@@ -318,6 +349,125 @@ $_SESSION['notificacion']="";?>
     </div>
     </div> <!-- Fin de filtrar dispositivos -->
     <?php endif; ?> 
+
+
+
+
+    <?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "no existe tipo"): 
+        $ip2Advertencia = htmlspecialchars($_SESSION['error']['ip2']) ?><!-- INICIO DE NO EXISTE TIPO -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">X</a>
+                        <h2>Tipo de dispositivo no registrado</h2> 
+                        <p>Al parecer la IP:<b style="color:red;"><?php echo $ip2Advertencia ?></b> aun no ha sido registrado bajo ningun tipo de equipo.</p>
+                        <p>¿Te gustaria registrar un nuevo tipo de equipo con esta IP?</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">Cancelar</a>
+                        <form action=
+                         <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Administrador/administrar-dispositivos/vista.php?añadir_dispositivo=1';} 
+                        else if(isset($_SESSION['error']['id'])){ echo '/ping-scan/modules/Administrador/administrar-dispositivos/vista.php?editar_dispositivo='.htmlspecialchars($_SESSION['error']['id']);}?>  
+                        method="POST">
+                            <input type="hidden" name="ip1_advertencia" value=  <?php echo $_SESSION['error']['ip1'];?>  />
+                            <input type="hidden" name="ip2_advertencia" value=  <?php echo $_SESSION['error']['ip2'];?>  />
+                            <input type="hidden" name="ip3_advertencia" value=  <?php echo $_SESSION['error']['ip3'];?>  />
+                            <input type="hidden" name="ip4_advertencia" value=  <?php echo $_SESSION['error']['ip4'];?>  />
+                            <input type="hidden" name="nombre_equipo_advertencia" value=  <?php echo $_SESSION['error']['nombre_equipo'];?>  />
+                            <input type="hidden" name="advertencia" value="tipo dispositivo no encontrado" />
+                            <button type="submit" class="btn-primary">Cambiar IP</button>
+                        </form>
+
+
+                        <form action="/ping-scan/modules/Administrador/tipo_dispositivo/vista.php?añadir_tipo=1" method="POST">
+                            <input type="hidden" name="ip2_advertencia" value=<?php echo $_SESSION['error']['ip2'];?> />
+                            <input type="hidden" name="advertencia" value="tipo dispositivo no encontrado" />
+                            <button type="submit" class="btn-success">Agregar nuevo tipo de dispositivo</button>
+                        </form>
+                        
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+<?php endif;?>
+
+
+
+
+
+                <?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "no existe local"): 
+        $ip3Advertencia = htmlspecialchars($_SESSION['error']['ip3']) ?><!-- INICIO DE NO EXISTE TIPO -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">X</a>
+                        <h2>Local no registrado</h2> 
+                        <p>Al parecer la IP: <b style="color:red;"><?php echo $ip3Advertencia ?></b> aun no ha sido registrado bajo ningun local.</p>
+                        <p>¿Te gustaria registrar un nuevo local con esta IP?</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">Cancelar</a>
+                        <form action= 
+                        <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Administrador/administrar-dispositivos/vista.php?añadir_dispositivo=1';} 
+                        else if(isset($_SESSION['error']['id'])){ echo '/ping-scan/modules/Administrador/administrar-dispositivos/vista.php?editar_dispositivo='.htmlspecialchars($_SESSION['error']['id']);}?>  
+                        method="POST">
+                            <input type="hidden" name="ip1_advertencia" value=  <?php echo $_SESSION['error']['ip1'];?>  />
+                            <input type="hidden" name="ip2_advertencia" value=  <?php echo $_SESSION['error']['ip2'];?>  />
+                            <input type="hidden" name="ip3_advertencia" value=  <?php echo $_SESSION['error']['ip3'];?>  />
+                            <input type="hidden" name="ip4_advertencia" value=  <?php echo $_SESSION['error']['ip4'];?>  />
+                            <input type="hidden" name="nombre_equipo_advertencia" value=  <?php echo $_SESSION['error']['nombre_equipo'];?>  />
+                            <input type="hidden" name="advertencia" value="local no encontrado" />
+                            <button type="submit" class="btn-primary">Cambiar IP</button>
+                        </form>
+
+
+                        <form action="/ping-scan/modules/Administrador/gestionar_locales/vista.php?añadir_local=1" method="POST">
+                            <input type="hidden" name="ip3_advertencia" value=<?php echo $_SESSION['error']['ip3'];?> />
+                            <input type="hidden" name="advertencia" value="local no encontrado" />
+                            <button type="submit" class="btn-success">Agregar nuevo local</button>
+                        </form>
+                        
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+                
+    
+            <?php  endif; ?>
+<?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "ip duplicada"): 
+        $ipAdvertencia = htmlspecialchars($_SESSION['error']['ip1']).".".htmlspecialchars($_SESSION['error']['ip2']).".".htmlspecialchars($_SESSION['error']['ip3']).".".htmlspecialchars($_SESSION['error']['ip4']) ?> <!-- INICIO DE IP DUPLICADA -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">X</a>
+                        <h2>IP ya registrada</h2> 
+                        <p>Al parecer la IP: <b style="color:red;"><?php echo $ipAdvertencia ?></b> ya ha sido registrada a un equipo.</p>
+                        <p>Ingrese una IP diferente.</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Administrador/administrar-dispositivos/vista.php">Cancelar</a>
+                        <form action=
+                        <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Administrador/administrar-dispositivos/vista.php?añadir_dispositivo=1';} 
+                        else if(isset($_SESSION['error']['id'])){ echo '/ping-scan/modules/Administrador/administrar-dispositivos/vista.php?editar_dispositivo='.htmlspecialchars($_SESSION['error']['id']);}?>   
+                        method="POST">
+                            <input type="hidden" name="nombre_equipo_advertencia" value=  <?php echo $_SESSION['error']['nombre_equipo'];?>  />
+                            <input type="hidden" name="advertencia" value="ip duplicada" />
+                            <button type="submit" class="btn-primary">Cambiar IP</button>
+                        </form>
+                        
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+<?php endif;?>
+
+
+
+
+
+
+
+
+
+        <?php $_SESSION['error']=null;?> <!-- fin de mostrar detalles -->
+
+
+
+
+
+
+
     </div><!-- Fin del div principal -->
 
 
@@ -391,6 +541,29 @@ $_SESSION['notificacion']="";?>
         }//fin del bucle
     
 })//fin del evento
+
+
+//como enfocar en el campo IP2 cuando hay un error en tipo de dispositivo
+<?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="tipo dispositivo no encontrado"):?>
+    if(document.getElementById("ip2")){
+        document.getElementById("ip2").focus();
+        document.getElementById("ip2").value="";
+    }
+<?php endif;?>
+
+//como enfocar en el campo IP3 cuando hay un error en local
+<?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="local no encontrado"):?>
+    if(document.getElementById("ip3")){
+        document.getElementById("ip3").focus();
+        document.getElementById("ip3").value="";
+    }
+<?php endif;?>
+//como enfocar en el campo IP1 cuando hay un error de ip duplicada
+<?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="ip duplicada"):?>
+    if(document.getElementById("ip1")){
+        document.getElementById("ip1").focus();
+    }
+<?php endif;?>
 
     </script>
 </body>

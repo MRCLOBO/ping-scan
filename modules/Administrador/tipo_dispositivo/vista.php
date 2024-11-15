@@ -147,6 +147,7 @@ $_SESSION['notificacion']="";?>
                 <label for="ip2">VLAN del dispositivo:</label>
             </br>
                 <input type="number" max="255" min="0" name="ip2" id="ip2" 
+                <?php if(isset($_POST['ip2_advertencia'])){ echo "value=".$_POST['ip2_advertencia'];}?> 
                 placeholder="X. Numero .X.X" required class="col-5 text-center"/>
             </br>
             

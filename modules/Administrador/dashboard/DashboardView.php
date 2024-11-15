@@ -1,6 +1,7 @@
 <?php require 'DashboardController.php';
 $_SESSION['local'] = null;
 $_SESSION['tipo_dispositivo']= null;
+$_SESSION['error']= null;
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -479,6 +479,36 @@ background-color: rgb(255,255,255,0.1);
   width:16px;
   height: 16x;
 }
+.advertencia{
+  background-color: rgb(40, 40, 40);
+    border: thin solid white;
+    border-radius: 10px;
+    margin: auto;
+    width: 70vw;
+    text-align: center;
+    color: white;
+}
+.advertencia > h2{
+  background-color: #dc3545;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+.advertencia > form{
+  display: inline;
+}
+.advertencia > a ,.advertencia > form > button{
+  text-decoration: none;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 5px;
+  outline: thin solid white;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.advertencia-fondo-activo{
+  z-index: 100;
+}
+
 /* Diseño responsive*/
 @media (max-width:992px){
   .tabla-monitorear-dispositivos > thead > tr > th{
@@ -542,5 +572,11 @@ background-color: rgb(255,255,255,0.1);
   .col-12{
     padding:0;
 
+  }
+  .advertencia > a, .advertencia > form > button{
+    margin: 3% 3%;
+  }
+  .advertencia > p{
+    margin:5%;
   }
 }

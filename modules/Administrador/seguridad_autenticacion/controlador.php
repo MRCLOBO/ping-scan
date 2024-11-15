@@ -108,6 +108,7 @@ class ControladorUsuarios {
             $_SESSION['local']=null;
             $_SESSION['rol']= $userResult['rol'];
             $_SESSION['id_usuarios']=$userResult['id_usuarios'];
+            $_SESSION['error']=null;
             return true;
         } else {
             return false;

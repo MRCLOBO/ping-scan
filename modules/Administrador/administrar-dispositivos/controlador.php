@@ -64,5 +64,15 @@ class ControladorDispositivos {
     public function getDispositivosConFiltro($localesFiltro,$tipoDispositivosFiltro,$ordenFiltro){
         return $this->model->getDispositivosConFiltro($localesFiltro,$tipoDispositivosFiltro,$ordenFiltro);
     }
+        //Integridad de los datos: Verificar si existe el tipo de dispositivo
+        public function comprobarIP2($ip2){
+            return $this->model->comprobarIP2($ip2);
+        }
+        public function comprobarIP3($ip3){
+            return $this->model->comprobarIP3($ip3);
+        }
+        public function comprobarIP($ip1,$ip2,$ip3,$ip4){
+            return $this->model->comprobarIP($ip1,$ip2,$ip3,$ip4);
+        }
 }
 ?>

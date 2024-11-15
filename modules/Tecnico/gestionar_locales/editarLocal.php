@@ -39,8 +39,9 @@
         $controlador->editarLocalDeDispositivos($id_locales,$ip3);
         $controlador->editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3);    
         $_SESSION['notificacion']= $denominacion." editado correctamente";
+
     }
-    
     header("Location: vista.php");
     die();
+
 ?>
