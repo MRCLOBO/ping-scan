@@ -25,6 +25,35 @@
         header('Location:'.getenv('HTTP_REFERER'));
         die();  
     }else{
+        $comprobarIP = $controlador->comprobarIP($ip2);
+        $comprobarTipo = $controlador->comprobarTipo($equipo);
+
+        if($comprobarTipo !== null && $comprobarTipo['id_tipo_dispositivo'] != $id_tipo_dispositivo){
+            //redireccionar atras
+            $_SESSION['error'] = 
+            ['error' => 'tipo duplicado',
+            'origen' => 'editar',
+            'id'=> $id_tipo_dispositivo,
+            'equipo' => $equipo,
+            'ip2' => $ip2,];
+            header('Location:'.getenv('HTTP_REFERER'));
+            die();
+            }       
+
+        if($comprobarIP !== null && $comprobarIP['id_tipo_dispositivo'] != $id_tipo_dispositivo){
+            //redireccionar atras
+            $_SESSION['error'] = 
+            ['error' => 'ip duplicada',
+            'origen' => 'editar',
+            'id' => $id_tipo_dispositivo,
+            'equipo' => $equipo,
+            'ip2' => $ip2,];
+            
+            header('Location:'.getenv('HTTP_REFERER'));
+            die();
+            
+                                } 
+                                
         $controlador->editarDispositivosConTipo($id_tipo_dispositivo,$ip2);
         $controlador->editarTipoDispositivo($id_tipo_dispositivo,$equipo,$ip2);    
         $_SESSION['notificacion']= $equipo." editado correctamente";

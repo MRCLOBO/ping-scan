@@ -56,6 +56,18 @@ class ModeloTipoDispositivo {
         return  $stmt->execute();
       
     }
+    public function comprobarIP($ip2){
+        $stmt = $this->conn->prepare("SELECT * from tipo_dispositivo where ip2 = ?");
+        $stmt->bind_param("i", $ip2);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+    public function comprobarTipo($equipo){
+        $stmt = $this->conn->prepare("SELECT * from tipo_dispositivo where equipo = ?");
+        $stmt->bind_param("s", $equipo);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
     /*
     public function localDeDispositivo($ip_local){
         $stmt = $this->conn->prepare("SELECT * FROM locales WHERE ip3 = ?");

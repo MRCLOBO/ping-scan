@@ -142,7 +142,8 @@ $_SESSION['notificacion']="";?>
                 <form method="POST" action="añadirTipoDispositivo.php">
                 <label for="equipo">Tipo de dispositivo:</label>
                 </br><input type="text" name="equipo" placeholder="Inserte el tipo de dispositivo" 
-                id="equipo"class="mb-3 col-9 text-center" required/>
+                id="equipo"class="mb-3 col-9 text-center" required
+                <?php if(isset($_POST['equipo_advertencia'])){ echo "value=".$_POST['equipo_advertencia'];}?>  />
                 </br>
                 <label for="ip2">VLAN del dispositivo:</label>
             </br>
@@ -168,13 +169,13 @@ $_SESSION['notificacion']="";?>
                 <label for="equipo">Nombre del local:</label>
                 </br><input type="text" name="equipo" placeholder="Inserte el tipo de dispositivo" 
                 id="equipo"class="mb-3 col-9 text-center" required 
-                value="<?php echo htmlspecialchars($editarTipo['equipo'])?>"/>
+                value="<?php if(isset($_POST['equipo_advertencia'])){ echo $_POST['equipo_advertencia'];}else{echo htmlspecialchars($editarTipo['equipo']);}?>"/>
                 </br>
                 <label for="ip2">VLAN del tipo de dispositivo:</label>
             </br>
                 <input type="number" max="255" min="0" name="ip2" id="ip2" 
                 placeholder="X. Numero .X.X" required class="col-5 text-center"
-                value="<?php echo htmlspecialchars($editarTipo['ip2'])?>"/>
+                value="<?php if(isset($_POST['ip2_advertencia'])){ echo $_POST['ip2_advertencia'];}else{echo htmlspecialchars($editarTipo['ip2']);}?>"/>
             </br>
             
                 <button type="submit" class="btn btn-primary mb-3">Editar tipo de dispositivo</button>
@@ -188,7 +189,7 @@ $_SESSION['notificacion']="";?>
             <?php if($eliminarTipo): ?><!-- inicio de eliminar dispositivo -->
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
+            <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/tipo_dispositivo/vista.php">X</a>
                 <h2>¿Estas seguro de eliminar estos dispositivos?</h2>
                 <form method="POST" action="eliminarTipoDispositivo.php">
                 <input type="hidden" name="id_tipo_dispositivo" value="<?php echo htmlspecialchars($eliminarTipo['id_tipo_dispositivo']);?>">
@@ -248,7 +249,94 @@ $_SESSION['notificacion']="";?>
             </div> <!-- fin de la ventana mostrar local -->
             </div> <!-- fin de editar-fondo --> 
             <?php endif;?> <!-- fin de mostrar detalles -->
-    
+
+
+
+
+            <?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "tipo duplicado"): 
+        $equipoAdvertencia = htmlspecialchars($_SESSION['error']['equipo']) ?><!-- INICIO DE NO EXISTE TIPO -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Administrador/tipo_dispositivo/vista.php">X</a>
+                        <h2>Tipo de equipo duplicado</h2> 
+                        <p>Al parecer el tipo de equipo: <b style="color:red;"><?php echo $equipoAdvertencia ?></b> ya esta registrado.</p>
+                        <p>Por favor, ingrese otro nombre para el tipo de equipo</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Administrador/tipo_dispositivo/vista.php">Cancelar</a>
+                        <form action= 
+                        <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Administrador/tipo_dispositivo/vista.php?añadir_tipo=1';} 
+                       else if(isset($_SESSION['error']['origen']) && $_SESSION['error']['origen'] == "editar"){ echo '/ping-scan/modules/Administrador/tipo_dispositivo/vista.php?editar_tipo='.htmlspecialchars($_SESSION['error']['id']);}?>  
+                        method="POST">
+                            <input type="hidden" name="ip2_advertencia" value=  <?php echo $_SESSION['error']['ip2'];?>  />
+                            <input type="hidden" name="equipo_advertencia" value=  <?php echo $_SESSION['error']['equipo'];?>  />
+                           <input type="hidden" name="advertencia" value="tipo duplicado" />
+                            <button type="submit" class="btn-primary">Cambiar nombre de tipo de equipo</button>
+                        </form>
+
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+              <?php  endif;?> <!-- fin de denominacion duplicada -->  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "ip duplicada"): 
+        $ipAdvertencia = htmlspecialchars($_SESSION['error']['ip2']) ?><!-- INICIO DE NO EXISTE TIPO -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Administrador/tipo_dispositivo/vista.php">X</a>
+                        <h2>IP duplicada</h2> 
+                        <p>Al parecer la IP: <b style="color:red;"><?php echo $ipAdvertencia ?></b> ya esta registrada bajo otro tipo de equipo.</p>
+                        <p>Por favor, ingrese otra IP para el tipo de equipo</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Administrador/tipo_dispositivo/vista.php">Cancelar</a>
+                        <form action= 
+                        <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Administrador/tipo_dispositivo/vista.php?añadir_tipo=1';} 
+                       else if(isset($_SESSION['error']['origen']) && $_SESSION['error']['origen'] == "editar"){ echo '/ping-scan/modules/Administrador/tipo_dispositivo/vista.php?editar_tipo='.htmlspecialchars($_SESSION['error']['id']);}?>  
+                        method="POST">
+                            <input type="hidden" name="ip2_advertencia" value=  <?php echo $_SESSION['error']['ip2'];?>  />
+                            <input type="hidden" name="equipo_advertencia" value=  <?php echo $_SESSION['error']['equipo'];?>  />
+                            <input type="hidden" name="advertencia" value="ip duplicada" />
+                            <button type="submit" class="btn-primary">Cambiar IP</button>
+                        </form>
+
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+              <?php  endif;?> <!-- fin de ip duplicada -->  
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <?php $_SESSION['error']=null; ?>
     </div><!-- Fin del div principal -->
 
 
@@ -276,6 +364,22 @@ $_SESSION['notificacion']="";?>
     document.getElementById("notificacion").className="notificacion-desaparecer"
     },3000)
 
+    
+//como enfocar en el campo IP cuando hay un error de ip duplicada
+<?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="tipo duplicado"):?>
+    if(document.getElementById("equipo")){
+        document.getElementById("equipo").focus();
+        document.getElementById("equipo").value="";
+    }
+<?php endif;?>
+
+//como enfocar en el campo denominacion cuando hay un error de denominacion duplicada
+<?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="ip duplicada"):?>
+    if(document.getElementById("ip2")){
+        document.getElementById("ip2").focus();
+        document.getElementById("ip2").value="";
+    }
+<?php endif;?>
     //codigo    document.getElementsByClassName("col-acciones")[0].children[n]
     </script>
 </body>

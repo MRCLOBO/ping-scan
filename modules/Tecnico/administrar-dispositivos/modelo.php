@@ -191,5 +191,27 @@ class ModeloDispositivos {
 
 
     }
+
+        //Integridad de los datos: comprobar si existe tipo de dispositivo
+        public function comprobarIP2($ip2){
+            $stmt = $this->conn->prepare("SELECT * from tipo_dispositivo where ip2 = ?");
+            $stmt->bind_param("i", $ip2);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        }
+        public function comprobarIP3($ip3){
+            $stmt = $this->conn->prepare("SELECT * from locales where ip3 = ?");
+            $stmt->bind_param("i", $ip3);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        }
+        public function comprobarIP($ip1,$ip2,$ip3,$ip4){
+            $stmt = $this->conn->prepare("SELECT * from dispositivos where ip1 = ? AND tipo_dispositivo_ip2 = ? AND locales_ip3 = ? AND ip4 = ?");
+            $stmt->bind_param("iiii", $ip1,$ip2,$ip3,$ip4);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        }
+
+        
 }
 ?>

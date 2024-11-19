@@ -34,6 +34,42 @@
         header('Location:'.getenv('HTTP_REFERER'));
         die();  
     }else{
+
+        $comprobarIP = $controlador->comprobarIP($ip3);
+        $comprobarDenominacion = $controlador->comprobarDenominacion($denominacion);
+
+        if($comprobarDenominacion !== null && $comprobarDenominacion['id_locales'] != $id_locales){
+            //redireccionar atras
+            $_SESSION['error'] = 
+            ['error' => 'denominacion duplicada',
+            'origen' => 'editar',
+            'id' => $id_locales,
+            'denominacion' => $denominacion,
+            'ip3' => $ip3,
+            'direccion' => $direccion,
+            'ciudad' => $ciudad,];
+            
+            header('Location:'.getenv('HTTP_REFERER'));
+            die();
+            }       
+
+        if($comprobarIP !== null && $comprobarIP['id_locales'] != $id_locales){
+            //redireccionar atras
+            $_SESSION['error'] = 
+            ['error' => 'ip duplicada',
+            'origen' => 'editar',
+            'id' => $id_locales,
+            'denominacion' => $denominacion,
+            'ip3' => $ip3,
+            'direccion' => $direccion,
+            'ciudad' => $ciudad,];
+
+            header('Location:'.getenv('HTTP_REFERER'));
+            die();
+                                }       
+
+
+
         $controlador->editarUsuarioLocal($id_locales,$denominacion);
         $controlador->editarLocalDeDispositivos($id_locales,$ip3);
         $controlador->editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3);    

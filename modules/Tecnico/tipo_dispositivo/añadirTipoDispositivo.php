@@ -23,6 +23,34 @@
             header('Location:'.getenv('HTTP_REFERER'));
             die();  
         }else{
+
+            $comprobarIP = $controlador->comprobarIP($ip2);
+            $comprobarTipo = $controlador->comprobarTipo($equipo);
+
+            if($comprobarTipo !== null){
+                //redireccionar atras
+                $_SESSION['error'] = 
+                ['error' => 'tipo duplicado',
+                'origen' => 'anadir',
+                'equipo' => $equipo,
+                'ip2' => $ip2,];
+                header('Location:'.getenv('HTTP_REFERER'));
+                die();
+                }       
+    
+            if($comprobarIP !== null){
+                //redireccionar atras
+                $_SESSION['error'] = 
+                ['error' => 'ip duplicada',
+                'origen' => 'anadir',
+                'equipo' => $equipo,
+                'ip2' => $ip2,];
+                
+                header('Location:'.getenv('HTTP_REFERER'));
+                die();
+                
+                                    }       
+
             $controlador->añadirTipoDispositivo($equipo,$ip2);  
             $_SESSION['notificacion']="Tipo de dispositivos añadido correctamente";
         }

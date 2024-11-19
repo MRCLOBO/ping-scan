@@ -96,6 +96,18 @@ class ModeloLocales {
         $stmt->bind_param("i", $locales_ip3);
         return $stmt->execute();
     }
+    public function comprobarIP($ip3){
+        $stmt = $this->conn->prepare("SELECT * from locales where ip3 = ?");
+        $stmt->bind_param("i", $ip3);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+    public function comprobarDenominacion($denominacion){
+        $stmt = $this->conn->prepare("SELECT * from locales where denominacion = ?");
+        $stmt->bind_param("s", $denominacion);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 
 }
 ?>

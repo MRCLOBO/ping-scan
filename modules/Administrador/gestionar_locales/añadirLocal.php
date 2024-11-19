@@ -32,6 +32,39 @@
             header('Location:'.getenv('HTTP_REFERER'));
             die();  
         }else{
+
+            $comprobarIP = $controlador->comprobarIP($ip3);
+            $comprobarDenominacion = $controlador->comprobarDenominacion($denominacion);
+
+            if($comprobarDenominacion !== null){
+                //redireccionar atras
+                $_SESSION['error'] = 
+                ['error' => 'denominacion duplicada',
+                'origen' => 'anadir',
+                'denominacion' => $denominacion,
+                'ip3' => $ip3,
+                'direccion' => $direccion,
+                'ciudad' => $ciudad,];
+                
+                header('Location:'.getenv('HTTP_REFERER'));
+                die();
+                }       
+    
+            if($comprobarIP !== null){
+                //redireccionar atras
+                $_SESSION['error'] = 
+                ['error' => 'ip duplicada',
+                'origen' => 'anadir',
+                'denominacion' => $denominacion,
+                'ip3' => $ip3,
+                'direccion' => $direccion,
+                'ciudad' => $ciudad,];
+
+                header('Location:'.getenv('HTTP_REFERER'));
+                die();
+                                    }       
+    
+
             $controlador->añadirLocal($denominacion,$ciudad,$direccion,$ip3);  
             $_SESSION['notificacion']="Local Añadido correctamente";
         }

@@ -24,6 +24,55 @@
      header('Location:'.getenv('HTTP_REFERER'));
      die();
  }else{
+
+    $comprobarIP = $controlador->comprobarIP($ip1,$ip2,$ip3,$ip4);
+    $comprobarIP2 = $controlador->comprobarIP2($ip2);
+    $comprobarIP3 = $controlador->comprobarIP3($ip3);
+    if($comprobarIP !== null && $comprobarIP['id_dispositivos'] != $id_dispositivos ){
+        //redireccionar atras
+        $_SESSION['error'] = 
+        ['error' => 'ip duplicada',
+        'origen' => 'editar',
+        'id' => $id_dispositivos,
+        'ip1' => $ip1,
+        'ip2' => $ip2,
+        'ip3' => $ip3,
+        'ip4' => $ip4,
+        'nombre_equipo' => $nombre_equipo,];
+        header('Location:'.getenv('HTTP_REFERER'));
+        die();
+                            }       
+
+    if($comprobarIP2 === null){
+        //redireccionar atras
+        $_SESSION['error'] = 
+        ['error' => 'no existe tipo',
+        'origen' => 'editar',
+        'id' => $id_dispositivos,
+        'ip1' => $ip1,
+        'ip2' => $ip2,
+        'ip3' => $ip3,
+        'ip4' => $ip4,
+        'nombre_equipo' => $nombre_equipo,];
+        header('Location:'.getenv('HTTP_REFERER'));
+        die();
+                            }       
+
+    if($comprobarIP3 === null){
+    //redireccionar atras
+    $_SESSION['error'] = 
+    ['error' => 'no existe local',
+    'origen' => 'editar',
+    'id' => $id_dispositivos,
+    'ip1' => $ip1,
+    'ip2' => $ip2,
+    'ip3' => $ip3,
+    'ip4' => $ip4,
+    'nombre_equipo' => $nombre_equipo,];
+    header('Location:'.getenv('HTTP_REFERER'));
+    die();
+    }
+    
      $controlador->editarDispositivo($id_dispositivos,$ip1,$ip2,$ip3,$ip4,$nombre_equipo);
      $_SESSION['notificacion']="Dispositivo ".$ip1.".".$ip2.".".$ip3.".".$ip4." editado correctamente";
  }
