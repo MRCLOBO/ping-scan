@@ -114,7 +114,7 @@ $_SESSION['notificacion']="";?>
 
 
 
-        <?php if($añadirUsuario): ?>
+        <?php if($añadirUsuario):?>
             <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">X</a>
@@ -122,30 +122,42 @@ $_SESSION['notificacion']="";?>
                 <form method="POST" action="añadirUsuario.php">
                 <label for="usuario">Usuario:</label>
                 </br><input type="text" name="usuario" placeholder="Inserte el usuario" 
-                id="usuario"class="mb-3 col-11 col-md-6 text-center" required/>
+                id="usuario"class="mb-3 col-11 col-md-6 text-center" required
+                <?php if(isset($_POST['usuario_advertencia'])){echo 'value='.$_POST['usuario_advertencia'];}?>  />
                 </br>
                 <label for="nombre">Nombre:</label>
                 </br><input type="text" id="nombre" name="nombre" placeholder="Inserte el nombre"
-                class="mb-3 col-11 col-md-6 text-center" required/>
+                class="mb-3 col-11 col-md-6 text-center" required
+                <?php if(isset($_POST['nombre_advertencia'])){echo 'value='.$_POST['nombre_advertencia'];}?>     />
                 </br>
                 <label>Contraseña:</label>
                 </br><input type="password" id="contrasena" name="contrasena" placeholder="Introduzca una contraseña"
-                class="mb-3 col-11 col-md-6 text-center" required/>
+                class="mb-3 col-11 col-md-6 text-center" required />
         </br>
+
                 <label for="edit_role">Rol:</label>
             </br>
                 <select id="edit_role" name="rol" class="mb-3" required>
-                <option value="admin">Administrador</option>
-                <option value="tecnico">Técnico</option>
-                <option value="user">Usuario</option>
+                <option value="admin"  <?php if(isset($_POST['rol_advertencia']) && $_POST['rol_advertencia'] == 'admin'){echo 'selected' ;} ?> >Administrador</option>
+                <option value="tecnico"   <?php if(isset($_POST['rol_advertencia']) && $_POST['rol_advertencia'] == 'tecnico'){echo 'selected' ;} ?>  >Técnico</option>
+ <?php 
+                $verificarLocal = $conn->query("SELECT * FROM locales");
+                if ($verificarLocal->num_rows != 0) {
+                    $agregado = "";
+                    if(isset($_POST['rol_advertencia']) && $_POST['rol_advertencia'] == 'user'){$agregado='selected';}
+                        echo "<option value='user'".$agregado.">Usuario</option>" ;
+                }
+?>
                 </select>
             </br>
             <!-- Local perteneciente del usuario -->
+
             <div id="container-elegir-local" class="elegir-local-ocultar">
             <label for="usuario-local">Especificar el local del usuario:</label>
             </br><select name="usuario_local" class="mb-3" id="usuario-local">
                 <?php while ($rowEditar = $locales->fetch_assoc()):?>
-                    <option value="<?php echo $rowEditar['denominacion']?>"><?php echo $rowEditar['denominacion']?></option>
+                    <option value="<?php echo $rowEditar['denominacion']?>"
+                    <?php if(isset($_POST['usuario_local_advertencia']) &&  $_POST['usuario_local_advertencia'] == $rowEditar['denominacion']){echo 'selected';}?>   > <?php echo $rowEditar['denominacion']?> </option>
                 <?php endwhile; ?>
             </select>
             </div>
@@ -275,6 +287,59 @@ $_SESSION['notificacion']="";?>
     </div>
     </div> 
             <?php endif; ?> <!-- fin de restaurar contrasena -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "usuario duplicado"): 
+        $usuarioAdvertencia = htmlspecialchars($_SESSION['error']['usuario']) ?><!-- INICIO DE NO EXISTE TIPO -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">X</a>
+                        <h2>Nombre de usuario duplicado</h2> 
+                        <p>Al parecer el nombre de usuario: <b style="color:red;"><?php echo $usuarioAdvertencia ?></b> ya esta registrado.</p>
+                        <p>Por favor, ingrese otro nombre</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php">Cancelar</a>
+                        <form action= 
+                        <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php?añadir_usuario=1';} 
+                       else if(isset($_SESSION['error']['origen']) && $_SESSION['error']['origen'] == "editar"){ echo '/ping-scan/modules/Administrador/seguridad_autenticacion/vista.php?editar_usuario='.htmlspecialchars($_SESSION['error']['id']);}?>  
+                        method="POST">
+                            <input type="hidden" name="usuario_advertencia" value=  <?php echo $_SESSION['error']['usuario'];?>  />
+                            <input type="hidden" name="nombre_advertencia" value=  <?php echo $_SESSION['error']['nombre'];?>  />
+                            <input type="hidden" name="rol_advertencia" value=  <?php echo $_SESSION['error']['rol'];?>  />
+                            <input type="hidden" name="usuario_local_advertencia" value=  <?php if(isset($_SESSION['error']['usuario_local'])){echo $_SESSION['error']['usuario_local'];}?> />
+                            <input type="hidden" name="advertencia" value="usuario duplicado" />
+                            <button type="submit" class="btn-primary">Cambiar nombre de usuario</button>
+                        </form>
+
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+              <?php  endif;
+              $_SESSION['error']=null;?> <!-- fin de denominacion duplicada -->  
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div><!-- Fin del div principal -->
     <script>
     const tamañoTabla=<?php echo $iterador ?>;
@@ -316,6 +381,13 @@ $_SESSION['notificacion']="";?>
     setInterval(()=>{
     document.getElementById("notificacion").className="notificacion-desaparecer"
     },3000)
+// enfocar al cuadro de usuario si es que hay un nombre duplicado
+    <?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="usuario duplicado"):?>
+    if(document.getElementById("usuario")){
+        document.getElementById("usuario").focus();
+        document.getElementById("usuario").value="";
+    }
+<?php endif;?>
     </script>
 </body>
 </html>

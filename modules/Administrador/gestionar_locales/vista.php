@@ -20,6 +20,8 @@ $componentes = new Componentes();
 
 //Guardo el resultado de la consulta de mostrarLocales en $locales
 $locales = $controlador->getLocales();
+$condicionLocales = $controlador->getLocales();
+$condicionLocalesAuxiliar = $condicionLocales->fetch_assoc() !== null;
 
 //funcion para añadir local
 $añadirLocal = null;
@@ -81,7 +83,7 @@ $_SESSION['notificacion']="";?>
 
 
 
-
+    <?php if($condicionLocalesAuxiliar):?> <!-- inicio de mostrar locales -->
             <?php while ($row = $locales->fetch_assoc()):?>
             <div class="col-6 col-lg-4 "><!-- div de cada card del local -->
                 <div id="<?php echo $iterador?>" class="card-local">
@@ -130,6 +132,17 @@ $_SESSION['notificacion']="";?>
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
             </div><!--final del segundo row -->
 
+            <?php endif;?> <!-- fin de mostrar locales -->
+            
+            <?php if($condicionLocalesAuxiliar === false):?> <!-- inicio de mostrar dispositivos -->
+        <div class="advertencia-dispositivos" style="width: max-content;"><!-- inicio de advertencia-dispositivos -->
+        <h1>Aun no hay locales registrados</h1>
+        <p>¿Le gustaria agregar un nuevo local ahora?</p>
+        <a href="?añadir_local=1" class="btn btn-success">
+        Añadir Local
+        </a>
+        </div><!-- fin de advertencia-dispositivos -->
+    <?php endif; ?>
 
 
         <?php if($añadirLocal): ?>
@@ -209,7 +222,7 @@ $_SESSION['notificacion']="";?>
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/gestionar_locales/vista.php">X</a>
-                <h2>¿Estas seguro de eliminar este local?</h2>
+                <h2 class="bg-danger">¿Estas seguro de eliminar este local?</h2>
                 <form method="POST" action="eliminarLocal.php">
                 <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eliminarLocal['id_locales']);?>">
                 <input type="hidden" name="ip3" value="<?php echo htmlspecialchars($eliminarLocal['ip3']); ?>">
@@ -234,7 +247,7 @@ $_SESSION['notificacion']="";?>
                 value="<?php echo htmlspecialchars($eliminarLocal['ip3'])?>" disabled/>
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Eliminar Local</button>
+                <button type="submit" class="btn btn-danger mb-3">Eliminar Local</button>
                 </form>
     </div> <!-- fin de la ventana borrar local -->
     </div> <!-- fin de editar-fondo --> 
@@ -384,6 +397,7 @@ $_SESSION['notificacion']="";?>
 
 
    <script>
+     <?php if($condicionLocalesAuxiliar):?> // inicio de pingear dispositivos
     const tamañoTabla=<?php echo $iterador ?>;
     let n;
     for(n=0;n<tamañoTabla;n++){
@@ -401,8 +415,7 @@ $_SESSION['notificacion']="";?>
             document.getElementById("eliminar-local").href="?eliminar_local="+document.getElementById(valorActual).children[0].id;
         });
     }
-    //Boton atras
-    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
+     
     setInterval(()=>{
     document.getElementById("notificacion").className="notificacion-desaparecer"
     },3000)
@@ -412,7 +425,10 @@ $_SESSION['notificacion']="";?>
             <?php $_SESSION['notificacion']="";?>
         })
     }
-
+    <?php endif;?> //fin de pingear dispositivos  
+    //Boton atras
+    document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Administrador/dashboard/DashboardView.php";})
+    
 //como enfocar en el campo IP cuando hay un error de ip duplicada
 <?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="ip duplicada"):?>
     if(document.getElementById("ip3")){

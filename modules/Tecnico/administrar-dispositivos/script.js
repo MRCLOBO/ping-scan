@@ -49,35 +49,5 @@ for(i=0;i<max;i++){
     pingeo(ipActual,i,os)
 }
 
-//funcion para poner la IP
-    function siguienteSegmento(ip){
-    if(document.getElementById("ip"+ip)!==null){
-    document.getElementById("ip"+ip).addEventListener("keydown", function(event) {
-    	if(event.key === "."){
-    		document.getElementById("ip"+(ip+1)).focus()
-    	}
-    })
-    document.getElementById("ip"+(ip+1)).addEventListener("keyup", function(event) {
-    	if(event.key === "."){
-    		document.getElementById("ip"+(ip+1)).value=""
-    	}
-    })
-    }//fin de la condicion if
-    }
-    //funcion para pasar al anterior segmento al borrar la IP
-    function anteriorSegmento(ip){
-        if(document.getElementById("ip"+ip)!==null){
-    document.getElementById("ip"+ip).addEventListener("keydown", function(event) {
-        const valorActual = document.getElementById("ip"+ip).value;
-    	if(valorActual === "" && event.key === "Backspace"){
-    		document.getElementById("ip"+(ip-1)).focus()
-    	}
-    })
-}//fin de la condicion if
-    }
-
-    siguienteSegmento(1);siguienteSegmento(2);siguienteSegmento(3);
-    anteriorSegmento(4);anteriorSegmento(3);anteriorSegmento(2);
-
     //funcion para capturar la fila seleccionada
     

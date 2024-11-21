@@ -1,19 +1,15 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'].'/ping-scan/config/conectar.php';
-
+if (file_exists($_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/controlador.php')) {
+    require $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/seguridad_autenticacion/controlador.php';
+} else {
+    echo "Archivo controller.php no encontrado<br>";
+}
 $conexion = new conectar();
 $conexion = $conexion->getConexion();
 
-// Verificar si existe un administrador
-$verificarAdmin = $conexion->query("SELECT * FROM usuarios WHERE rol = 'admin' LIMIT 1");
+$controlador = new ControladorUsuarios($conexion);
 
-
-
-if ($verificarAdmin->num_rows > 0) {
-    // Si ya existe un administrador, redirigir al login
-    header("Location: public/login.php");
-    exit();
-}
 
 
 
@@ -31,15 +27,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("sss", $usuario, $nombre, $hashedContrasena);
         //Ejecuta la funcion y genera una salida de acuerdo al resultado
         if ($stmt->execute()) {
-            echo "Registro exitoso. Ahora puedes <a href='login.php'>iniciar sesión</a>.";
+            
         } else {
             echo "Error: " . $stmt->error;
         }
 
         $stmt->close();
-        $conexion->close();
+
     }
 }
+
+// Verificar si existe un administrador
+$verificarAdmin = $conexion->query("SELECT * FROM usuarios WHERE rol = 'admin' LIMIT 1");
+
+
+
+if ($verificarAdmin->num_rows > 0) {
+    // Si ya existe un administrador, redirigir al login
+    if (isset($usuario) && isset($contrasena) && $controlador->login($usuario, $contrasena)) {
+        if($_SESSION['rol'] === 'admin'){
+        header("Location: /ping-scan/modules/Administrador/dashboard/DashboardView.php");
+        $_SESSION['notificacion'] = "Sesion Iniciada";
+        exit(); // Asegúrate de usar exit() después de header()
+        }
+    }else{
+        header("Location: /ping-scan/public/login.php");
+        exit(); // Asegúrate de usar exit() después de header()
+    }
+
+}
+$conexion->close();
+
 ?>
 
 <!DOCTYPE html>

@@ -176,7 +176,7 @@ align-content: center;
   font-size: 1.2em;
   text-align: center;
 } 
-.tabla-monitorear-dispositivos-usuario > thead > tr > th,.tabla-monitorear-dispositivos-tecnico > thead > tr > th{
+.tabla-monitorear-dispositivos-usuario > thead > tr > th, .tabla-monitorear-dispositivos-tecnico > thead > tr > th{
   padding:10px;
   background-color: #198754;
   font-size: 1.2em;
@@ -449,6 +449,7 @@ background-color: rgb(255,255,255,0.1);
   border-bottom: thin solid white;
   width: 90%;
   margin: auto;
+  margin-bottom:10px;
 }
 .busqueda-incorrecta{
   height: 0px;
@@ -509,6 +510,41 @@ background-color: rgb(255,255,255,0.1);
   z-index: 100;
 }
 
+.ping-scan-logo{
+  border-radius: 1vw;
+}
+
+.ping-scan-logo > img{
+  max-height: 60px;
+  max-width: 60px;
+  border-radius: 1vw;
+  padding:0px;
+}
+.ping-scan-logo > p{
+  text-align: center;
+  padding-bottom: 0px;
+  margin: auto;
+  text-decoration: none;
+  color: white;
+}
+.ping-scan-logo:hover{
+  cursor:pointer;
+  transition: 1s;
+  background-color: rgb(40, 40, 40);
+  outline:thin solid white;
+  box-shadow: 0 0 20px black;
+}
+.contenedor-navbar{
+  background: linear-gradient(20deg, rgb(20,20,250), rgb(0,0,100));
+}
+.contenedor-navbar, .contenedor-navbar > *{
+  --bs-gutter-x: 0;
+
+}
+body{
+  background: linear-gradient(130deg, rgb(20, 20, 20), rgb(50, 50, 50));
+}
+
 /* Diseño responsive*/
 @media (max-width:992px){
   .tabla-monitorear-dispositivos > thead > tr > th{
@@ -517,9 +553,9 @@ background-color: rgb(255,255,255,0.1);
     font-size: 0.8em;
     text-align: center;
   } 
-  .tabla-monitorear-dispositivos-usuario > thead > tr > th{
+  .tabla-monitorear-dispositivos-usuario > thead > tr > th, .tabla-monitorear-dispositivos-tecnico > thead > tr > th{
     padding:5px;
-    background-color: #198754;
+    background-color: #198754 !important;
     font-size: 0.8em;
     text-align: center;
   } 
@@ -549,7 +585,13 @@ background-color: rgb(255,255,255,0.1);
   .contenedor-registrar{
     height: auto;
   }
-
+  .card-mostrar-detalles{
+    width: 90%;
+  }
+  .card-mostrar-detalles > h2{
+    text-align: center;
+    margin-bottom: 10px;
+  }
   .card-mostrar-detalles-mostrar-dispositivos{
     float:none;
     margin:10px;
@@ -582,4 +624,34 @@ background-color: rgb(255,255,255,0.1);
   .formulario-añadir-dispositivo{
     width: 90vw;
   }
+
+  .ping-scan-logo{
+    max-height: 60px;
+    overflow: hidden;
+    padding:10px;
+  }
+  .ping-scan-logo:hover{
+    background-color: transparent;
+    transition:none ;
+    outline: transparent;
+    box-shadow: none;
+  }
+  .ping-scan-logo > img{
+    margin: auto;
+    margin-bottom: 10px;
+    height: 40px;
+    width: auto;
+    outline: thin solid white;
+  }
+  .advertencia-dispositivos{
+    width: 90%;
+  }
+  .solicitar-ip{
+    width: 90%;
+  }
+  .solicitar-ip > input{
+    width:20%;
+  }
+
+
 }

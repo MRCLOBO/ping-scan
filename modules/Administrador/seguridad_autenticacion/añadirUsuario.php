@@ -28,11 +28,31 @@
         header('Location:'.getenv('HTTP_REFERER'));
         die();
     }else{
+        
+        $comprobarUsuario = $controlador->comprobarUsuario($usuario);
+        
+
+        if($comprobarUsuario !== null){
+            //redireccionar atras
+            $_SESSION['error'] = 
+            ['error' => 'usuario duplicado',
+            'origen' => 'anadir',
+            'usuario' => $usuario,
+            'rol' => $rol,
+            'nombre' => $nombre,
+        'usuario_local' => $usuario_local,];
+            $_SESSION['notificacion']="¡Usuario Duplicado!";
+            header('Location:'.getenv('HTTP_REFERER'));
+            die();
+            }       
+
+
         $controlador->añadirUsuario($usuario,$nombre,$rol,$contrasena);
         if($_POST['rol'] == 'user'){
             $controlador->añadirUsuarioLocal($usuario_local,$usuario);
         };
         $_SESSION['notificacion']="Usuario Añadido";
+    
     }
 
     // Codigo para ir a la pagina anterior: header('Location:' . getenv('HTTP_REFERER'));

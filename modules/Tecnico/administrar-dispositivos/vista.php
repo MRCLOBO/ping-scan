@@ -207,7 +207,11 @@ $_SESSION['notificacion']="";?>
                 
     <?php if($condicionDispositivosAuxiliar === false):?> <!-- inicio de mostrar dispositivos -->
         <div class="advertencia-dispositivos"><!-- inicio de advertencia-dispositivos -->
-        <h1>Aun no hay dispositivos registrados dentro de este local</h1>
+        <h1>Aun no hay dispositivos registrados</h1>
+        <p>¿Le gustaria agregar un nuevo dispositivo ahora?</p>
+        <a href="?añadir_dispositivo=1" class="btn btn-success">
+                Añadir Dispositivo
+        </a> 
         </div><!-- fin de advertencia-dispositivos -->
     <?php endif; ?>
 
@@ -215,7 +219,7 @@ $_SESSION['notificacion']="";?>
             <div class='editar-fondo'> 
             <div class='formulario-añadir-dispositivo'>
             <a class='btn bg-danger text-light boton-atras' href='/ping-scan/modules/Tecnico/administrar-dispositivos/vista.php'>X</a>
-            <h2>Añadir dispositivo</h2>
+            <h2 class="bg-success">Añadir dispositivo</h2>
             <form method='POST' action='añadirDispositivo.php'>
             <label for='ip1'>Ingrese la direccion IP del dispositivo:</label>
             <div class='solicitar-ip'> 
@@ -232,7 +236,7 @@ $_SESSION['notificacion']="";?>
             </br>
             <input type='text' id='nombre_equipo' name='nombre_equipo' <?php if(isset($_POST['nombre_equipo_advertencia'])){ echo "value=".$_POST['nombre_equipo_advertencia'];}?> />
             </br>
-            <button type='submit' class='btn btn-primary mb-3'>Enviar</button>
+            <button type='submit' class='btn btn-success mb-3'>Enviar</button>
             </form>
             </div>
             </div>
@@ -243,7 +247,7 @@ $_SESSION['notificacion']="";?>
         <div class="editar-fondo">  <!-- inicio de editar dispositivo -->
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-danger text-light boton-atras" href='/ping-scan/modules/Tecnico/administrar-dispositivos/vista.php'>X</a>
-                <h2>Editar dispositivo</h2>
+                <h2 class="bg-success">Editar dispositivo</h2>
                 <form method="POST" action="editarDispositivo.php">
                 <input type="hidden" name="id_dispositivos" value="<?php echo htmlspecialchars($editarDispositivo['id_dispositivos']); ?>">
                 <label for="ip1">Direccion IP del dispositivo:</label>
@@ -274,7 +278,7 @@ $_SESSION['notificacion']="";?>
                 <input type="text" id="nombre_equipo" name="nombre_equipo"
                 value="<?php echo htmlspecialchars($editarDispositivo['nombre_equipo'])?>"/>
     </br>
-                <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                <button type="submit" class="btn btn-success mb-3">Enviar</button>
                 </form>
     </div>
     </div> 
@@ -312,9 +316,9 @@ $_SESSION['notificacion']="";?>
                 </br>
                 <input type="text" id="nombre_equipo" name="nombre_equipo" disabled
                 value="<?php echo htmlspecialchars($eliminarDispositivo['nombre_equipo'])?>"/>
-    </br>
+    </br></br>
     <p>¿Estas Seguro de que deseas eliminar el dispositivo?</p>
-                <button type="submit" class="btn btn-danger">Enviar</button>
+                <button type="submit" class="btn btn-danger mb-3">Enviar</button>
                 </form>
     </div>
     </div> 
@@ -589,6 +593,36 @@ $_SESSION['notificacion']="";?>
     }
 <?php endif;?>
 
+
+//funcion para poner la IP
+function siguienteSegmento(ip){
+    if(document.getElementById("ip"+ip)!==null){
+    document.getElementById("ip"+ip).addEventListener("keydown", function(event) {
+    	if(event.key === "."){
+    		document.getElementById("ip"+(ip+1)).focus()
+    	}
+    })
+    document.getElementById("ip"+(ip+1)).addEventListener("keyup", function(event) {
+    	if(event.key === "."){
+    		document.getElementById("ip"+(ip+1)).value=""
+    	}
+    })
+    }//fin de la condicion if
+    }
+    //funcion para pasar al anterior segmento al borrar la IP
+    function anteriorSegmento(ip){
+        if(document.getElementById("ip"+ip)!==null){
+    document.getElementById("ip"+ip).addEventListener("keydown", function(event) {
+        const valorActual = document.getElementById("ip"+ip).value;
+    	if(valorActual === "" && event.key === "Backspace"){
+    		document.getElementById("ip"+(ip-1)).focus()
+    	}
+    })
+}//fin de la condicion if
+    }
+
+    siguienteSegmento(1);siguienteSegmento(2);siguienteSegmento(3);
+    anteriorSegmento(4);anteriorSegmento(3);anteriorSegmento(2);
 
 
     </script>

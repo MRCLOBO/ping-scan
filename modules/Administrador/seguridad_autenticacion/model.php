@@ -100,6 +100,13 @@ class UserModel {
         $stmt->bind_param("s", $usuario);
         return $stmt->execute();
     }
+    
+    public function comprobarUsuario($usuario){
+        $stmt = $this->conn->prepare("SELECT * from usuarios where usuario = ?");
+        $stmt->bind_param("s", $usuario);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 
 }
 ?>

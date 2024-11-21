@@ -27,6 +27,13 @@ $conn = $conexion->getConexion();
 // Crear una instancia del controlador de usuario
 $controlador = new ControladorUsuarios($conn);
 
+$verificarUsuarios = $conn->query("SELECT * FROM usuarios");
+
+if ($verificarUsuarios->num_rows == 0) {
+        header("Location: /ping-scan/index.php");
+        exit(); // Asegúrate de usar exit() después de header()
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['usuario'];
     $password = $_POST['contrasena'];
@@ -85,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <div class="row fila-inicio-seccion">
     <div class="col-12 col-sm-12 ">
-        <div class="card card-body m-5">
+        <div class="card card-body m-3">
             <form  action="login.php" method="POST">
             <div class="card-title text-center"><h2>INICIO DE SESION</h2></div>
             <div class="card-body">
@@ -93,14 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="usuario" class="col-12 col-lg-1 text-center">Usuario: </label>
                 <input name="usuario" id="usuario"
                 type="text" placeholder="Ingrese su usuario"
-            required class="col-12 col-lg-4 mb-3"
+            required class="col-12 col-lg-4 mb-3 p-1"
                 />
                 <div class="col-0 col-lg-1"></div>
 
                 <label for="contrasena" class="col-12 col-lg-2 text-center">Contraseña:</label>
                 <input type="password" id="contrasena" 
                 name="contrasena" placeholder="Ingrese su contraseña"
-                 required class="col-12 col-lg-4 mb-3"
+                 required class="col-12 col-lg-4 mb-3 p-1"
                 />
 
                 </div><!--Final del row para los inputs -->

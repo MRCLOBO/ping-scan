@@ -114,7 +114,7 @@ else{
 <body class="bg-dark text-light">
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php";
 $_SESSION['notificacion']="";?>
-<?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Administrador/componentes/navbar.php"?>
+ <?php require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/componentes/navbar.php';?> <!-- llamada al navbar -->
     <div class="container"> <!-- Inicio del div principal -->
         <div class="row text-center"><h2>Administracion de Dispositivos</h2></div>
     <div class="row"><!-- inicio del segundo row -->
@@ -176,13 +176,13 @@ $_SESSION['notificacion']="";?>
 
             <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
 
-            <a href="?añadir_dispositivo=1">
+            <a href="?añadir_dispositivo=1" title="Añadir dispositivo">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Dispositivo"/>
             </a>
-            <a href="?editar_dispositivo=" id="editar-dispositivo">
+            <a href="?editar_dispositivo=" id="editar-dispositivo" title="Editar dispositivo">
             <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar dispositivo"/>
             </a>
-            <a href="?eliminar_dispositivo=>" id="eliminar-dispositivo">
+            <a href="?eliminar_dispositivo=>" id="eliminar-dispositivo" title="Eliminar dispositivo">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Añadir Dispositivo"/>    
             </a>
             <?php if($_SESSION['local'] !== null): ?>   
@@ -200,7 +200,11 @@ $_SESSION['notificacion']="";?>
                 
     <?php if($condicionDispositivosAuxiliar === false):?> <!-- inicio de mostrar dispositivos -->
         <div class="advertencia-dispositivos"><!-- inicio de advertencia-dispositivos -->
-        <h1>Aun no hay dispositivos registrados dentro de este local</h1>
+        <h1>Aun no hay dispositivos registrados</h1>
+        <p>¿Le gustaria agregar un nuevo dispositivo ahora?</p>
+        <a href="?añadir_dispositivo=1" class="btn btn-success">
+                Añadir Dispositivo
+        </a> 
         </div><!-- fin de advertencia-dispositivos -->
     <?php endif; ?>
 
@@ -473,8 +477,7 @@ $_SESSION['notificacion']="";?>
 
     <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de pingear dispositivos-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script  src="script.js" type="module">
-    </script>
+    <script  src="script.js" type="module"></script>
 
     <script>
     const tamañoTabla=<?php echo $iterador ?>;
@@ -564,6 +567,37 @@ $_SESSION['notificacion']="";?>
         document.getElementById("ip1").focus();
     }
 <?php endif;?>
+
+//funcion para poner la IP
+function siguienteSegmento(ip){
+    if(document.getElementById("ip"+ip)!==null){
+    document.getElementById("ip"+ip).addEventListener("keydown", function(event) {
+    	if(event.key === "."){
+    		document.getElementById("ip"+(ip+1)).focus()
+    	}
+    })
+    document.getElementById("ip"+(ip+1)).addEventListener("keyup", function(event) {
+    	if(event.key === "."){
+    		document.getElementById("ip"+(ip+1)).value=""
+    	}
+    })
+    }//fin de la condicion if
+    }
+    //funcion para pasar al anterior segmento al borrar la IP
+    function anteriorSegmento(ip){
+        if(document.getElementById("ip"+ip)!==null){
+    document.getElementById("ip"+ip).addEventListener("keydown", function(event) {
+        const valorActual = document.getElementById("ip"+ip).value;
+    	if(valorActual === "" && event.key === "Backspace"){
+    		document.getElementById("ip"+(ip-1)).focus()
+    	}
+    })
+}//fin de la condicion if
+    }
+
+    siguienteSegmento(1);siguienteSegmento(2);siguienteSegmento(3);
+    anteriorSegmento(4);anteriorSegmento(3);anteriorSegmento(2);
+
 
     </script>
 </body>

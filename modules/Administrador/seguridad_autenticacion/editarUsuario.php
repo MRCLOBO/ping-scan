@@ -29,6 +29,24 @@ if( preg_match($patron_texto_numero, $usuario) !== 1){
         die();
     }else{
 
+        $comprobarUsuario = $controlador->comprobarUsuario($usuario);
+        
+        if($comprobarUsuario !== null){
+            //redireccionar atras
+            $_SESSION['error'] = 
+            ['error' => 'usuario duplicado',
+            'origen' => 'editar',
+            'usuario' => $usuario,
+            'rol' => $rol,
+            'nombre' => $nombre,
+            'usuario_local' => $usuario_local,];
+            $_SESSION['notificacion']="¡Usuario Duplicado!";
+            header('Location:'.getenv('HTTP_REFERER'));
+            die();
+            }       
+
+
+
     if($rol === "user"){
     $controlador->editarUsuario($id_usuarios,$usuario,$nombre,$rol);
     $controlador->editarUsuarioLocal($usuario_local,$usuario);  

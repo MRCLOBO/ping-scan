@@ -20,6 +20,9 @@ $componentes = new Componentes();
 
 //Guardo el resultado de la consulta de mostrarLocales en $locales
 $locales = $controlador->getLocales();
+$condicionLocales = $controlador->getLocales();
+$condicionLocalesAuxiliar = $condicionLocales->fetch_assoc() !== null;
+
 
 //funcion para añadir local
 $añadirLocal = null;
@@ -62,7 +65,7 @@ else{
     <link rel="stylesheet" href="/ping-scan/public/css/personalizado.css">
     <link rel="stylesheet" href="/ping-scan/public/css/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
-<body class="bg-dark text-light">
+<body class="text-light">
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Usuario/componentes/notificaciones.php";
 $_SESSION['notificacion']=""; ?>
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/ping-scan/modules/Tecnico/componentes/navbar.php"?>
@@ -81,7 +84,7 @@ $_SESSION['notificacion']=""; ?>
 
 
 
-
+<?php if($condicionLocalesAuxiliar):?> <!-- inicio de mostrar locales -->
             <?php while ($row = $locales->fetch_assoc()):?>
             <div class="col-6 col-lg-4 "><!-- div de cada card del local -->
                 <div id="<?php echo $iterador?>" class="card-local card-local-tecnico">
@@ -129,7 +132,17 @@ $_SESSION['notificacion']=""; ?>
 
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
             </div><!--final del segundo row -->
-
+            <?php endif;?> <!-- fin de mostrar locales -->
+            
+            <?php if($condicionLocalesAuxiliar === false):?> <!-- inicio de mostrar dispositivos -->
+        <div class="advertencia-dispositivos" style="width: max-content;"><!-- inicio de advertencia-dispositivos -->
+        <h1>Aun no hay locales registrados</h1>
+        <p>¿Le gustaria agregar un nuevo local ahora?</p>
+        <a href="?añadir_local=1" class="btn btn-success">
+        Añadir Local
+        </a>
+        </div><!-- fin de advertencia-dispositivos -->
+    <?php endif; ?>
 
 
 
@@ -137,7 +150,7 @@ $_SESSION['notificacion']=""; ?>
             <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">X</a>
-                <h2>Añadir Local</h2>
+                <h2 class="bg-success">Añadir Local</h2>
                 <form method="POST" action="añadirLocal.php">
                 <label for="denominacion">Nombre del local:</label>
                 </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
@@ -164,7 +177,7 @@ $_SESSION['notificacion']=""; ?>
                 />
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Añadir Local</button>
+                <button type="submit" class="btn btn-success mb-3">Añadir Local</button>
                 </form>
     </div> <!-- fin de la ventana añadir local -->
     </div> <!-- fin de editar-fondo --> 
@@ -175,7 +188,7 @@ $_SESSION['notificacion']=""; ?>
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">X</a>
-                <h2>Editar Local</h2>
+                <h2 class="bg-success">Editar Local</h2>
                 <form method="POST" action="editarLocal.php">
                 <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($editarLocal['id_locales']);?>">
                 <label for="denominacion">Nombre del local:</label>
@@ -198,7 +211,7 @@ $_SESSION['notificacion']=""; ?>
                 value="<?php if(isset($_POST['ip3_advertencia'])){ echo $_POST['ip3_advertencia'];}else{echo htmlspecialchars($editarLocal['ip3']);}?>" />
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Editar Local</button>
+                <button type="submit" class="btn btn-success mb-3">Editar Local</button>
                 </form>
     </div> <!-- fin de la ventana editar local -->
     </div> <!-- fin de editar-fondo --> 
@@ -210,7 +223,7 @@ $_SESSION['notificacion']=""; ?>
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
-                <h2>¿Estas seguro de eliminar este local?</h2>
+                <h2 class="bg-danger">¿Estas seguro de eliminar este local?</h2>
                 <form method="POST" action="eliminarLocal.php">
                 <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eliminarLocal['id_locales']);?>">
                 <input type="hidden" name="ip3" value="<?php echo htmlspecialchars($eliminarLocal['ip3']); ?>">
@@ -235,7 +248,7 @@ $_SESSION['notificacion']=""; ?>
                 value="<?php echo htmlspecialchars($eliminarLocal['ip3'])?>" disabled/>
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Eliminar Local</button>
+                <button type="submit" class="btn btn-danger mb-3">Eliminar Local</button>
                 </form>
     </div> <!-- fin de la ventana borrar local -->
     </div> <!-- fin de editar-fondo --> 
@@ -384,6 +397,9 @@ $_SESSION['notificacion']=""; ?>
 
 
    <script>
+
+<?php if($condicionLocalesAuxiliar):?> // inicio de pingear dispositivos
+
     const tamañoTabla=<?php echo $iterador ?>;
     let n;
     for(n=0;n<tamañoTabla;n++){
@@ -401,6 +417,8 @@ $_SESSION['notificacion']=""; ?>
             document.getElementById("eliminar-local").href="?eliminar_local="+document.getElementById(valorActual).children[0].id;
         });
     }
+    <?php endif;?> //fin de pingear dispositivos  
+
     //Boton atras
     document.getElementById("boton-atras").addEventListener("click",() =>{window.location.href = "/ping-scan/modules/Tecnico/dashboard/DashboardView.php";})
     setInterval(()=>{

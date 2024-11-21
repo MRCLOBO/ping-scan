@@ -1,5 +1,11 @@
+<?php $verificarUsuarios = $conn->query("SELECT * FROM usuarios");
 
-            <div class="row bg-success p-2">
+if ($verificarUsuarios->num_rows == 0) {
+        header("Location: /ping-scan/index.php");
+        exit(); // Asegúrate de usar exit() después de header()
+}?>
+
+<div class="row bg-success p-2">
             <div class="col-2 col-md-1 text-center">
                 <img src="/ping-scan/public/media/imagenes/icono-atras.png"
                 class="btn" id="boton-atras"/>

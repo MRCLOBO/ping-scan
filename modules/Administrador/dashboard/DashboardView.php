@@ -19,7 +19,7 @@ $_SESSION['error']= null;
 $_SESSION['notificacion']="";?>
 
     <div class="container col-md-12" style="height:100vh;"> <!--div principal-->
-    <?php require '../componentes/navbar.php';?> <!-- llamada al navbar -->
+    <?php require  $_SERVER['DOCUMENT_ROOT'].'/ping-scan/modules/Administrador/componentes/navbar.php';?> <!-- llamada al navbar -->
     <h2 class="text-center m-2">PANEL PRINCIPAL</h2>
     <div class="row"><!-- row principal -->
     <div class="col-md-3 col-12 p-2">

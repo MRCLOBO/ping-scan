@@ -126,6 +126,9 @@ class ControladorUsuarios {
     public function restaurarContrasena($id_usuarios){
         return $this->model->restaurarContrasena($id_usuarios);
     }
+    public function comprobarUsuario($usuario){
+        return $this->model->comprobarUsuario($usuario);
+    }
 
 }
 ?>

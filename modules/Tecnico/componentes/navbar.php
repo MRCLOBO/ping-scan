@@ -1,11 +1,27 @@
+<?php $verificarUsuarios = $conn->query("SELECT * FROM usuarios");
 
-            <div class="row bg-success p-2">
+if ($verificarUsuarios->num_rows == 0) {
+        header("Location: /ping-scan/index.php");
+        exit(); // Asegúrate de usar exit() después de header()
+}?> 
+<div class="row bg-success p-2" style="--bs-gutter-x: 0;">
             <div class="col-2 col-md-1 text-center">
                 <img src="/ping-scan/public/media/imagenes/icono-atras.png"
                 class="btn" id="boton-atras"/>
             </div>
-             <!-- inicio info usuario -->
-        <div class="col-4 col-md-4" >
+            <div class="col-3 col-md-2">
+                <!-- dividir en 3 partes -->
+                 
+                <a class="ping-scan-logo row col-12" href="/ping-scan/modules/Tecnico/dashboard/DashboardView.php"> <!-- inicio del row--> 
+                    <img class="col-12 col-md-4" src="/ping-scan/public/media/imagenes/ping-scan-logo.jpg" />
+                <p class="col-0 col-md-8">Ping-Scan</p>
+</a> <!-- fin del row -->
+            </div>
+
+            <div class="col-1 col-md-6 ocultar-nav-bar"></div>
+
+                          <!-- inicio info usuario -->
+        <div class="col-4 col-md-2" >
             <div class="row">
                 <div class="col-3 text-center">
                     <img src="/ping-scan/public/media/imagenes/icono-admin.png" alt="Profile" class="icono" />     
@@ -17,7 +33,8 @@
             </div>
         </div> 
             <!-- Fin de info usuario nav-->
-             <div class="col-3 col-md-6"></div>
+
+
         <div class="col-2 col-md-1 btn-cerrar-seccion">
         <form action="/ping-scan/modules/Administrador/componentes/controlador.php?action=logout" method="POST">
             <button class="btn btn-danger" type="submit">Salir</button>

@@ -20,6 +20,8 @@ $componentes = new Componentes();
 
 //Guardo el resultado de la consulta de mostrarLocales en $locales
 $tipoDispositivo = $controlador->getTipoDispositivo();
+$condicionTipo = $controlador->getTipoDispositivo();
+$condicionTipoAuxiliar = $condicionTipo->fetch_assoc() !== null;
 
 //funcion para añadir local
 $añadirTipo = null;
@@ -80,7 +82,7 @@ $_SESSION['notificacion']="";?>
         ?>
 
 
-
+            <?php if($condicionTipoAuxiliar):?> <!-- inicio de mostrar tipos de dispositivos -->
 
             <?php while ($row = $tipoDispositivo->fetch_assoc()):?>
             <div class="col-12 col-lg-6 "><!-- div de cada card del local -->
@@ -132,7 +134,17 @@ $_SESSION['notificacion']="";?>
             <p id="auxiliar-iterador" style="z-index:-10;position:fixed;color:transparent"><?php echo $iterador ?></p>
             </div><!--final del segundo row -->
 
-
+            <?php endif;?> <!-- fin de mostrar locales -->
+            
+            <?php if($condicionTipoAuxiliar === false):?> <!-- inicio de mostrar dispositivos -->
+        <div class="advertencia-dispositivos" style="width: max-content;"><!-- inicio de advertencia-dispositivos -->
+        <h1>Aun no hay ningun tipo de dispositivo registrado</h1>
+        <p>¿Le gustaria agregar un nuevo tipo de dispositivo?</p>
+        <a href="?añadir_tipo=1" class="btn btn-success">
+        Añadir tipo de dispositivo
+        </a>
+        </div><!-- fin de advertencia-dispositivos -->
+    <?php endif; ?>
 
         <?php if($añadirTipo): ?>
             <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
@@ -190,7 +202,7 @@ $_SESSION['notificacion']="";?>
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
             <a class="btn bg-dark text-light boton-atras" href="/ping-scan/modules/Administrador/tipo_dispositivo/vista.php">X</a>
-                <h2>¿Estas seguro de eliminar estos dispositivos?</h2>
+                <h2 class="bg-danger">¿Estas seguro de eliminar estos dispositivos?</h2>
                 <form method="POST" action="eliminarTipoDispositivo.php">
                 <input type="hidden" name="id_tipo_dispositivo" value="<?php echo htmlspecialchars($eliminarTipo['id_tipo_dispositivo']);?>">
                 <input type="hidden" name="ip2" value="<?php echo htmlspecialchars($eliminarTipo['ip2']); ?>">
@@ -207,7 +219,7 @@ $_SESSION['notificacion']="";?>
                 value="<?php echo htmlspecialchars($eliminarTipo['ip2'])?>" disabled/>
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Eliminar dispositivos</button>
+                <button type="submit" class="btn btn-danger mb-3">Eliminar dispositivos</button>
                 </form>
     </div> <!-- fin de la ventana borrar local -->
     </div> <!-- fin de editar-fondo --> 
@@ -231,7 +243,7 @@ $_SESSION['notificacion']="";?>
 
                 <div class="col-lg-3 align-content-center"><!-- columna imagen -->
                     <img src="/ping-scan/public/media/imagenes/icono-iot.png" alt="Dispositivos"
-                    style="width:100%;border-radius:10px;border:thin solid;border-radius:10px;margin:2%;max-height: 200px;"/>
+                    style="width:100%;border-radius:10px;border-radius:10px;margin:2%;max-height: 200px;"/>
                 </div><!--fin de columna imagen -->
                 </div><!-- fin de card-mostrar-detalles-body -->
 
