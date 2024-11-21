@@ -68,9 +68,9 @@ $_SESSION['notificacion']="";?>
             <!-- Inicio el cuadro de busqueda -->
     <div class="row">
             <div class="col-8 text-center" style="align-content: center;">
-                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda"/>
+                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda" title="Introduce el nombre del equipo"/>
             </div>
-            <div class="col-1 icono-busqueda"><img src="/ping-scan/public/media/imagenes/icono-lupa.png"/></div>
+            <div class="col-1 icono-busqueda"><img src="/ping-scan/public/media/imagenes/icono-lupa.png" title="Busca el equipo"/></div>
     </div>
             <!-- Fin del cuadro de busqueda-->
 
@@ -125,7 +125,7 @@ $_SESSION['notificacion']="";?>
     </div><!-- Fin del div principal -->
  <div class="col-1 col-acciones-usuario"> <!-- inicio de la columna para las herramientas -->
             <?php if($_SESSION['local'] !== null): ?>   
-            <a href="?generar_documento=" id="generar-documento">
+            <a href="?generar_documento=" id="generar-documento" title="Genera un documento del estado actual de todos los equipos">
             <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
             </a>
             <?php endif; ?> 

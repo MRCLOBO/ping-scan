@@ -125,11 +125,11 @@ $_SESSION['notificacion']="";?>
         <div class="row">
             <div class="col-8 text-center" style="align-content: center;">
             
-                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda"/>
+                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda" title="Ingrese el nombre del equipo que desea encontrar"/>
             </div>
-            <div class="col-1 icono-busqueda"><img src="/ping-scan/public/media/imagenes/icono-lupa.png"/></div>
+            <div class="col-1 icono-busqueda" title="Buscar equipo"><img src="/ping-scan/public/media/imagenes/icono-lupa.png"/></div>
             <div class="col-2 text-center btn-filtrar">
-            <a href="?filtrar_dispositivos=1" class="btn-warning">Filtrar</a>
+            <a href="?filtrar_dispositivos=1" class="btn-warning" title="Filtrar dispositivos">Filtrar</a>
             </div>
             <!-- Fin del cuadro de busqueda-->
         </div>
@@ -160,7 +160,7 @@ $_SESSION['notificacion']="";?>
 
                 ?>
                 
-                <tr id=<?php echo $iterador?> class="fila-datos">
+                <tr id=<?php echo $iterador?> class="fila-datos" title="Seleccionar dispositivo">
                     <td id=<?php echo htmlspecialchars($row['id_dispositivos']);?>><?php echo $ip_actual?></td>
                     <td><?php echo htmlspecialchars($row['nombre_equipo']);?></td>
                     <td><?php echo $local ?></td>

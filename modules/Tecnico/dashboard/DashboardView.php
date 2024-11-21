@@ -24,7 +24,7 @@ $_SESSION['notificacion']="";?>
         <div class="col-sm-4 col-12 p-2">
             <div class="card-opcion-tecnico">
             <form method="POST" action="/ping-scan/modules/Tecnico/gestionar_locales/vista.php"> <!-- definir donde va -->
-                <button type="submit" class="card-opcion-boton">
+                <button type="submit" class="card-opcion-boton" title="Gestiona los locales del sistema">
             <img src="/ping-scan/public/media/imagenes/icono-local.png" alt="">
             <h3 class="card-opcion-tecnico-h3">Gestionar Locales</h3>    
             </button>
@@ -36,7 +36,7 @@ $_SESSION['notificacion']="";?>
         <div class="col-sm-4 col-12 p-2">
             <div class="card-opcion-tecnico">
             <form method="POST" action="/ping-scan/modules/Tecnico/tipo_dispositivo/vista.php"> <!-- definir donde va -->
-                <button type="submit" class="card-opcion-boton">
+                <button type="submit" class="card-opcion-boton"  title="Gestiona entre todos los tipos de dispositivos">
             <img src="/ping-scan/public/media/imagenes/icono-pc.png" alt="">
             <h3 class="card-opcion-tecnico-h3">Administrar Tipos de Dispositivos</h3>    
             </button>
@@ -47,7 +47,7 @@ $_SESSION['notificacion']="";?>
         <div class="col-sm-4 col-12 p-2  mb-3">
             <div class="card-opcion-tecnico">
             <form method="POST" action="/ping-scan/modules/Tecnico/administrar-dispositivos/vista.php">
-                <button type="submit" class="card-opcion-boton">
+                <button type="submit" class="card-opcion-boton" title="Administra todos los dispositivos del sistema">
             <img src="/ping-scan/public/media/imagenes/icono-red.png" alt="">
             <h3 class="card-opcion-tecnico-h3">Gestionar Dispositivos</h3>    
             </button>

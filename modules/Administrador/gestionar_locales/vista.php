@@ -85,7 +85,7 @@ $_SESSION['notificacion']="";?>
 
     <?php if($condicionLocalesAuxiliar):?> <!-- inicio de mostrar locales -->
             <?php while ($row = $locales->fetch_assoc()):?>
-            <div class="col-6 col-lg-4 "><!-- div de cada card del local -->
+            <div class="col-6 col-lg-4 " title="Selecciona este local"><!-- div de cada card del local -->
                 <div id="<?php echo $iterador?>" class="card-local">
                 <h4 id="<?php echo htmlspecialchars($row['id_locales']);?>"><?php echo htmlspecialchars($row['denominacion']);?></h4>
                 <img src="/ping-scan/public/media/imagenes/super6.png" alt="Local"/>
@@ -99,7 +99,7 @@ $_SESSION['notificacion']="";?>
                 </p>
                 <p>VLAN del local: <?php echo htmlspecialchars($row['ip3']);?></p>
                 </div><!-- fin de card-local-info-->
-                <a class="btn btn-primary" href="?mostrar_detalles=<?php echo htmlspecialchars($row['id_locales'])?>">Más Detalles</a>
+                <a class="btn btn-primary" href="?mostrar_detalles=<?php echo htmlspecialchars($row['id_locales'])?>" title="Muestra mas informacion sobre este local">Más Detalles</a>
                 </div>
             </div><!-- fin de div de cada card del local -->
                  <?php $iterador= $iterador+1;?>
@@ -118,13 +118,13 @@ $_SESSION['notificacion']="";?>
 
             <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
 
-            <a href="?añadir_local=1">
+            <a href="?añadir_local=1" title="Añade un nuevo local">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Local"/>
             </a>
-            <a href="?editar_local" id="editar-local">
+            <a href="?editar_local" id="editar-local" title="Edita la informacion de un local">
             <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar Local"/>
             </a>
-            <a href="?eliminar_local" id="eliminar-local">
+            <a href="?eliminar_local" id="eliminar-local" title="Elimina un local">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Local"/>    
             </a>    
             </div>

@@ -85,19 +85,19 @@ $conexion->close();
     <h3>!Empieza ahora!</h3>
     <form method="POST" action="index.php">
     <label for="usuario">Usuario:</label>
-                </br><input type="text" name="usuario" placeholder="Inserte el usuario" 
+                </br><input type="text" name="usuario" placeholder="Inserte el usuario" title="Ingrese su usuario"
                 id="usuario"class="mb-3 col-11 " required/>
                 </br>
                 <label for="nombre">Nombre:</label>
-                </br><input type="text" id="nombre" name="nombre" placeholder="Inserte el nombre"
+                </br><input type="text" id="nombre" name="nombre" placeholder="Inserte el nombre" title="Ingrese su nombre"
                 class="mb-3 col-11 " required/>
                 </br>
                 <label>Contraseña:</label>
-                </br><input type="password" id="contrasena" name="contrasena" placeholder="Introduzca una contraseña"
+                </br><input type="password" id="contrasena" name="contrasena" placeholder="Introduzca una contraseña" title="Ingrese una contraseña"
                 class="mb-3 col-11" required/>
         </br>
         <div class="card-footer text-center">
-        <button class="btn btn-success" type="submit">Registrarse</button>
+        <button class="btn btn-success" type="submit" title="Registre su nueva cuenta">Registrarse</button>
 </div>
     </form>
 </div> <!-- fin de formulario -->

@@ -133,11 +133,11 @@ $_SESSION['notificacion']="";?>
             <!-- Inicio el cuadro de busqueda -->
     <div class="row">
             <div class="col-8 text-center" style="align-content: center;">
-                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda"/>
+                <input type="text" placeholder="Buscar equipo" id="cuadro_busqueda" title="Ingresa el nombre de un dispositivo"/>
             </div>
-            <div class="col-1 icono-busqueda"><img src="/ping-scan/public/media/imagenes/icono-lupa.png"/></div>
+            <div class="col-1 icono-busqueda"><img src="/ping-scan/public/media/imagenes/icono-lupa.png" title="Busca un dispositivo"/></div>
             <div class="col-2 text-center btn-filtrar">
-            <a href="?filtrar_dispositivos=1" class="btn-warning">Filtrar</a>
+            <a href="?filtrar_dispositivos=1" class="btn-warning" title="Filtra dispositivos">Filtrar</a>
             </div>
             <!-- Fin del cuadro de busqueda-->
     </div>
@@ -167,7 +167,7 @@ $_SESSION['notificacion']="";?>
 
                 ?>
                 
-                <tr id=<?php echo $iterador?> class="fila-datos">
+                <tr id=<?php echo $iterador?> class="fila-datos" title="Selecciona el dispositivo">
                     <td id=<?php echo htmlspecialchars($row['id_dispositivos']);?>><?php echo $ip_actual?></td>
                     <td><?php echo htmlspecialchars($row['nombre_equipo']);?></td>
                     <td><?php echo $local ?></td>
@@ -183,17 +183,17 @@ $_SESSION['notificacion']="";?>
 
             <div class="col-1 col-acciones col-acciones-tecnico"> <!-- inicio de la columna para las herramientas -->
 
-            <a href="?añadir_dispositivo=1">
+            <a href="?añadir_dispositivo=1" title="Añade un nuevo dispositivo">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Dispositivo"/>
             </a>
-            <a href="?editar_dispositivo=" id="editar-dispositivo">
+            <a href="?editar_dispositivo=" id="editar-dispositivo" title="Edita la informacion de un dispositivo">
             <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar dispositivo"/>
             </a>
-            <a href="?eliminar_dispositivo=>" id="eliminar-dispositivo">
+            <a href="?eliminar_dispositivo=>" id="eliminar-dispositivo" title="Elimina un dispositivo">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Añadir Dispositivo"/>    
             </a>
             <?php if($_SESSION['local'] !== null): ?>   
-            <a href="?generar_documento=" id="generar-documento">
+            <a href="?generar_documento=" id="generar-documento" title="Genera un documento del estado de los equipos">
             <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
             </a>
             <?php endif; ?> 

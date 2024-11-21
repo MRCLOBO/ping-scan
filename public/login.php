@@ -98,21 +98,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="card-body">
                 <div class="row"> <!-- inicio del row para modificar la apariencia de los inputs -->
                 <label for="usuario" class="col-12 col-lg-1 text-center">Usuario: </label>
-                <input name="usuario" id="usuario"
+                <input name="usuario" id="usuario" title="Ingrese su usuario"
                 type="text" placeholder="Ingrese su usuario"
             required class="col-12 col-lg-4 mb-3 p-1"
                 />
                 <div class="col-0 col-lg-1"></div>
 
                 <label for="contrasena" class="col-12 col-lg-2 text-center">Contraseña:</label>
-                <input type="password" id="contrasena" 
+                <input type="password" id="contrasena" title="Ingrese su contraseña"
                 name="contrasena" placeholder="Ingrese su contraseña"
                  required class="col-12 col-lg-4 mb-3 p-1"
                 />
 
                 </div><!--Final del row para los inputs -->
             </div>
-            <div class="card-footer text-center"><button class="btn btn-primary btn-inicio-seccion">Iniciar Sesion</button></div>
+            <div class="card-footer text-center"><button class="btn btn-primary btn-inicio-seccion" title="Iniciar Sesion">Iniciar Sesion</button></div>
             </form>
         </div>
     </div>

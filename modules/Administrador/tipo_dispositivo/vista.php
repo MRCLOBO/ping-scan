@@ -85,7 +85,7 @@ $_SESSION['notificacion']="";?>
             <?php if($condicionTipoAuxiliar):?> <!-- inicio de mostrar tipos de dispositivos -->
 
             <?php while ($row = $tipoDispositivo->fetch_assoc()):?>
-            <div class="col-12 col-lg-6 "><!-- div de cada card del local -->
+            <div class="col-12 col-lg-6 " title="Selecciona este tipo de dispositivo"><!-- div de cada card del local -->
                 <div id="<?php echo $iterador?>" class="card-local card-dispositivo">
                 <h4 id="<?php echo htmlspecialchars($row['id_tipo_dispositivo']);?>"><?php echo htmlspecialchars($row['equipo']);?></h4>
                 <img src="/ping-scan/public/media/imagenes/icono-iot.png" alt="Dispositivos"/>
@@ -101,7 +101,7 @@ $_SESSION['notificacion']="";?>
                 </p>
                 <p>VLAN del equipo: <?php echo htmlspecialchars($row['ip2']);?></p>
                 </div><!-- fin de card-local-info-->
-                <a class="btn btn-primary" href="?mostrar_detalles=<?php echo htmlspecialchars($row['id_tipo_dispositivo'])?>">Más Detalles</a>
+                <a class="btn btn-primary" href="?mostrar_detalles=<?php echo htmlspecialchars($row['id_tipo_dispositivo'])?>" title="Muestra mas detalles sobre el tipo de dispositivo">Más Detalles</a>
                 </div>
             </div><!-- fin de div de cada card del local -->
                  <?php $iterador= $iterador+1;?>
@@ -120,13 +120,13 @@ $_SESSION['notificacion']="";?>
 
             <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
 
-            <a href="?añadir_tipo=1">
+            <a href="?añadir_tipo=1" title="Añade un nuevo tipo de dispositivo">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Tipo"/>
             </a>
-            <a href="?editar_tipo" id="editar-tipo">
+            <a href="?editar_tipo" id="editar-tipo" title="Modifica la informacion de un tipo de dispositivo">
             <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar Tipo"/>
             </a>
-            <a href="?eliminar_tipo" id="eliminar-tipo">
+            <a href="?eliminar_tipo" id="eliminar-tipo" title="Elimina el tipo de dispositivo">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Tipo"/>    
             </a>    
             </div>

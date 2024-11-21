@@ -77,7 +77,7 @@ $_SESSION['notificacion']="";?>
         <tbody >
             <?php while ($row = $usuarios->fetch_assoc()):?>
                 
-                <tr id=<?php echo $iterador?>>
+                <tr id=<?php echo $iterador?>  title="Selecciona el usuario">
                     <td id=<?php echo htmlspecialchars($row['id_usuarios']);?>><?php echo htmlspecialchars($row['id_usuarios']);?></</td>
                     <td><?php echo htmlspecialchars($row['usuario']);?></td>
                     <td><?php echo htmlspecialchars($row['nombre']);?></td>
@@ -92,16 +92,16 @@ $_SESSION['notificacion']="";?>
 
             <div class="col-1 col-acciones"> <!-- inicio de la columna para las herramientas -->
 
-            <a href="?añadir_usuario=1">
+            <a href="?añadir_usuario=1" title="Añade un nuevo usuario">
                 <img src="/ping-scan/public/media/imagenes/icono-mas.png" alt="Añadir Usuario"/>
             </a>
-            <a href="?editar_usuario=" id="editar-usuario">
+            <a href="?editar_usuario=" id="editar-usuario" title="Edita la informacion de un usuario">
             <img src="/ping-scan/public/media/imagenes/editar.png" alt="Editar Usuario"/>
             </a>
-            <a href="?eliminar_usuario=" id="eliminar-usuario">
+            <a href="?eliminar_usuario=" id="eliminar-usuario" title="Elimina a un usuario">
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Eliminar Usuario"/>    
             </a>
-            <a href="?restaurar_contrasena" id="restaurar-contrasena">
+            <a href="?restaurar_contrasena" id="restaurar-contrasena" title="Restaura la contraseña del usuario seleccionado">
             <img src="/ping-scan/public/media/imagenes/icono-desbloquear.png" alt="Desbloqueo"/>    
             </a>     
             </div>
