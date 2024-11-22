@@ -191,10 +191,16 @@ $_SESSION['notificacion']="";?>
                 <label for="edit_role">Rol:</label>
             </br>
                 <select id="edit_role" name="rol" class="mb-3" required>
-                <option value="admin" <?php echo $editarUsuario['rol'] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
-                <option value="tecnico" <?php echo $editarUsuario['rol'] === 'tecnico' ? 'selected' : ''; ?>>Tecnico</option>
-                <option value="user" <?php echo $editarUsuario['rol'] === 'user' ? 'selected' : ''; ?>>Usuario</option>    
-                </select>
+                <option value="admin"  <?php if(isset($_POST['rol_advertencia']) && $_POST['rol_advertencia'] == 'admin'){echo 'selected' ;} ?> >Administrador</option>
+                <option value="tecnico"   <?php if(isset($_POST['rol_advertencia']) && $_POST['rol_advertencia'] == 'tecnico'){echo 'selected' ;} ?>  >Técnico</option>
+ <?php 
+                $verificarLocal = $conn->query("SELECT * FROM locales");
+                if ($verificarLocal->num_rows != 0) {
+                    $agregado = "";
+                    if(isset($_POST['rol_advertencia']) && $_POST['rol_advertencia'] == 'user'){$agregado='selected';}
+                        echo "<option value='user'".$agregado.">Usuario</option>" ;
+                }
+?></select>
             </br>
             <!-- Local perteneciente del usuario -->
             <div id="container-elegir-local" class="elegir-local-ocultar">

@@ -31,11 +31,12 @@ if( preg_match($patron_texto_numero, $usuario) !== 1){
 
         $comprobarUsuario = $controlador->comprobarUsuario($usuario);
         
-        if($comprobarUsuario !== null){
+        if($comprobarUsuario !== null && $comprobarUsuario['id_usuarios'] != $id_usuarios){
             //redireccionar atras
             $_SESSION['error'] = 
             ['error' => 'usuario duplicado',
             'origen' => 'editar',
+            'id' => $id_usuarios,
             'usuario' => $usuario,
             'rol' => $rol,
             'nombre' => $nombre,
