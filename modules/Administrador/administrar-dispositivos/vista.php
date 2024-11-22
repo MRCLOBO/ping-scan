@@ -186,7 +186,7 @@ $_SESSION['notificacion']="";?>
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Añadir Dispositivo"/>    
             </a>
             <?php if($_SESSION['local'] !== null): ?>   
-            <a href="?generar_documento=" id="generar-documento">
+            <a onclick="generarInforme()" id="generar-documento" title="Generar documento del estado de los dispositivos">
             <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
             </a>
             <?php endif; ?> 
@@ -600,5 +600,8 @@ function siguienteSegmento(ip){
 
 
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <button onclick="generarInforme()">Generar Informe</button>-->
+<script src="http://localhost/ping-scan/modules/Administrador/informes/informe.js"></script>
 </body>
 </html>

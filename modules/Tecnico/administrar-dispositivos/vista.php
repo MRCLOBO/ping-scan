@@ -193,7 +193,7 @@ $_SESSION['notificacion']="";?>
             <img src="/ping-scan/public/media/imagenes/icono-eliminar.png" alt="Añadir Dispositivo"/>    
             </a>
             <?php if($_SESSION['local'] !== null): ?>   
-            <a href="?generar_documento=" id="generar-documento" title="Genera un documento del estado de los equipos">
+                <a onclick="generarInforme()" id="generar-documento" title="Genera un documento del estado de los equipos">
             <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
             </a>
             <?php endif; ?> 
@@ -501,8 +501,7 @@ $_SESSION['notificacion']="";?>
 
 
     <?php if($condicionDispositivosAuxiliar):?> <!-- inicio de pingear dispositivos-->
-    <script  src="script.js" type="module">
-    </script>
+    <script  src="script.js" type="module"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
     const tamañoTabla=<?php echo $iterador ?>;
@@ -623,7 +622,49 @@ function siguienteSegmento(ip){
 
     siguienteSegmento(1);siguienteSegmento(2);siguienteSegmento(3);
     anteriorSegmento(4);anteriorSegmento(3);anteriorSegmento(2);
+    function generarInforme() {
+    let dispositivos = [];
+    const filas = document.querySelectorAll("table tbody tr"); // Asumiendo que tienes una tabla en tu vista.php
 
+    /*filas.forEach((fila, index) => {
+        const nombre = fila.children[1].textContent; // Ajusta según la posición en tu tabla
+        const estado = fila.children[3].textContent; // Ajusta según la posición en tu tabla
+
+        dispositivos.push({ id: index + 1, nombre, estado });
+    });*/
+
+    filas.forEach((fila) => {
+        const ipCompleta = fila.children[0].textContent; // Suponiendo que la IP está en la primera columna
+        const nombre = fila.children[1].textContent; // Ajusta según la posición en tu tabla
+        const estado = fila.children[3].textContent; // Ajusta según la posición en tu tabla
+
+        // Extraer el último octeto de la IP
+        const ultimoOcteto = ipCompleta.split('.').pop();
+
+        dispositivos.push({ id: ultimoOcteto, nombre, estado });
+    });
+
+    // Enviar los datos al servidor
+    $.ajax({
+        //url: 'http://localhost/ping-scan/modules/Administrador/informes/generarPdfv3.php',
+        url: 'http://localhost/ping-scan/modules/Administrador/informes/informeGenerado.php',
+        method: 'POST',
+        data: JSON.stringify({ dispositivos }),
+        contentType: 'application/json',
+        success: function(response) {
+            if (response.success) {
+                alert("Informe generado exitosamente. Ver Informe");
+                window.open(response.filePath, '_blank');
+            } else {
+                alert("Error: No se pudo generar el archivo PDF.");
+            }
+        },
+        error: function(error) {
+            console.error("Error en la solicitud:", error);
+            alert("Error al generar el informe.");
+        }
+    });
+}
 
     </script>
 </body>
