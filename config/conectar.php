@@ -1,9 +1,11 @@
 <?php
 //echo "Iniciando conectar.php";
+//para uso en todo el codigo de la hora de Paraguay
+date_default_timezone_set('America/Asuncion');
 class Conectar {
     private $servidor = "localhost";
     private $usuario = "root";
-    private $contrasena = "";
+    private $contrasena = "password";
     private $bd = "ping_scan";
     public $conexion;
 
