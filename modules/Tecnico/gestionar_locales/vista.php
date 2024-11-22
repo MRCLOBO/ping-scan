@@ -132,28 +132,36 @@ $_SESSION['notificacion']=""; ?>
 
 
 
-        <?php if($añadirLocal): ?>
+
+            <?php if($añadirLocal): ?>
             <div class="editar-fondo">  <!-- inicio de añadir dispositivo -->
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">X</a>
                 <h2>Añadir Local</h2>
                 <form method="POST" action="añadirLocal.php">
                 <label for="denominacion">Nombre del local:</label>
                 </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
-                id="denominacion"class="mb-3 col-9 text-center" required/>
+                id="denominacion"class="mb-3 col-9 text-center" required
+                <?php if(isset($_POST['denominacion_advertencia'])){ echo "value=".$_POST['denominacion_advertencia'];}?>  />
                 </br>
                 <label for="ciudad">Ciudad:</label>
                 </br><input type="text" id="ciudad" name="ciudad" placeholder="Ciudad perteneciente"
-                class="mb-3 col-9 text-center" required/>
+                class="mb-3 col-9 text-center" required
+                <?php if(isset($_POST['ciudad_advertencia'])){ echo "value=".$_POST['ciudad_advertencia'];}?>   />
                 </br>
                 <label for="direccion">Direccion:</label>
                 </br><input type="text" id="direccion" name="direccion" placeholder="Introduzca la direccion"
-                class="mb-3 col-9 text-center" required/>
+                class="mb-3 col-9 text-center" required
+                <?php if(isset($_POST['direccion_advertencia'])){ echo "value=".$_POST['direccion_advertencia'];}?>    />
             </br>
                 <label for="ip3">VLAN del local:</label>
             </br>
-                <input type="number" max="255" min="0" name="ip3" id="ip3" 
-                placeholder="X.X.Numero.X" required class="col-5 text-center"/>
+                <input value=<?php if(isset($_POST['ip3_advertencia'])){ echo $_POST['ip3_advertencia'];}
+                else{
+                echo 0;}?>
+                 type="number" max="255" min="0" name="ip3" id="ip3" 
+                placeholder="X.X.Numero.X" required class="col-5 text-center"
+                />
             </br>
             
                 <button type="submit" class="btn btn-primary mb-3">Añadir Local</button>
@@ -166,31 +174,31 @@ $_SESSION['notificacion']=""; ?>
             <?php if($editarLocal): ?>
                 <div class="editar-fondo">
             <div class="formulario-añadir-dispositivo">
-            <a class="btn bg-dark text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
+            <a class="btn bg-danger text-light boton-atras" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">X</a>
                 <h2>Editar Local</h2>
                 <form method="POST" action="editarLocal.php">
-                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($eLocal['id_locales']);?>">
+                <input type="hidden" name="id_locales" value="<?php echo htmlspecialchars($editarLocal['id_locales']);?>">
                 <label for="denominacion">Nombre del local:</label>
                 </br><input type="text" name="denominacion" placeholder="Inserte el nombre del local" 
                 id="denominacion"class="mb-3 col-9 text-center" required 
-                value="<?php echo htmlspecialchars($editarLocal['denominacion'])?>"/>
+                value=" <?php if(isset($_POST['denominacion_advertencia'])){ echo $_POST['denominacion_advertencia'];}else{echo htmlspecialchars($editarLocal['denominacion']);}?>"  />
                 </br>
                 <label for="ciudad">Ciudad:</label>
                 </br><input type="text" id="ciudad" name="ciudad" placeholder="Ciudad perteneciente" 
-                class="mb-3 col-9 text-center" required value="<?php echo htmlspecialchars($editarLocal['ciudad'])?>"/>
+                class="mb-3 col-9 text-center" required value="<?php if(isset($_POST['ciudad_advertencia'])){ echo $_POST['ciudad_advertencia'];}else{echo htmlspecialchars($editarLocal['ciudad']);}?>" />
                 </br>
                 <label for="direccion">Direccion:</label>
                 </br><input type="text" id="direccion" name="direccion" placeholder="Introduzca la direccion"
-                class="mb-3 col-9 text-center" required value="<?php echo htmlspecialchars($editarLocal['direccion'])?>"/>
+                class="mb-3 col-9 text-center" required value="<?php if(isset($_POST['direccion_advertencia'])){ echo $_POST['direccion_advertencia'];}else{echo htmlspecialchars($editarLocal['direccion']);}?>" />
             </br>
                 <label for="ip3">VLAN del local:</label>
             </br>
                 <input type="number" max="255" min="0" name="ip3" id="ip3" 
                 placeholder="X.X.Numero.X" required class="col-5 text-center"
-                value="<?php echo htmlspecialchars($editarLocal['ip3'])?>"/>
+                value="<?php if(isset($_POST['ip3_advertencia'])){ echo $_POST['ip3_advertencia'];}else{echo htmlspecialchars($editarLocal['ip3']);}?>" />
             </br>
             
-                <button type="submit" class="btn btn-primary mb-3">Eliminar Local</button>
+                <button type="submit" class="btn btn-primary mb-3">Editar Local</button>
                 </form>
     </div> <!-- fin de la ventana editar local -->
     </div> <!-- fin de editar-fondo --> 
@@ -258,9 +266,9 @@ $_SESSION['notificacion']=""; ?>
                 </div><!-- fin de card-mostrar-detalles-body -->
 
                 <div class="card-mostrar-detalles-footer"><!-- inicio de card-mostrar-detalles-footer -->
-                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?editar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
+                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?editar_local=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
                 class="btn btn-primary">Editar</a>
-                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?eliminar_dispositivo=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
+                <a href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php?eliminar_local=<?php echo htmlspecialchars($mostrarDetalles['id_locales'])?>"
                 class="btn btn-danger">Eliminar</a>
             <form method="POST" action="/ping-scan/modules/Tecnico/administrar-dispositivos/vista.php">    
             <input type="hidden" name="locales_ip3" value="<?php echo htmlspecialchars($mostrarDetalles['ip3']);?>">
@@ -271,6 +279,106 @@ $_SESSION['notificacion']=""; ?>
             </div> <!-- fin de la ventana mostrar local -->
             </div> <!-- fin de editar-fondo --> 
             <?php endif;?> <!-- fin de mostrar detalles -->
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "denominacion duplicada"): 
+        $denominacionAdvertencia = htmlspecialchars($_SESSION['error']['denominacion']) ?><!-- INICIO DE NO EXISTE TIPO -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">X</a>
+                        <h2>Nombre del local duplicado</h2> 
+                        <p>Al parecer el nombre para el local: <b style="color:red;"><?php echo $denominacionAdvertencia ?></b> ya esta registrado bajo otro local.</p>
+                        <p>Por favor, ingrese otro nombre para el local</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">Cancelar</a>
+                        <form action= 
+                        <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Tecnico/gestionar_locales/vista.php?añadir_local=1';} 
+                       else if(isset($_SESSION['error']['origen']) && $_SESSION['error']['origen'] == "editar"){ echo '/ping-scan/modules/Tecnico/gestionar_locales/vista.php?editar_local='.htmlspecialchars($_SESSION['error']['id']);}?>  
+                        method="POST">
+                            <input type="hidden" name="ip3_advertencia" value=  <?php echo $_SESSION['error']['ip3'];?>  />
+                            <input type="hidden" name="denominacion_advertencia" value=  <?php echo $_SESSION['error']['denominacion'];?>  />
+                            <input type="hidden" name="ciudad_advertencia" value=  <?php echo $_SESSION['error']['ciudad'];?>  />
+                            <input type="hidden" name="direccion_advertencia" value=  <?php echo $_SESSION['error']['direccion'];?> />
+                            <input type="hidden" name="advertencia" value="denominacion duplicada" />
+                            <button type="submit" class="btn-primary">Cambiar nombre</button>
+                        </form>
+
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+              <?php  endif;?> <!-- fin de denominacion duplicada -->  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <?php if($_SESSION['error'] !== null && $_SESSION['error']['error'] == "ip duplicada"): 
+        $ipAdvertencia = htmlspecialchars($_SESSION['error']['ip3']) ?><!-- INICIO DE NO EXISTE TIPO -->
+                <div class="advertencia-fondo-activo"><!-- inicio del cuadro principal-->
+                <div class="editar-fondo">
+                    <div class="advertencia"><!--inicio de advertencia -->
+                    <a class="btn-dark text-light boton-atras" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">X</a>
+                        <h2>IP duplicada</h2> 
+                        <p>Al parecer la IP: <b style="color:red;"><?php echo $ipAdvertencia ?></b> ya esta registrada bajo otro local.</p>
+                        <p>Por favor, ingrese otra IP para el local</p>
+                        <a class="btn-danger" href="/ping-scan/modules/Tecnico/gestionar_locales/vista.php">Cancelar</a>
+                        <form action= 
+                        <?php if(isset($_SESSION['error']['origen'])  && $_SESSION['error']['origen'] == 'anadir'){ echo '/ping-scan/modules/Tecnico/gestionar_locales/vista.php?añadir_local=1';} 
+                       else if(isset($_SESSION['error']['origen']) && $_SESSION['error']['origen'] == "editar"){ echo '/ping-scan/modules/Tecnico/gestionar_locales/vista.php?editar_local='.htmlspecialchars($_SESSION['error']['id']);}?>  
+                        method="POST">
+                            <input type="hidden" name="ip3_advertencia" value=  <?php echo $_SESSION['error']['ip3'];?>  />
+                            <input type="hidden" name="denominacion_advertencia" value=  <?php echo $_SESSION['error']['denominacion'];?>  />
+                            <input type="hidden" name="ciudad_advertencia" value=  <?php echo $_SESSION['error']['ciudad'];?>  />
+                            <input type="hidden" name="direccion_advertencia" value=  <?php echo $_SESSION['error']['direccion'];?> />
+                            <input type="hidden" name="advertencia" value="ip duplicada" />
+                            <button type="submit" class="btn-primary">Cambiar IP</button>
+                        </form>
+
+                    </div><!-- fin de advertencia -->
+                </div>
+                </div><!-- fin del cuadro principal-->
+              <?php  endif;?> <!-- fin de ip duplicada -->  
+            
+
+
+
+
+
+
+
+
+
+
+
+
+                <?php $_SESSION['error']=null; ?>
     
     </div><!-- Fin del div principal -->
 
@@ -298,6 +406,23 @@ $_SESSION['notificacion']=""; ?>
     setInterval(()=>{
     document.getElementById("notificacion").className="notificacion-desaparecer"
     },3000)
+
+    //como enfocar en el campo IP cuando hay un error de ip duplicada
+<?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="ip duplicada"):?>
+    if(document.getElementById("ip3")){
+        document.getElementById("ip3").focus();
+        document.getElementById("ip3").value="";
+    }
+<?php endif;?>
+
+//como enfocar en el campo denominacion cuando hay un error de denominacion duplicada
+<?php if(isset($_POST['advertencia']) && $_POST['advertencia']=="denominacion duplicada"):?>
+    if(document.getElementById("denominacion")){
+        document.getElementById("denominacion").focus();
+        document.getElementById("denominacion").value="";
+    }
+<?php endif;?>
+
     </script>
 </body>
 </html>

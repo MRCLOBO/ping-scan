@@ -59,5 +59,12 @@ class ControladorLocales {
         public function getDispositivosDeLocal($locales_ip3){
             return $this->model->getDispositivosDeLocal($locales_ip3);
         }
+        public function comprobarIP($ip){
+            return $this->model->comprobarIP($ip);
+        }
+        public function comprobarDenominacion($denominacion){
+            return $this->model->comprobarDenominacion($denominacion);
+        }
+
 }
 ?>

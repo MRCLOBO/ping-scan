@@ -67,6 +67,12 @@ class ModeloLocales {
         $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);
         return $stmt->execute();
     }
+    public function editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3){
+        $stmt = $this->conn->prepare("UPDATE locales SET  denominacion= ?, ciudad = ?, direccion = ?, ip3 = ?
+        WHERE id_locales = ?");
+        $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);
+        return $stmt->execute();
+    }
     public function editarUsuarioLocal($id_locales,$denominacion){
         $stmt = $this->conn->prepare("UPDATE usuario_local SET  denominacion= ?
         WHERE locales_id_locales = ?");
@@ -90,11 +96,18 @@ class ModeloLocales {
         $stmt->bind_param("i", $locales_ip3);
         return $stmt->execute();
     }
-    public function editarLocal($id_locales,$denominacion,$ciudad,$direccion,$ip3){
-        $stmt = $this->conn->prepare("UPDATE locales SET  denominacion= ?, ciudad = ?, direccion = ?, ip3 = ?
-        WHERE id_locales = ?");
-        $stmt->bind_param("sssii", $denominacion, $ciudad, $direccion,$ip3,$id_locales);
-        return $stmt->execute();
+    public function comprobarIP($ip3){
+        $stmt = $this->conn->prepare("SELECT * from locales where ip3 = ?");
+        $stmt->bind_param("i", $ip3);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
     }
+    public function comprobarDenominacion($denominacion){
+        $stmt = $this->conn->prepare("SELECT * from locales where denominacion = ?");
+        $stmt->bind_param("s", $denominacion);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
 }
 ?>

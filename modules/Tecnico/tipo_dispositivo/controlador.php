@@ -36,6 +36,13 @@ class ControladorTipoDispositivo {
     public function eliminarTipo($id_tipo_dispositivo){
         return $this->model->eliminarTipo($id_tipo_dispositivo);
     }
+    public function comprobarIP($ip){
+        return $this->model->comprobarIP($ip);
+    }
+    public function comprobarTipo($equipo){
+        return $this->model->comprobarTipo($equipo);
+    }
+
 
 /*
     public function localDeDispositivo($ip_local){
