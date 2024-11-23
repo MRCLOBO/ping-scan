@@ -19,21 +19,29 @@ if ($verificarUsuarios->num_rows == 0) {
 </a> <!-- fin del row -->
             </div>
 
-            <div class="col-1 col-md-6 ocultar-nav-bar"></div>
+            <div class="col-1 col-md-5 ocultar-nav-bar"></div>
 
                           <!-- inicio info usuario -->
-        <div class="col-4 col-md-2" >
+        <div class="col-2 col-md-2" >
             <div class="row">
-                <div class="col-3 text-center">
+                <div class="col-12 col-md-3 text-center">
                     <img src="/ping-scan/public/media/imagenes/icono-admin.png" alt="Profile" class="icono" title=" <?php echo htmlspecialchars($user->usuario); ?> "/>     
                 </div>
-                <div class="col-9">
+                <div class="col-0 col-md-9 informacion-usuario">
             <p class="usuario-icono-info"><b><?php echo htmlspecialchars($user->usuario); ?></b></p>  
             <p class="usuario-icono-info"><?php echo htmlspecialchars($user->rol); ?></p>       
                 </div>
             </div>
         </div> 
             <!-- Fin de info usuario nav-->
+        <div class="col-3 col-md-1">
+            <form method="POST" action="/ping-scan/public/media/archivos/generarManual.php">
+            <input type="hidden" name="descargar" value="true"/>
+            <button type="submit" class="ayuda">
+            <img src="/ping-scan/public/media/imagenes/icono-ayuda.png" alt="Ayuda" title="Manual de usuario"/>
+            </button>
+            </form>
+        </div>
 
 
         <div class="col-2 col-md-1 btn-cerrar-seccion">

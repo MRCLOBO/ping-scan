@@ -546,6 +546,16 @@ body{
   background: linear-gradient(130deg, rgb(20, 20, 20), rgb(50, 50, 50));
   min-height: 100vh;
 }
+.ayuda{
+  background-color: transparent;
+  border: none;
+}
+.ayuda > img:hover{
+  filter:invert(1);
+}
+.contenedor-nav-bar-tecnico > *{
+  --bs-gutter-x: 0 !important;
+}
 
 /* Diseño responsive*/
 @media (max-width:992px){
@@ -658,5 +668,12 @@ body{
     background: none;
     background-color: #212529 !important;
   }
-
+  .informacion-usuario{
+    width: 0px !important;
+    overflow: hidden;
+    height: 0px !important;
+  }
+  .ocultar-nav-bar{
+    display: contents;
+  }
 }

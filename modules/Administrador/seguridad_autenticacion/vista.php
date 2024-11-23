@@ -104,9 +104,9 @@ $_SESSION['notificacion']="";?>
             <a href="?restaurar_contrasena" id="restaurar-contrasena" title="Restaura la contraseña del usuario seleccionado">
             <img src="/ping-scan/public/media/imagenes/icono-desbloquear.png" alt="Desbloqueo"/>    
             </a> 
-            <a href="http://localhost/ping-scan/modules/Administrador/informes/vista_usuarios.php" target="_blank" id="generar-documento">
+            <!-- <a href="http://localhost/ping-scan/modules/Administrador/informes/vista_usuarios.php" target="_blank" id="generar-documento">
             <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
-            </a>    
+            </a> -->   
             </div>
             
 

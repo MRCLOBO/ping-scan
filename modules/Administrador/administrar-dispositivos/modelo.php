@@ -97,6 +97,9 @@ class ModeloDispositivos {
 
         if($localesFiltro !== false){
             $tamanoLocal = count($localesFiltro);
+            if($tamanoLocal == 1){
+                $_SESSION['local'] = $localesFiltro[0];
+            }
             //bucle para concatenar todos los locales para mostrar
             for($i1 = 0; $i1 < $tamanoLocal ; ++$i1 ){
                 if($i1 == 0){
