@@ -125,7 +125,7 @@ $_SESSION['notificacion']="";?>
     </div><!-- Fin del div principal -->
  <div class="col-1 col-acciones-usuario"> <!-- inicio de la columna para las herramientas -->
             <?php if($_SESSION['local'] !== null): ?>   
-            <a href="?generar_documento=" id="generar-documento" title="Genera un documento del estado actual de todos los equipos">
+            <a class="btn" onclick="generarInforme()"  id="generar-documento" title="Genera un documento del estado actual de todos los equipos">
             <img src="/ping-scan/public/media/imagenes/documento.png" alt="Generar Documento"/>    
             </a>
             <?php endif; ?> 
@@ -185,5 +185,6 @@ $_SESSION['notificacion']="";?>
 
 
     </script>
+    <script src="http://localhost/ping-scan/modules/Administrador/informes/informe.js"></script>
 </body>
 </html>
