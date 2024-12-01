@@ -20,6 +20,9 @@ $componentes = new Componentes();
 //INICIAR SECCION
 session_start();
 //Mostrar los locales de manera filtrada
+if(isset($_POST['limpiar'])){
+    $_SESSION['local']=null;
+}
 if(isset($_POST['locales_ip3'])){
     //  $dispositivos =$controlador->getDispositivosDeLocal($_POST['locales_ip3']);
     $_SESSION['local'] = $_POST['locales_ip3'];
@@ -42,7 +45,6 @@ if($_SESSION['local'] !== null){ //si tiene el valor de un local mostrara una li
     
             //Filtro de dispositivos de acuerdo a varios parametros
             if(isset($_POST['locales']) || isset($_POST['tipo_dispositivos']) || isset($_POST['orden'])){
-    
                 if(isset($_POST['locales'])){
                     $localesFiltro = $_POST['locales'];
                 }else{
@@ -326,6 +328,7 @@ $_SESSION['notificacion']="";?>
             <a class="btn bg-danger text-light boton-atras" href="<?php echo $_SERVER['HTTP_REFERER']?>">X</a>
                 <h2>Filtrar Dispositivos</h2>
                 <form method="POST" action="./vista.php" class="formulario-filtro">
+                <input type="hidden" name="limpiar" value="limpiar">
                <p>Locales de los dispositivos:</p>
                 <?php while ($row = $locales->fetch_assoc()):
                     $ipDelLocal = $row['ip3']?>

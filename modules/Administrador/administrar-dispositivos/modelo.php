@@ -90,6 +90,7 @@ class ModeloDispositivos {
         return $stmt->get_result();
     }
     public function getDispositivosConFiltro($localesFiltro,$tipoDispositivosFiltro,$ordenFiltro){
+
         $consultaLocal = "";
         $consultaTipoDispositivos = "";
         $cantidadConsultaLocal= "";
